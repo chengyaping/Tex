@@ -1,21 +1,91 @@
 
-\chapter{光电倍增管的刻度及测试工作}
+\chapter{光电倍增管的刻度及测试}
 \label{chap:chap3}
-在中微子实验中，闪烁体或水通常被用于建造大型中微子探测器，需要使用数以万计的光电倍增管（PMT）探测闪烁光或切伦科夫光。光电倍增管是一种光电转换器件，
-考虑到大多数用户并无~\LaTeX{}~使用经验，本模板将~\LaTeX{}~的复杂性尽可能地进行了封装，开放出简单的接口，以便于使用者可以轻易地使用，同时，对使用~\LaTeX{}~撰写论文所遇到的一些主要难题，如插入图片、文献索引等，进行了详细的说明，并提供了相应的代码样本，理解了上述问题后，对于初学者而言，使用此模板撰写其学文论文将不存在实质性的困难，所以，如果您是初学者，请不要直接放弃，因为同样作为初学者的我，十分明白让~\LaTeX{}~变得简单易用的重要性，而这正是本模板所体现的.
+在中微子实验中，闪烁体或水通常被用于建造大型中微子探测器，需要使用数以万计的光电倍增管~\textt{PMT}~探测闪烁光或切伦科夫光。当光打到置于真空中的金属或者半导体上时，电子就会从其表面发射到真空中，被称为光电效应。%pmt_handbook
+光电倍增管就是基于光电效应的一种光电转换器件。由于PMT是一种无损探测器件，并且具有响应速度快，灵敏度高等优点，除了高能物理外，还被广泛运用到医学设备以及工业设备中。
 
-此中国科学院大学学位论文模板~\texttt{ucasthesis}~基于吴凌云的~\texttt{CASthesis}~模板发展而来，~ucasthesis~文档类的基础架构为~ctexbook~文档类。当前~ucasthesis~ 模板满足最新的中国科学院大学学位论文撰写要求和封面设定。模板提供了~pdflatex~或~xelatex~（默认） 编译方式，完美地支持中文书签、中文渲染、中文粗体显示、拷贝~pdf~中的文本到其他文本编辑器等特性，此外，对模板的文档结构进行了精心设计，撰写了编译脚本提高模板的易用性和使用效率。
+\numberwithin{equation}{section}
 
-宏包的目的是简化学位论文的撰写，模板文档的默认设定是十分规范的，从而论文作者可以将精力集中到论文的内容上，而不需要在版面设置上花费精力。 同时，在编写模板的~\LaTeX{}~文档代码过程中，作者对各结构和命令进行了十分详细的注解，并提供了整洁一致的代码结构，对文档的仔细阅读可以为初学的您提供一个学习~\LaTeX{}~的窗口。除此之外，整个模板的架构十分注重通用性，事实上，本模板不仅是中国科学院大学学文论文模板，同时，也是使用~\LaTeX{}~撰写中英文~article~或~book~的通用模板，并为使用者的个性化设定提供了接口和相应的代码。
+\section{大亚湾中心探测器PMT增益刻度}
+大亚湾实验中用的PMT增益刻度方法有两种，一种是通过调节驱动~\texttt{LED}~的电压，使~\texttt{LED}~发出单光子，单光子打到~\textt{PMT}~上，从而研究~\textt{PMT}~单光子响应的~\texttt{LED}~ 增益刻度方法。这种方法依赖与~\textt{LED}~的精细调节，而且需要牺牲物理取数时间，专门做这些增益刻度~run~。另一种使用来自非光源的单光电子进行刻度的~\texttt{Rolling Gain}~ 刻度方法。使用的单光电子主要来自~\textt{PMT}~的暗噪声以及随机触发数据。这种方法不需要~\textt{LED}~,而且在物理取数的同时，可以得到刻度数据，提供了~\textt{PMT}~暗噪声率的在线监测方法，对于在线实时处理数据也有好处。做~\texttt{Rolling Gain}~刻度的第一步是刻度数据的挑选。下面是被挑选光子需要满足的一些条件：
+\begin{itemize}
+\item 距离前一个触发的时间间隔大于20$mu$s
+\item 该Hit的peak cycle 在【4,6】之间
+\item 每个PMT通道只有一个Hit
+\item ADC工作在精细量程区域
+\item 电子学基线恢复良好，要求~\left|preAdc-avePed\right|~<20
+\item 需要去除40MHz的来自电子学时钟的噪声。方法是：(Tdc-15)\%16>=4
+\item TDC位于噪声窗口，及大于1070。另要求噪声窗口内的~hit multiplicity~ 小于3
+\end{itemize}
+Hit挑选完之后，需要使用~\texttt{PMT}~单光子相应的~Model~去对数据进行~Fit~。 这里使用的模型来自\verb|\citet{BELLAMY1994468}|。在该模型中，光电倍增管被划分为两个相对独立的功能模块。一是模拟光阴极的光子电子转换功能。另一是描述打拿级系统对原初光电子的倍增放大过程。光子转换成光电子的效率由PMT的量子效率决定。考虑到PMT 的收集效率，假设由第一打拿级搜集到的平均光电子数目为~$mu$~,则实际观测到的光电子数目~$n$~与~$mu$~满足泊松分布。$P(n;mu)=\frac{\mu^{n}e^{-\mu}}{n!}$。 电子的倍增放大过程，由于~\texttt{PMT}~自身的电荷分辨，可以用一个高斯分布描述。实际的PMT响应的描述可以表示成如下模式：
 
-\section{系统要求}
+这个模型被用到Rolling Gain的Fit当中。一个好的Fit结果需要满足一下条件:
+Root Fit的状态为成功。chi2 除以ndf需要小于10. 刻度出来的增益常数在【6.80】 的范围内，并且在边界内。Fit结果的误差需要合理，通常要求小于10。gain 的sigma要求小于gain 值得1/3. gain sigma的绝对值在【1,30】的范围内。
+图图
 
-\texttt{ucasthesis}宏包可以在目前大多数的~\TeX{}~系统中使用，例如~C\TeX{}、MiK\TeX{}、\TeX{}Live。考虑到大多数用户将是~Windows~使用者，推荐安装最新的~C\TeX{}~完整版套装，C\TeX{}~完整版套装中包含了本模板中出的各类宏包，用户无需额外的设置即可使用。 \texttt{ucasthesis}~宏包通过~\texttt{ctexbook}~宏包来获得中文支持。
 
-\section{问题反馈}
 
-\begin{center}
-莫晃锐 (mohuangrui) \quad mohuangrui@gmail.com
-\end{center}
 
-欢迎大家反馈自己的使用情况，使我们可以不断改进宏包。
+得到刻度常数以后，需要更新刻度参数表。其基本流程如下
+首先在本底拷贝一个offline database的副本。往本底副本数据库里插入刻度参数。对本底副本里插入的刻度参数做有效性检验。联系负责人，更新官方离线数据库。
+除了提供增益刻度参数外，Rolling Gain还提供了除是用强制触发计算外的另外一种计算方法。暗噪声窗口为1070到1170，共100个TDC，转换为ns为1.5625ns。然后使用暗噪声窗口内的总hit数除以暗噪声窗口长度，即可得到暗噪声率。该方法与强制触发方法结果大致相同。
+图图图
+\texttt{ucasthesis}宏包可以在目前大多数的~\TeX{}~系统中使用，例如~C\TeX{}、MiK\TeX{}、\TeX{}Live。考虑到大多数用户将是~Windows~ 使用者，推荐安装最新的~C\TeX{}~完整版套装，C\TeX{}~ 完整版套装中包含了本模板中出的各类宏包，用户无需额外的设置即可使用。 \texttt{ucasthesis}~宏包通过~\texttt{ctexbook}~宏包来获得中文支持。
+\section{大亚湾中心探测器PMT时间刻度}
+TDC是一种时间幅度转换器件。一旦信号到达该通道并且通过了甄别器设定的阈值，TDC开始计时。接收到触发信号时停止，因此，TDC记录的时间为停止触发信号的时间减去信号开始的时间。大亚湾的PMT的时间刻度主要是时间漂移（timeoffset）刻度和timewalk刻度。对于一个PMT来说：$ T(TDC)=T0+Ttof+T(offset)+T(timewalk) $ 由于T(timewalk)较小，所以$T(offset)=T(Tdc)-T0-Ttof$.T0的给出方法有两种：使用reference channel 的读数，或者是所有channel Tdc读数的中位数。\ref{fig:tdc_res}
+\begin{verbatim}
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\textwidth]{HC_OASPL_A}
+    \caption{}
+    \label{fig:tdc1}
+  \end{subfigure}%
+  ~%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\textwidth]{HC_OASPL_B}
+    \caption{}
+    \label{fig:tdc2}
+  \end{subfigure}
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\textwidth]{HC_OASPL_C}
+    \caption{}
+    \label{fig:tdc3}
+  \end{subfigure}%
+  ~%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\textwidth]{HC_OASPL_D}
+    \caption{}
+    \label{fig:tdc4}
+  \end{subfigure}
+  \caption{总声压级。（a）$Tdc offset calibration constants(ns) in DayaBayAD1 by reference channel$，（b）$Tdc offset calibration constants(ns) in DayaBayAD3 by reference channel$，（c）$Tdc offset calibration constants(ns) in DayaBayAD1 by median$，（d）$Tdc offset calibration constants(ns) in DayaBayAD2 by median$}
+  \label{fig:tdc_res}
+\end{figure}
+\end{verbatim}
+另外还需要做PMT的时幅漂移修正。$T(timewalk)=T（TDC）-Ttof-T0-T（offset）$。减去T0，Ttof和offset 刻度参数后的得到的calibTime
+与Adc的二维Map投影成单值关系，然后做拟合。目前的拟合函数改为：$ y=[0]+[1]*log(x)+[2]*log(x)*log(x)+[3]*log(x)*log(x)*log(x) $ . 一组经验的取值为: p0=-1284.02 p1=558.783 p2=-77.6985 p3=3.59324。
+
+时间刻度参数的检查。利用不同强度的LED刻度run，以及在掺Gd液闪区，和白油区的run来分别检查。定义corrected time $Tcorr=T（TDC）-Ttof-T0-T（offset）-T(timewalk) $ 检查其分布的RMS值得大小。其流程是：
+1）获得Adc，Tdc读数（cut条件Tdc>900，<1100）
+2） 从数据库中读PMT几何位置，并根据发光源LED的位置，计算出飞行时间（根据DetId和Svcmode）
+3） 从数据库中读Tdc Offset参数
+4） 由Adc读数计算timewalk（hard code）
+5） 获得corrected time 值
+经过timeoffset及T0和Ttof修正的结果：
+
+\section{中子俘获时间的研究}
+掺Gd液体闪烁体探测器长时间运行时，Gd络合物析出的风险。中子可以在H和Gd上俘获。在H上的平均俘获时间和在Gd上的平均俘获时间分别是200微秒和30微秒。因此我们可以通过研究不同时间段的种子俘获时间，来监测不同时间段的Gd的比例。在大亚湾液体闪烁体中，大致存在三种中子的来源。一是：来自IBD反应的中子，一是来自刻度源的中子，另一是来自宇宙线muon引起的spallation 反应带来的中子。种子俘获时间的拟合通常使用两种方法：单指数+常数，双指数+常数。在使用单指数加常数模型时，需要注意的是，时间拟合区间最好从12微秒开始，以避开中子慢化时间的影响。
+图图图
+
+
+
+散列中子由于数目多，并且分布相对均匀，是一种很好的刻度源。散列中子的挑选方法是：
+挑选ADmuon后20到200微秒内的事例。并且减去本底的时间谱。本底时间谱的获得可以通过距离ADmuon后220到400微秒的事例得到。并且为了得到在纯粹的在Gd上俘获的中，还需要加上能量和有效体积cut。其中能量cut为6到12MeV，有效体积cut为要求事例顶点在一个半径小于1.4m，高度小于1.4m的圆柱内。
+
+得到中子的俘获时间后，就可以拿复活时间来限制Gd的浓度了。其中一个简单的对应关系如下图：从图中可以看出，由于中子俘获时间在很长时间范围内的变化小于0.4微秒，那么我们可以时候响应地Gd浓度变化应该小于0.002\%。并且通过假设检验可以进一步检验在显著性水平0.05 上，中子的俘获时间在误差范围内没有发生变化，也即没有发生Gd析出。
+
+
+
+\section{新型MCP-PMT测试}
+
+
