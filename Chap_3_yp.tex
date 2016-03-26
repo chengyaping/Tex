@@ -1,91 +1,528 @@
 
 \chapter{光电倍增管的刻度及测试}
 \label{chap:chap3}
-在中微子实验中，闪烁体或水通常被用于建造大型中微子探测器，需要使用数以万计的光电倍增管~\textt{PMT}~探测闪烁光或切伦科夫光。当光打到置于真空中的金属或者半导体上时，电子就会从其表面发射到真空中，被称为光电效应。%pmt_handbook
+在中微子实验中，闪烁体或水通常被用于建造大型中微子探测器，需要使用数以万计的光电倍增管~PMT~探测闪烁光或切伦科夫光。当光打到置于真空中的金属或者半导体上时，电子就会从其表面发射到真空中，被称为光电效应。%pmt_handbook
 光电倍增管就是基于光电效应的一种光电转换器件。由于PMT是一种无损探测器件，并且具有响应速度快，灵敏度高等优点，除了高能物理外，还被广泛运用到医学设备以及工业设备中。
 
 \numberwithin{equation}{section}
 
 \section{大亚湾中心探测器PMT增益刻度}
-大亚湾实验中用的PMT增益刻度方法有两种，一种是通过调节驱动~\texttt{LED}~的电压，使~\texttt{LED}~发出单光子，单光子打到~\textt{PMT}~上，从而研究~\textt{PMT}~单光子响应的~\texttt{LED}~ 增益刻度方法。这种方法依赖与~\textt{LED}~的精细调节，而且需要牺牲物理取数时间，专门做这些增益刻度~run~。另一种使用来自非光源的单光电子进行刻度的~\texttt{Rolling Gain}~ 刻度方法。使用的单光电子主要来自~\textt{PMT}~的暗噪声以及随机触发数据。这种方法不需要~\textt{LED}~,而且在物理取数的同时，可以得到刻度数据，提供了~\textt{PMT}~暗噪声率的在线监测方法，对于在线实时处理数据也有好处。做~\texttt{Rolling Gain}~刻度的第一步是刻度数据的挑选。下面是被挑选光子需要满足的一些条件：
+\subsection{Rolling Gain 刻度方法介绍}
+大亚湾实验中用的PMT增益刻度方法有两种，一种是通过调节驱动~LED~的电压，使~LED~发出单光子，单光子打到
+~PMT~上，从而研究~PMT~单光子响应的~LED~ 增益刻度方法。这种方法依赖与~LED~的精细调节，而且需要牺牲物理
+取数时间，专门做这些增益刻度~run~。另一种使用来自非光源的单光电子进行刻度的~Rolling Gain~ 刻度方法。使
+用的单光电子主要来自~PMT~的暗噪声以及随机触发数据。这种方法不需要~LED~,而且在物理取数的同时，可以得到
+刻度数据，提供了~PMT~暗噪声率的在线监测方法，对于在线实时处理数据也有好处。做~Rolling Gain~ 刻度的第一
+步是刻度数据的挑选。下面是被挑选光子需要满足的一些条件：
 \begin{itemize}
 \item 距离前一个触发的时间间隔大于20$mu$s
 \item 该Hit的peak cycle 在【4,6】之间
 \item 每个PMT通道只有一个Hit
 \item ADC工作在精细量程区域
-\item 电子学基线恢复良好，要求~\left|preAdc-avePed\right|~<20
+\item 电子学基线恢复良好，要求$ \left \| preAdc-avePed \right \| <20 $
 \item 需要去除40MHz的来自电子学时钟的噪声。方法是：(Tdc-15)\%16>=4
 \item TDC位于噪声窗口，及大于1070。另要求噪声窗口内的~hit multiplicity~ 小于3
 \end{itemize}
-Hit挑选完之后，需要使用~\texttt{PMT}~单光子相应的~Model~去对数据进行~Fit~。 这里使用的模型来自\verb|\citet{BELLAMY1994468}|。在该模型中，光电倍增管被划分为两个相对独立的功能模块。一是模拟光阴极的光子电子转换功能。另一是描述打拿级系统对原初光电子的倍增放大过程。光子转换成光电子的效率由PMT的量子效率决定。考虑到PMT 的收集效率，假设由第一打拿级搜集到的平均光电子数目为~$mu$~,则实际观测到的光电子数目~$n$~与~$mu$~满足泊松分布。$P(n;mu)=\frac{\mu^{n}e^{-\mu}}{n!}$。 电子的倍增放大过程，由于~\texttt{PMT}~自身的电荷分辨，可以用一个高斯分布描述。实际的PMT响应的描述可以表示成如下模式：
-
-这个模型被用到Rolling Gain的Fit当中。一个好的Fit结果需要满足一下条件:
-Root Fit的状态为成功。chi2 除以ndf需要小于10. 刻度出来的增益常数在【6.80】 的范围内，并且在边界内。Fit结果的误差需要合理，通常要求小于10。gain 的sigma要求小于gain 值得1/3. gain sigma的绝对值在【1,30】的范围内。
-图图
-
-
-
-
-得到刻度常数以后，需要更新刻度参数表。其基本流程如下
+Hit挑选完之后，需要使用~PMT~单光子相应的~Model~去对数据进行~Fit~。 这里使用的模型来自
+\citep{bellamy1994absolute}。在该模型中，光电倍增管被划分为两个相对独立的功能模块。一是模拟光阴极的光子电
+子转换功能。另一是描述打拿级系统对原初光电子的倍增放大过程。光子转换成光电子的效率由PMT的量子效率决
+ 定。考虑到PMT 的收集效率，假设由第一打拿级搜集到的平均光电子数目为~$\mu$~,则实际观测到的光电子数目
+ ~$n$~与~$\mu$~满足泊松分布。$P(n;mu)=\frac{\mu^{n}e^{-\mu}}{n!}$。 电子的倍增放大过程，由于
+ ~PMT~自身的电荷分辨，可以用一个高斯分布描述。实际的PMT响应的描述可以表示成如下模式~\ref{eq:model}~。
+ \begin{eqnarray} \label{eq:model}
+ S_{real}(x) &=& \int S_{ideal}(x^{\prime})B(x-x^{\prime})dx^{\prime}\\
+ S_{ideal}(x) &=& P(n;\mu)\otimes G_n(x) \nonumber \\
+ &=& \sum_{n=0}{\infty} \frac{{\mu}^n e^{-\mu}}{n!}\frac{1}{\sigma_1\sqrt{2n\pi}}exp(-\frac{{(x-nQ_1)}^2}{2n{\sigma_1}^2}) \\
+B(x)&=&\frac{1-w}{\sigma_0\sqrt{2\pi}}exp(-\frac{x^2}{2\sigma_0^2})+w\theta (x) \alpha exp(-\alpha x ) \end{eqnarray} 
+  这个模型被用到~Rolling Gain~的~Fit~当中。一个好的~Fit~结果需要满足一下条件:
+~Root Fit~的状态为成功。~chi2 ~除以~ndf~需要小于~10~。 刻度出来的增益常数在[6,80]的范围内，并且在边界
+内。~Fit ~结果的误差需要合理，通常要求小于10。~gain~ 的sigma要求小于gain 值得1/3. gain sigma的绝对值在
+[1,30] 的范围内。~Fit~的示例如图~\ref{fig:rg}~。
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/rg}
+    \caption{~Rolling Gain~ 刻度示例}
+  \label{fig:rg}
+\end{figure}
+得到刻度常数以后，需要更新刻度参数表。其基本流程如下~\ref{fig:db}~
 首先在本底拷贝一个offline database的副本。往本底副本数据库里插入刻度参数。对本底副本里插入的刻度参数做有效性检验。联系负责人，更新官方离线数据库。
-除了提供增益刻度参数外，Rolling Gain还提供了除是用强制触发计算外的另外一种计算方法。暗噪声窗口为1070到1170，共100个TDC，转换为ns为1.5625ns。然后使用暗噪声窗口内的总hit数除以暗噪声窗口长度，即可得到暗噪声率。该方法与强制触发方法结果大致相同。
-图图图
-\texttt{ucasthesis}宏包可以在目前大多数的~\TeX{}~系统中使用，例如~C\TeX{}、MiK\TeX{}、\TeX{}Live。考虑到大多数用户将是~Windows~ 使用者，推荐安装最新的~C\TeX{}~完整版套装，C\TeX{}~ 完整版套装中包含了本模板中出的各类宏包，用户无需额外的设置即可使用。 \texttt{ucasthesis}~宏包通过~\texttt{ctexbook}~宏包来获得中文支持。
-\section{大亚湾中心探测器PMT时间刻度}
-TDC是一种时间幅度转换器件。一旦信号到达该通道并且通过了甄别器设定的阈值，TDC开始计时。接收到触发信号时停止，因此，TDC记录的时间为停止触发信号的时间减去信号开始的时间。大亚湾的PMT的时间刻度主要是时间漂移（timeoffset）刻度和timewalk刻度。对于一个PMT来说：$ T(TDC)=T0+Ttof+T(offset)+T(timewalk) $ 由于T(timewalk)较小，所以$T(offset)=T(Tdc)-T0-Ttof$.T0的给出方法有两种：使用reference channel 的读数，或者是所有channel Tdc读数的中位数。\ref{fig:tdc_res}
-\begin{verbatim}
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{HC_OASPL_A}
-    \caption{}
-    \label{fig:tdc1}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/db1}
+    \caption{建立本地副本}
+    \label{fig:db_1}
   \end{subfigure}%
-  ~%add desired spacing
+  \quad\quad\quad\quad%add desired spacing
   \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{HC_OASPL_B}
-    \caption{}
-    \label{fig:tdc2}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/db2}
+    \caption{检验上传}
+    \label{fig:db_2}
   \end{subfigure}
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{HC_OASPL_C}
-    \caption{}
-    \label{fig:tdc3}
-  \end{subfigure}%
-  ~%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{HC_OASPL_D}
-    \caption{}
-    \label{fig:tdc4}
-  \end{subfigure}
-  \caption{总声压级。（a）$Tdc offset calibration constants(ns) in DayaBayAD1 by reference channel$，（b）$Tdc offset calibration constants(ns) in DayaBayAD3 by reference channel$，（c）$Tdc offset calibration constants(ns) in DayaBayAD1 by median$，（d）$Tdc offset calibration constants(ns) in DayaBayAD2 by median$}
-  \label{fig:tdc_res}
+  \caption{刻度参数数据库操作}
+  \label{fig:db}
 \end{figure}
-\end{verbatim}
-另外还需要做PMT的时幅漂移修正。$T(timewalk)=T（TDC）-Ttof-T0-T（offset）$。减去T0，Ttof和offset 刻度参数后的得到的calibTime
-与Adc的二维Map投影成单值关系，然后做拟合。目前的拟合函数改为：$ y=[0]+[1]*log(x)+[2]*log(x)*log(x)+[3]*log(x)*log(x)*log(x) $ . 一组经验的取值为: p0=-1284.02 p1=558.783 p2=-77.6985 p3=3.59324。
 
-时间刻度参数的检查。利用不同强度的LED刻度run，以及在掺Gd液闪区，和白油区的run来分别检查。定义corrected time $Tcorr=T（TDC）-Ttof-T0-T（offset）-T(timewalk) $ 检查其分布的RMS值得大小。其流程是：
-1）获得Adc，Tdc读数（cut条件Tdc>900，<1100）
-2） 从数据库中读PMT几何位置，并根据发光源LED的位置，计算出飞行时间（根据DetId和Svcmode）
-3） 从数据库中读Tdc Offset参数
-4） 由Adc读数计算timewalk（hard code）
-5） 获得corrected time 值
-经过timeoffset及T0和Ttof修正的结果：
+除了提供增益刻度参数外，~Rolling Gain~还提供了暗噪声率除强制触发外的另外一种计算方法。暗噪声窗口为~TDC~从1070 到1170，共100个TDC，1个~TDC~转换为ns为1.5625ns。然后使用暗噪声窗口内的总~hit~数除以暗噪声窗口长度，即可得到暗噪声率。该方法与强制触发方法结果大致相同。在大亚湾在线监测的~PQM~图上，有时暗噪声率会超过100~KHz~\ref{fig:darkrate_1}，实际的暗噪声率应该在~10 KHz~的数量级上，使用~Rolling Gain~方法给出的暗噪声率为~\ref{fig:darkrate_2}，接近真实水平。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/darkrate1}
+    \caption{某段时间~PQM~上错误暗噪声率}
+    \label{fig:darkrate_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/darkrate2}
+    \caption{~Rolling Gain~给出的暗噪声率 }
+    \label{fig:darkrate_2}
+  \end{subfigure}
+  \caption{~Rolling Gain~方法分析暗噪声率}
+  \label{fig:darkrate}
+\end{figure}
+\subsection{~PMT~增益与~VME~机箱温度关系研究}
+为了搞清楚~PMT~增益与VME机箱温度是否有长期关联性，我们做了该研究。~PMT~的增益数据，通过读数据库中的~CalibPmtFineGain~获得，通过CalibPmtFineGainVld来挑选EH1,AD1的~Rolling~Gain~数据增益，同时需要加入一些质量控制，比如衡量增益拟合优度的量要求小于3等。最终我们挑选了从2011年8月24号至2013年3月16号的2095个整个AD192个~PMT~平均过后的增益数据。~VME~机箱上共有7个温度探头，温度可以通过DCS历史数据获得，我们取得了从2011-07-02到2013-03-15的每天的平均温度。我们将同一天的~VME~机箱温度和~Rolling~ Gain~增益数据作为横纵坐标的一个点填到~Graph~当中，结果如图~\ref{fig:vmeT}~。通过~Excel~分析出机箱温度和~PMT~增益的关联系数为-0.927，负关联明显。
+
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/vmet}
+    \caption{~PMT~增益与~VME~机箱温度的关系}
+  \label{fig:vmeT}
+\end{figure}
+
+
+\subsection{~PMT~增益漂移一个可能解释}
+我们通过~LED~增益刻度和~~刻度均发现大亚湾~PMT~的增益在缓慢上升，大约增加了10\%,见图~\ref{fig:gaindrift}~。
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/gaindrift}
+    \caption{ 大亚湾~PMT~增益随时间的漂移}
+  \label{fig:gaindrift}
+\end{figure}
+
+
+
+
+~NIM~上的一篇文章~\citep{aiello2013aging}~,提出的一种理论可以解释这一现象。对于通常的~PMT~双碱光阴极，提出了两种老化理论~\ref{fig:model_1}和~\ref{fig:model_2}。随着~PMT~光阴极的老化，对应着~PMT~阳极灵敏度及输出电流的大小，影响观测到的~PMT~的增益。图~\ref{fig:gain}~展示了随着阳极电荷的积累，单光子波形的电荷幅度的变化。对于一个新的~PMT~来说，其增益是先上升(新的光阴极镀层过厚，随着电子的轰击，镀层变薄，更利于二次电子的发射)，后下降的(光阴极结构受损，二次电子发射不足)。为了检验这一理论，我们需要知道大亚湾~PMT~阳极积累电荷的多少。首先通过估算计算。大亚湾~PMT~阳极电流约为100~$\mu A$~，则根据其运行时间，可以推算出阳极总电荷约为7000库伦。按照图~\ref{fig:gain}~的结论，应该处于增益下降阶段。另一种方法是，在我们的探测器中，有一些旧的使用时间比较长的~Marco~PMT，被安装在水池，根据~\ref{fig:marco}~,我们去研究单个~PMT~的增益变化。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/model1}
+    \caption{up-drift mode}
+    \label{fig:model_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/model1}
+    \caption{down-drift mode}
+    \label{fig:model_2}
+  \end{subfigure}
+\caption{~PMT~光阴极老化模式}
+  \label{fig:model}
+\end{figure}
+
+
+
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/gain}
+    \caption{ ~PMT~增益随阳极总电荷的变化情况}
+  \label{fig:gain}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/marco}
+    \caption{~Marco ~PMT~在水池中的分布}
+  \label{fig:marco}
+\end{figure}
+
+
+
+我们检查了60个~marco~PMT~和170个滨松~PMT~增益随时间的变化。结果发现，对于老的~Marco~PMT~来说，其增益保持稳定或者缓慢下降。对于滨松~PMT~来说，其大部分增益上升，只有一小部分保持稳定。图~\ref{fig:gainpmt1}~ 和~\ref{fig:gainpmt2}~分别是同一个channel上滨松和marco ~PMT~的增益变化，其在探测器上的位置接近，因此~hit~occupancy~近似，但明显表现出两种趋势。对于长期运行的中微子实验，这是一种值得注意的现象。
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/b1}
+    \caption{}
+    \label{fig:gainpmt1_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/b1}
+    \caption{}
+    \label{fig:gainpmt1_2}
+  \end{subfigure}
+   \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/b3}
+    \caption{}
+    \label{fig:gainpmt1_3}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/b4}
+    \caption{}
+    \label{fig:gainpmt1_4}
+  \end{subfigure}
+  \caption{滨松~PMT~增益随时间的变化}
+  \label{fig:gainpmt1}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/m1}
+    \caption{}
+    \label{fig:gainpmt2_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/m2}
+    \caption{}
+    \label{fig:gainpmt2_2}
+  \end{subfigure}
+   \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/m3}
+    \caption{}
+    \label{fig:gainpmt2_3}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*3/2]{D:/Thesis/ucasthesis-master/Img/chap3/m4}
+    \caption{}
+    \label{fig:gainpmt2_4}
+  \end{subfigure}
+  \caption{Marco~PMT~增益随时间的变化}
+  \label{fig:gainpmt2}
+\end{figure}
+
+
+\section{大亚湾中心探测器PMT时间刻度参数检查}
+TDC是一种时间幅度转换器件。一旦信号到达该通道并且通过了甄别器设定的阈值，TDC开始计时。接收到触发信号时停止，因此，TDC记录的时间为停止触发信号的时间减去信号开始的时间。大亚湾的PMT的时间刻度主要是时间漂移（timeoffset）刻度和timewalk刻度。对于一个PMT来说：$ T(TDC)=T0+Ttof+T(offset)+T(timewalk) $ 。大亚湾~PMT~目前使用的时间刻度方法为~AD~Timing~。对于一个PMT，使用6个刻度参数来刻度时间，其模型为~\ref{eq:tcor}~。其中x表示电荷。刻度参数通过对图~\ref{fig:tcor}~拟合得到。
+\begin{eqnarray}\label{eq:tcor}
+f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
+\end{eqnarray}
+
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/tcor}
+    \caption{~PMT~TDC与ADC二维关系}
+  \label{fig:tcor}
+\end{figure}
+我们需要对其时间刻度参数进行检查。利用ACUA ~Z~ 为0位置不同强度的LED刻度run检查，LED驱动电压从-7200~mv~ 到-5400~mv~。定义corrected time $Tcorr=T （TDC）-Ttof-T0-T（offset）-T(timewalk) $ 检查其分布的RMS值得大小。其流程是：
+ \begin{enumerate}
+\item 使用和LED 发光同步的 B18C16 通道作为参考通道，给出参考时间 
+\item 由NuWa下的pmtGeomSvc读PMT几何位置，并根据发光源LED的位置，计算出飞行时间
+\item 从数据库TimingCalibData表中读时间刻度参数
+\item 由Adc读数计算修正时间
+\end{enumerate}
+根据图~\ref{fig:tres}~，以及更多不同~LED~光强下，我们看到修正时间的~RMS~一般都小于2ns，因此新的AD Timing刻度参数是非常有效的。
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/tres1}
+    \caption{高光强下时间刻度参数检查}
+    \label{fig:tres_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/tres2}
+    \caption{ 低光强下时间刻度参数检查}
+    \label{fig:tres_2}
+  \end{subfigure}
+  \caption{~AD Timing~时间刻度参数检查}
+  \label{fig:tres}
+\end{figure}
+
+
 
 \section{中子俘获时间的研究}
-掺Gd液体闪烁体探测器长时间运行时，Gd络合物析出的风险。中子可以在H和Gd上俘获。在H上的平均俘获时间和在Gd上的平均俘获时间分别是200微秒和30微秒。因此我们可以通过研究不同时间段的种子俘获时间，来监测不同时间段的Gd的比例。在大亚湾液体闪烁体中，大致存在三种中子的来源。一是：来自IBD反应的中子，一是来自刻度源的中子，另一是来自宇宙线muon引起的spallation 反应带来的中子。种子俘获时间的拟合通常使用两种方法：单指数+常数，双指数+常数。在使用单指数加常数模型时，需要注意的是，时间拟合区间最好从12微秒开始，以避开中子慢化时间的影响。
-图图图
+\subsection{利用中子俘获时间研究液闪中~Gd~浓度}
+掺Gd液体闪烁体探测器长时间运行时，Gd络合物析出的风险。中子可以在H和Gd上俘获。在H上的平均俘获时间和在Gd上的平均俘获时间分别是200微秒和30微秒。因此我们可以通过研究不同时间段的种子俘获时间，来监测不同时间段的Gd的比例。由图~\ref{fig:gds}~可以根据对应的中子俘获时间的变化，得到~Gd~浓度的变化。
 
 
 
+
+
+\subsection{分析中使用的中子源}
+在大亚湾液体闪烁体中，大致存在三种中子的来源。一是：来自IBD反应的中子，一是来自刻度源的中子，另一是来自宇宙线muon引起的spallation 反应带来的中子。
+使用的IBD中子来自P12A数据，覆盖时间从2011年9月23好开始2012年7月30号，除了通常的IBD挑选条件外，外加了中子俘获顶点的在探测器中心1m球内的~cut~。以及快慢信号距离小于1m的~cut~。
+探测器中存在的刻度中子源有 ~AmC~,~AmBe~,~PuC~中子源。
 散列中子由于数目多，并且分布相对均匀，是一种很好的刻度源。散列中子的挑选方法是：
-挑选ADmuon后20到200微秒内的事例。并且减去本底的时间谱。本底时间谱的获得可以通过距离ADmuon后220到400微秒的事例得到。并且为了得到在纯粹的在Gd上俘获的中，还需要加上能量和有效体积cut。其中能量cut为6到12MeV，有效体积cut为要求事例顶点在一个半径小于1.4m，高度小于1.4m的圆柱内。
+ \begin{enumerate}
+ \item 本底时间谱的获得可以通过距离ADmuon后220到400微秒的事例得到
+ \item 挑选~ADmuon~后20到200微秒内的事例,需要减去本底的时间谱 
+ \item 能量cut为6到12MeV，
+ \item 事例顶点在一个半径小于1.4m，高度小于1.4m的圆柱内
+  \end{enumerate}
+\subsection{中子俘获时间的拟合}
+中子俘获时间的拟合通常使用两种方法：单指数+常数，双指数+ 常数。在使用单指数加常数模型时，需要注意的是，时间拟合区间最好从12微秒开始，以避开中子慢化时间的影响。图~\ref{fig:ibdexp_1}~ 和~\ref{fig:ibdexp_2}~分别为单指数拟合和双值拟合情况下，~EH1~AD1~和~AD2~的中子俘获时间。下方面板为AD1和AD2中子俘获时间的差异。IBD中子拟合结果显示，中子俘获时间随时间变化的差异在0.5微秒范围内。
 
-得到中子的俘获时间后，就可以拿复活时间来限制Gd的浓度了。其中一个简单的对应关系如下图：从图中可以看出，由于中子俘获时间在很长时间范围内的变化小于0.4微秒，那么我们可以时候响应地Gd浓度变化应该小于0.002\%。并且通过假设检验可以进一步检验在显著性水平0.05 上，中子的俘获时间在误差范围内没有发生变化，也即没有发生Gd析出。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/ibdexp1}
+    \caption{单指数}
+    \label{fig:ibdexp_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/ibdexp2}
+    \caption{ 双指数}
+    \label{fig:ibdexp_2}
+  \end{subfigure}
+  \caption{ 单指数和双指数拟合中子俘获时间}
+  \label{fig:ibdexp}
+\end{figure}
+刻度源中子和散裂中子俘获时间拟合结果分别如图~\ref{fig:amc}~ 和~\ref{fig:sn}~ 所示。
+得到中子的俘获时间后，就可以拿复活时间来限制Gd的浓度了。根据图~\ref{fig:gds}~的对应关系，从图中可以看出，由于中子俘获时间在很长时间范围内的变化小于0.4微秒，那么我们可以时候响应地Gd浓度变化应该小于0.002\%。并且通过假设检验可以进一步检验在显著性水平0.05 上，中子的俘获时间在误差范围内没有发生变化，也即没有发生~Gd~析出。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/amc1}
+    \caption{单指数}
+    \label{fig:amc_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/amc2}
+    \caption{ 双指数}
+    \label{fig:amc_2}
+  \end{subfigure}
+  \caption{ 刻度源中子俘获时间拟合结果}
+  \label{fig:amc}
+\end{figure}
 
 
+ \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/sn}
+    \caption{散裂中子俘获时间拟合结果}
+  \label{fig:sn}
+\end{figure}
 
 \section{新型MCP-PMT测试}
+\subsection{后脉冲概念及研究意义}
+出现在最初的光电信号一段时间之后的脉冲，如下图~\ref{fig:defination}~ ，幅度可能比主脉冲大，是一种非常讨厌的本底噪声。打拿型~PMT~后脉冲可能的来源：
+\begin{enumerate}
+\item 从光阴极到第一打拿极的路径上被加速的光电子使PMT内残余气体电离，电离出来的阳离子向光阴极漂，打在光阴极上产生后脉冲。
+\item 打拿极上向后散射的电子回到第一打拿极，造成后脉冲。
+ \end{enumerate} 
+ 
+ \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/defination}
+    \caption{~PMT~前后脉冲定义}
+  \label{fig:defination}
+\end{figure}
+ 
+ 
+  
+  图~\ref{fig:afterpulse}~ 为~PMT~DataSheet~ 上的后脉冲数据。对于~DayaBay~ 实验来说，离主脉冲近（几十~ns~）的后脉冲，可能会被~FEE~ 积分进去，从而影响快信号能谱。电子学模拟目前采用的后脉冲模型时间窗口为主脉冲后[500ns, 15000ns], 幅度为单光电子。这与我们的测试结果不同，可以将新的测试结果放入模拟。考虑到未来~JUNO~ 实验采用高速波形采样技术，后脉冲可能会影响能量重建。
+
+
+
+ \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/afterpulse}
+    \caption{~PMT~手册上给出的后脉冲数据}
+  \label{fig:afterpulse}
+\end{figure}
+
+
+
+
+
+\subsection{测试方法调研}
+\subsubsection{~Dayabay~测试方法介绍}
+大亚湾实验后脉冲测试使用一个定标器，通过计数主脉冲后100ns-20μs期间的~PMT~的~hit~个数来完成后脉冲测试。测试图为~\ref{fig:dayabay}~。 测试结果为~\ref{fig:dyb_1}~和~\ref{fig:dyb_2}~。左图为测试得到的后脉冲的时间结构，右图为后脉冲率测试结果。该次测试中，后脉冲率定义为~\ref{eq:apr1}~。当主脉冲小于400个pe时，测试的结果为后脉冲率$ APR=0.207+0.017 \times Q $ ,其中Q以pe单位。
+\begin{eqnarray}\label{eq:apr1}
+after-pulse fraction=\frac{channel 1 count -dark pulse count}{channel 0 count}
+\end{eqnarray}
+
+ \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/dayabay}
+    \caption{大亚湾定标器测试~PMT~后脉冲方法}
+  \label{fig:dayabay}
+\end{figure}
+
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/dyb2}
+    \caption{后脉冲时间结构测试结果}
+    \label{fig:dyb_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/dyb1}
+    \caption{后脉冲率测试结果}
+    \label{fig:dyb_2}
+  \end{subfigure}
+  \caption{大亚湾~PMT~测试结果}
+  \label{fig:dyb}
+\end{figure}
+
+
+\subsubsection{~Reno~及~KM3NetT~测试方法介绍}
+~Reno~测试使用~LED~光源点亮~PMT~,记录300 ns 到15 $\mu$s范围内的PMT Hit的个数。~KM3NetT~实验使用激光点亮~PMT~，使用示波器记录20$\mu$s的信号，其测试示意图及测试结果如图~\ref{fig:km3}~和~\ref{fig:km3r}~所示。
+ \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/km3}
+    \caption{~KM3NetT~测试~PMT~后脉冲方法}
+  \label{fig:km3}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/km3r1}
+    \caption{快后脉冲测试结果}
+    \label{fig:km3r_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/km3r2}
+    \caption{后脉冲测试结果}
+    \label{fig:km3r_2}
+  \end{subfigure}
+  \caption{~KM3NetT~~PMT~后脉冲测试结果}
+  \label{fig:km3r}
+\end{figure}
+
+\subsection{基于~Desktop~FADC~的快速后脉冲测试方法}
+\subsubsection{高速后脉冲测试方法介绍}
+我们使用ps激光器经过衰减后调出单光子或多光子状态。使用激光器的优点是同步信号与光信号时间晃动在几十ps量极,可以准确知道光子到达~pmt~的时间。缺点:~pmt~输出波形的时间会受到~pmt~渡越时间的影响,激光器电源会引入非常大的电磁干扰。测试使用1 ~GHz~采样率的便携式~FADC~。调节PMT高压（~SY1527~高压模块），使PMT增益约为1E7。 信号发生器门信号\~50~ns~宽，PMT的信号在门内，这样可以减少暗噪声的过阈触发。调节信号发生器，型号AFG3102，分别给出单光子，  多光子的信号。另外一种可选择方案是使用示波器，型号~Lecroy~ WavePro ~7100~。 示波器和~CANE~FADC~对比如~\ref{tab:dtwa}~。因此我们最终选择使用DT。
+
+\begin{table}[htbp]
+\centering  % 表居中
+\begin{tabular}{lcc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
+\hline
+测试设备 &DT5751 &WavePro 7100 \\ \hline
+\\  采样率&1/(GHz/s) &10/(GHz/s) 
+\\  内存 &1.835/Mpts &1/Mpts
+\\  死时间& 0$\mu$s &小于6$\mu$s
+\\   带宽 &500/MHz &1/GHz
+\\   灵敏度(LSB)&1/(mV/div)& 2/(mV/div)
+\\  重量(便携性)& 680克 & 18Kg
+\\ 价格& 5万元& 15万元
+\\ \hline
+\end{tabular}
+\caption{DT5751与~Lecroy~ WavePro ~7100~对比}
+\label{tab:dtwa}
+\end{table}
+
+为了准确给出主脉冲以及后脉冲的大小，我们需要做单光子刻度，方法是调节~LD~的~intensity~为单光子， 然后通过拟合得到单光子的数值积分电荷。为了方便分析，我们将事例号，整个20us内波形的个数，每个波形的幅度，面积，开始时间，结束时间，峰值时间记录成~ROOT~Tree~的形式。用于电荷刻度的单光子事例挑选方法是：根据信号产生器门信号的位置，选取第一个~hit~在时间窗口[280ns，330ns]里的~hit~。积分电荷谱的拟合使用与大亚湾Rolling Gain刻度同样的PMT 响应模型。R5912 ~SPE的积分电荷为：0.8559；R5912-100型号 为：0.97817。 单光子电荷刻度结果如图~\ref{fig:speQ}~。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/speQ1}
+    \caption{R5912单光子电荷刻度 测试结果}
+    \label{fig:speQ_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/speQ2}
+    \caption{R5912-100 单光子电荷刻度 测试结果}
+    \label{fig:speQ_2}
+  \end{subfigure}
+  \caption{FADC单光子电荷刻度结果}
+  \label{fig:speQ}
+\end{figure}
+
+\subsubsection{测试结果}
+我们的测试结果中后脉冲率的定义为：后脉冲个数/主脉冲Pe数。拟合方程：$N^{afterpulse} = P_0 +P_1\times Q^{mainpulse}$。其中P0 可以认为是PMT的暗计数率  P1即为后脉冲率。如果取中间片段的拟合结果：R5912 的后脉冲率为1.79\% ; R5912-100 的后脉冲率为1.336\%。结果如图~\ref{fig:APRR}~所示。
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/APRR1}
+    \caption{R5912后脉冲率 测试结果}
+    \label{fig:APRR_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/APRR2}
+    \caption{R5912-100 后脉冲率 测试结果}
+    \label{fig:APRR_2}
+  \end{subfigure}
+  \caption{后脉冲率测试结果}
+  \label{fig:APRR}
+\end{figure}
+
+
+后脉冲时间分布也是我们关心的一个内容。图~\ref{fig:APT}~展示了两种~PMT~后脉冲的时间结果。通过上图后脉冲出现时间的分析,可以得出如下结论：R5912，R5912-100内残余气体电离后主要出现两种离子，对R5912，这两种离子造成的后脉冲集中出现在主脉冲后1.7us和6.3us。（大亚湾一期采用multi-hit Tdc测量结果为1.6us 和 7us）；对R5912-100，这两种离子造成的后脉冲主要出现在主脉冲后1.5us和7.1us。在我们进行的后脉冲测试中，还存在一种出现的比较快的“后脉冲”，出现在主脉冲后50ns之内。而且非常集中，时间分布的smearing非常小。对R5912，出现比例约为1148/18154=6.3\% ，  对R5912-100，出现的比例约为4900/327601=1.5\%。一种可能的解释：光电子在第一打拿级上被反射（没有出现次级电子发射），回到光阴极后再从新倍增放大。
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/APT1}
+    \caption{R5912后脉冲时间分布}
+    \label{fig:APT_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/APT2}
+    \caption{R5912-100 后脉冲时间分布}
+    \label{fig:APT_2}
+  \end{subfigure}
+  \caption{后脉冲时间结构}
+  \label{fig:APT}
+\end{figure}
+
+
+
+
+图~\ref{fig:TQ}~展示了后脉冲的电荷时间而为分布。后脉冲并不仅仅是单光子，从测试结果看还是有很多高于一个1pe 的后脉冲,对R5912-100 尤其明显。
+图中用红色框框起来的条状部分，是暗噪声，可见暗噪声在整个时间轴上均匀分布，大小为1个pe。
+
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/TQ1}
+    \caption{R5912后脉冲时间电荷分布}
+    \label{fig:TQ_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/TQ2}
+    \caption{R5912-100 后脉冲时间电荷分布}
+    \label{fig:TQ_2}
+  \end{subfigure}
+  \caption{后脉冲时间电荷二维分布}
+  \label{fig:TQ}
+\end{figure}
+
+通过对比后脉冲测试，FADC测试结果与示波器测试结果基本相同，当信号发生器的脉冲频率为1KHz 时，FADC 触发率约为100Hz ，示波器触发率 仅为1Hz。用DT 开展后续测试更节省时间。另外DT由于可以波形取样，因此通过波形分析，可以得到丰富的物理结果，比如可以得到单光子电荷谱，结果如V965类似，~\ref{fig:QDC_1}~。通过使用皮秒激光器，可以分析~PMT~的渡越时间，比如从图~\ref{fig:QDC_2}~可以看出对于R5912来说，其渡越时间约为2.8ns。
+
+
+
+\begin{figure}[!htbp]
+  \centering
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/QDC1}
+    \caption{DT得到的单光子电荷谱}
+    \label{fig:QDC_1}
+  \end{subfigure}%
+  \quad\quad\quad\quad%add desired spacing
+  \begin{subfigure}[b]{\MySubFactor\textwidth}
+    \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap3/QDC2}
+    \caption{DT得到的单光子电荷时间谱}
+    \label{fig:QDC_2}
+  \end{subfigure}
+  \caption{DT采样波形分析的其他结果}
+  \label{fig:QDC}
+\end{figure}
+
 
 
