@@ -1,70 +1,122 @@
 
-\chapter{液闪探测器能量响应电子学部分模拟研究}
+\chapter{光电倍增管的波形重建算法开发及应用}
 \label{chap:chap4}
-
-
-\section{大亚湾电子学非线性测试}
-理解大亚湾探测器的能量响应对于大亚湾的谱分析工作非常重要。粒子在探测器中沉积能量~$E_{true}$~,液闪将沉积能量转换为可见能量~$E_{vis}$~，可见能量被~PMT~探测到，经过刻度和能量重建，~$E_{vis}$~被转换为~$E_{rec}$~。实际上~$E_{rec}$~和~$E_{true}$~并不成正比，这是由于两方面的原因:液闪非线性
-~$\left( \frac{E_{vis}}{E_{true}} \right)$~和电子学非线性
-~$\left( \frac{E_{rec}}{E_{vis}} \right)$~。本人参与电子学非线性的研究。电子学非线性是由液体闪烁体慢成分和前段电子学的共同作用导致的。液闪有快慢成分，图~\ref{fig:lscomp}~，这样有些光子就会发射的比较晚（>100ns）。由于我们的电子学存在过冲，以及重建中只挑选第一个~Hit~,因此随着可见能量的增加，电子学的效率就会下降。通常用~$\frac{E_{vis}}{E_{rec}}=(1-\alpha e^{\frac{E_{rec}}{r}})$~来描述电子学非线性。
-2014年1月份，我们在大亚湾现场开展了电子学非线性测试。本次测试的目的是通过FADC响应来测试FEE的响应到2\%的精度范围内。然后通过蒙特卡洛，将单通道的电子学非线性传传递到整个探测器的能量非线性。我们更换了两块FEE 电路板~\ref{fig:onsite_1}~，使得信号在前放后成形电路前被被一分为二~\ref{fig:onsite_2}~。本人分析了单通道的电子学非线性，结果如图~\ref{fig:mynon}~。可以看到在小于5个pe时，单通道电子学非线性可以达到10\%的程度。
-
+本章节第一部分内容为波形重建算法的开发背景。第二部分内容为波形拟合程序的开发。第三部分内容为该算法与电荷积分方法带来的电荷非线性的比较，以及基于该算法的采样率对时间分辨影响的研究。
+理解反中微子探测器的能量响应是大亚湾的能谱分析工作阶段的重点。其中电子学能量响应是探测器能量响应的重要组成部分（另外一个重要部分是液闪的能量响应）。为了了解和减小电子学能量非线性，自2016年1月份开始，192通道的~Flash-ADC~开始在大亚湾取数。未来江门中微子实验也计划使用~Flash-ADC~波形采样读出。因此需要开发对应的采样波形重建算法。
+现有的文献中很少有关于波形拟合技术的专门论述，只有在少数会议报告中会对该部分内容有简要论述。此外，江门中微子实验计划使用1~GHz~采样率~Flash-ADC~直接对~PMT~输出波形进行采样，波形未经任何成形电路，因此，应对快速变化的波形也是波形拟合算法开发过程中需要解决的一个难点。本文中论述的模板拟合方法，能够灵活处理各种波形，并且通过波形分区域拟合，极大减小了算法运行所需时间。最后一部分内容为算法应用研究，包括模板拟合和电荷积分方法的电荷非线性研究和通过分析模拟波形和实际测试波形，研究1~GHz~和500~MHz~采样率~Flash-ADC~对时间分辨率的影响。
+\section{波形重建算法开发背景}
+\subsection{大亚湾电子学非线性介绍}
+粒子在探测器中沉积能量~$E_{true}$~,液闪将沉积能量转换为可见能量~$E_{vis}$~，可见能量被~PMT~探测到，经过刻度和能量重建，~$E_{vis}$~被转换为~$E_{rec}$~。实际上~$E_{rec}$~和~$E_{true}$~并不成正比，这是由于两方面的原因:液闪非线性和电子学非线性,分别表示如下:
+\begin{eqnarray}
+\label{eq:def}
+Nonlinearity_{  LS}=\left( \frac{E_{vis}}{E_{true}} \right) \quad\quad
+Nonlinearity_{  electronics}=\left( \frac{E_{rec}}{E_{vis}} \right)
+\end{eqnarray}
+本人参与电子学非线性的研究。电子学非线性是由于液体闪烁体慢成分和前端电子学以及离线电荷挑选方法共同作用导致的（参见关于电子学非线性的示意图\ref{fig:lscomp},~Cr~:~Soeren Jetter~）。液闪有约占6\%的慢成分，约有4-5\%的~PMT~击中发生在该~PMT~上最早击中出现时间的100~ns~以后。由于前段电子学的电荷积分窗口约为100~ns~，大于100~ns~的这部分击中不能被积分电路积分进去。由于大亚湾~PMT~使用正高压工作模式以及使用了隔直电容，~PMT~输出波形存在过冲，晚到达~PMT~的击中的基线会受到前一个击中的影响，为此离线算法只挑选每个~PMT~上记录下来的首次过域电荷值，并用于重建。随着可见光子数的增多，电子学的电荷搜集效率就会下降，出现非线性。通常用指数形式的公式~\ref{eq:elc}~来描述电子学非线性，$\alpha$和$\tau$为待拟合的浮动参数。
+\begin{eqnarray}
+\label{eq:elc}
+\frac{E_{vis}}{E_{rec}}=(1-\alpha e^{\frac{E_{rec}}{\tau}})
+\end{eqnarray}
 \begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/lscomp}
-    \caption{大亚湾液闪发光快慢成分}
+   \includegraphics[width=\MyFactor\textwidth*3/2]{Img/chap4/elecins}
+    \caption{电子学非线性示意图}
   \label{fig:lscomp}
 \end{figure}
-
-
-
-\begin{figure}[!htbp]
+\subsection{电子学非线性~Flash-ADC~测试}
+我们可以通过~Flash-ADC~来刻度电子学非线性。将~PMT~输出信号一分为二。一路送入~FEE~，经过积分成形送入两个高低量程的~ADC~，使用~PMT~增益刻度参数，便可将~ADC~值转化为电荷值(~p.e.~)。另一路直接送入~Flash-ADC~，记录波形信息，通过离线波形刻度，得到波形对应的电荷信息。比较~FEE~和~Flash-ADC~对同一个信号的响应。即可了解~FEE~的电荷非线性。
+2014年1月份，我们在大亚湾现场开展了电子学非线性测试。
+%本次测试的目的刻度~FEE~的电荷响应到2\%的精度范围内。然后通过蒙特卡洛，将单通道的电子学非线性传传递为整个探测器的能量非线性，并用于大亚湾的能谱分析。
+我们使用更改了2路电子学读出通道的~FEE~电路板~\ref{fig:onsite_1}~做测试，所做更改主要是在板上增加了扇入扇出和放大器。信号在经过前放，到达成形电路前，被扇出为4路，见图~\ref{fig:onsite_2}~，其中一路经放大送入~CANE~公司的~DT5751~进行波形采样。对比修改电路板前后~FEE~数据的一些基本分布，比如~preADC~，~TDC/ADC~等，证实新增加的一路扇出并未对~FEE~产生影响。型号为~DT5751~的~Flash-ADC~可以提供1~GHz~采样率，有利于后续多光子波形的刻度。
+\begin{figure}[!htb]
   \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-  \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/onsite}
+   \includegraphics[width=\textwidth*2/3]{D:/Thesis/ucasthesis-master/Img/chap4/onsite}
     \caption{现场测试使用的改装FEE电路板}
-    \label{fig:onsite_1}
-  \end{subfigure}%
-  \quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/fadc}
-    \caption{FEE电路板电路图}
-    \label{fig:onsite_2}
-  \end{subfigure}
-    \caption{大亚湾单通道电子学非线性测试}
-  \label{fig:onsite}
+  \label{fig:onsite_1}
 \end{figure}
 
+\begin{figure}[!htb]
+  \centering
+     \includegraphics[width=\textwidth*2/3]{D:/Thesis/ucasthesis-master/Img/chap4/fadc2}
+    \caption{使用修改后的FEE电路板同时获取~FEE~和~FADC~数据}
+  \label{fig:onsite_2}
+\end{figure}
+本人分析了单通道~PMT~的电子学非线性，结果如图~\ref{fig:mynon}~。图中红色和蓝色两组点对应长短不同的两种积分电荷窗长度（分别是400~ns~和170~ns~）。这是为了使~FADC~与~FEE~行为保持一致，排除因积分时间窗差异带来的电荷非线性差别。可以看到在小于3个~pe~ 时，单通道电子学非线性可以达到10\%的程度，随后电子学非线性保持稳定。将图~\ref{fig:mynon}~的结果作为电子学模拟的蒙卡输入，即可得到整个探测器的电子学能量非线性，可用于构造探测器的能量响应模型，该部分工作由~Soeren~完成。
 
-
+%\begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%  \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/onsite}
+%    \caption{现场测试使用的改装FEE电路板}
+%    \label{fig:onsite_1}
+%  \end{subfigure}%
+%  \quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/fadc2}
+%    \caption{FEE电路板电路图}
+%    \label{fig:onsite_2}
+%  \end{subfigure}
+%    \caption{大亚湾单通道电子学非线性测试}
+%  \label{fig:onsite}
+%\end{figure}
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap4/nonmy}
     \caption{不同电荷积分方法下的单通道电子学非线性}
   \label{fig:mynon}
 \end{figure}
-
 \section{波形重建算法的开发}
-\subsection{为什么我们需要波形重建算法}
-在江门的电子学读出方案中，其中一个是在~PMT~后面加上一个阈值固定的甄别器，一旦信号电压过域，就给出触发信号，~DAQ~就开始接收存储一段波形。但是存在一些影响电子学基线的因素，会导致真实信号无法过域，这样这部分信号就永远丢失了。影响电子学基线的因素有温度，~PMT~自身，以及信号的堆积。我们可以通过~FEEDiag run ~ 来检查温度对基线的影响。~FEEDiag run~ 是由~FEE~板产生的~1~KHz~ 50~ns ~的不同幅度的方波，然后由~FEE~来处理这些幅度已知的信号，借此来监测~FEE~的响应。通过监测一年内~FEEDiag run~ 基线的变化图~\ref{fig:temp}~，我们可以认为温度对电子学基线的影响可以忽略。~PMT~自身的基线也会发生变化（和~PMT~高压相关？）。我们参照~Rolling gain~挑选暗噪声的方法，挑选真实物理信号到达前的暗噪声信号。这些信号多是单光子信号，因此并不含有信号堆积导致的基线偏移情况。图~\ref{fig:pmt_1}~ 显示了~PMT~ 暗噪声hit的基线情况，我们可以看到这个通常随时间会有比较大幅度的变化。不同时间段，更多通道的暗噪声的基线情况见图~\ref{fig:pmt_2}~。图~\ref{fig:tdc}~显示的一个典型的~TDC~分布，物理信号从 ~TDC~<1050开始，这段时间内如果有多个信号，后一个信号的基线就会受到前一个信号的影响。从图~\ref{fig:firstsecond}~可以看出第一个~Hit~的基线通常比较稳定，第二个~Hit~受第一个~Hit~的影响，基线涨落比较大。基于以上原因，我们认为使用固定阈值的触发方案并不合理。
+\subsection{波形拟合方法调研}
+在研究波形拟合前期，先调研了一些使用了波形采样读出的实验。
+高能物理实验中，径迹测量通常使用硅微条探测器。硅微条探测器具有良好的空间分辨能力。但其优异的时间性能由于使用了具有较长成形时间的前段放大器而丢失。采用高速采样技术则可能保留一些时间信息。文献\citep{friedl2007time}针对~BELLE~实验硅顶点探测器的采样波形，介绍了两种寻找波形达峰时间和波形幅度的方法。波形采样率为40~MHz~,采样读出窗口为300~ns~，共12个采样点。一种波形拟合的方法是指数拟合，如下：
+\begin{eqnarray}
+\label{expfit}
+v_{out}=A\frac{t}{T_p}e^{-\frac{t}{T_p}}
+\end{eqnarray}
+其中$T_{p}$为~CR-RC~电路的成形时间。但使用该方法，拟合波形和实际的波形在波形上升沿和尾部有较大偏差。另一种方法为
+三次样条差值方法，从图~\ref{fig:cms_1}~可以看出该方法与数据符合较好。
 \begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/cms1}
+    \caption{ 指数和样条函数波形拟合}
+    \label{fig:cms_1}
+\end{figure}
+%中微子双贝塔衰变实验~EXO~也使用了波形拟合。使用~APD~探测闪烁光。采样率为1~MS/s~，波形上升时间~$\sim$~6~$\mu$s~。采用的波形拟合函数是根据实际电路计算出来的理论上的响应，拟合的变量只有两个，信号开始时间和信号幅度。见图~\ref{fig:exo}~
+%
+%\begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*3/2]{Img/chap4/exo}
+%    \caption{EXO实验波形拟合}
+%  \label{fig:exo}
+%\end{figure}
+
+另外文献\citep{S2012PMT}使用一个根据实测波形构造出来的参数化的公式~\ref{eq:soeren}~来拟合波形，公式中可以通过$\sigma$ 控制波形的形状。$\tau$ 控制波形的宽度。方框框起来的部分为模型中的过冲部分。过冲由一个指数函数乘上费米函数然后外加一个高斯峰构成。$U^0_{os}$表示过冲部分的幅度大小，通常与前面的主峰幅度$U^0_{mainpeak}$成正比，对于单光子，其大小约为0.4~mV~，为单光子幅度的5\%。过冲部分的时间衰减常数$\tau_{os}$通常为150~ns~。拟合的参数为波形时间，幅度以及波形宽度。该算法在噪声较高时，容易拟合失败，而且波形形状固定，处理不同的~PMT~ 输出波形时，需要做复杂精细的参数调整工作，不能灵活处理多种波形。
+\begin{eqnarray}\label{eq:soeren}
+U(t) &=&U^0_{mainpeak}exp\left( -\frac{1}{2}{\left( \frac{ln(t/\tau)}{\sigma}\right)}^2\right)+ \\ \nonumber
+&&\fbox{$U^0_{os}/(e^{\frac{50-t}{10}}+1).exp(-\frac{t}{\tau_{os}})+
+U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
+\end{eqnarray}
+\subsection{固定阈值过阈触发的问题：基线不稳定}
+在江门的电子学读出方案中，其中一个是在~PMT~后面加上一个阈值固定的甄别器，一旦信号电压过阈，就给出触发信号，~DAQ~就开始接收存储一段波形。但是存在一些影响电子学基线的因素，会导致真实信号无法过阈，这样这部分信号就永远丢失了。可能影响电子学基线的因素有外界温度以及~PMT~自身基线涨落等。我们可以通过~FEEDiag run~来检查温度对基线的影响。~FEEDiag run~是由~FEE~板产生~1~KHz~50~ns~宽的不同幅度的方波，然后由~FEE~来处理这些幅度已知的信号，借此来监测~FEE~的响应。通过监测一年内~FEEDiag run~基线的变化图~\ref{fig:temp}~，从图中可以看到电子学基线的年变化率小于1\%，因此可以认为温度对电子学基线的影响可以忽略。
+\begin{figure}[!htb]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/temp1}
-    \caption{~FEEDiag run~ 中基线值随时间的变化情况 }
+    \caption{~FEEDiag run~中基线值随时间的变化情况 }
     \label{fig:temp_1}
   \end{subfigure}%
   \quad\quad\quad\quad\quad\quad%add desired spacing
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/temp2}
-    \caption{ ~FEEDiag run~ 中基线分布~$\sigma$~随时间的变化情况}
+    \caption{ ~FEEDiag run~中基线分布~$\sigma$~随时间的变化情况}
     \label{fig:temp_2}
   \end{subfigure}
-    \caption{ 利用~FEEDiag run~ 来研究温度对于电子学基线的影响}
+    \caption{ 利用~FEEDiag run~来研究温度对于电子学基线的影响}
   \label{fig:temp}
 \end{figure}
-
-
+~PMT~自身的基线也有可能发生变化。我们参照~Rolling gain~挑选暗噪声的方法，挑选真实物理信号到达前的暗噪声信号。这些信号多是单光子信号，因此并不含有信号堆积导致的基线偏移情况。图~\ref{fig:pmt_1}~显示了~PMT~暗噪声~hit~的基线情况，从图中可以看到电子学基线的年变化率大于10\%。 不同时间段，更多~PMT~通道的暗噪声的基线情况见图~\ref{fig:pmt_2}~。
+%图~\ref{fig:tdc}~显示的一个典型的~TDC~分布，物理信号从 ~TDC~<1050开始，这段时间内如果有多个信号，后一个信号的基线就会受到前一个信号的影响。从图~\ref{fig:firstsecond}~可以看出第一个~Hit~的基线通常比较稳定，第二个~Hit~受第一个~Hit~的影响，基线涨落比较大。
+基于以上原因，我们认为使用固定阈值的触发方案并不合理。
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
@@ -78,76 +130,49 @@
     \caption{ }
     \label{fig:pmt_2}
   \end{subfigure}
-    \caption{ ~PMT~自身基线随时间的变化情况}
+    \caption{~PMT~基线随时间的变化情况}
   \label{fig:pmt}
 \end{figure}
-
-
-\begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/tdc}
-    \caption{一个典型的TDC分布}
-  \label{fig:tdc}
-\end{figure}
-
-
-
-\begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/first}
-    \caption{第一个Hit的电子学基线分布}
-    \label{fig:firstsecond_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/second}
-    \caption{第二个Hit的电子学基线分布及与第一个Hit的时间间隔}
-    \label{fig:firstsecond_2}
-  \end{subfigure}
-    \caption{信号的堆积对后续信号电子学基线的影响}
-  \label{fig:firstsecond}
-\end{figure}
-
-\subsection{波形拟合方法调研}
-在研究波形拟合前期，先调研了一些采样了波形采样读出的实验。但是由于波形拟合多是底层的细节技术，并没有十分详细的资料。对撞机实验~CMS~的硅像素径迹室采用了波形采样读出。采样率为40MHz,波形拟合的方法是指数拟合~$v_out=A\frac{t}{T_p}e^{-\frac{t}{T_p}}$~ 加上三册样条差值。在束流实验测试中，得到的时间分辨率是2ns（RMS）。如图~\ref{fig:cms}~。
-\begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/cms1}
-    \caption{ 指数和样条函数波形拟合}
-    \label{fig:cms_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*6/5]{D:/Thesis/ucasthesis-master/Img/chap4/cms2}
-    \caption{ 时间分辨束流测试 }
-    \label{fig:cms_2}
-  \end{subfigure}
-    \caption{ CMS实验波形拟合 }
-  \label{fig:cms}
-\end{figure}
+%
+%
+%\begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/tdc}
+%    \caption{一个典型的TDC分布}
+%  \label{fig:tdc}
+%\end{figure}
+%
+%
+%
+%\begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/first}
+%    \caption{第一个Hit的电子学基线分布}
+%    \label{fig:firstsecond_1}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/second}
+%    \caption{第二个Hit的电子学基线分布及与第一个Hit的时间间隔}
+%    \label{fig:firstsecond_2}
+%  \end{subfigure}
+%    \caption{信号的堆积对后续信号电子学基线的影响}
+%  \label{fig:firstsecond}
+%\end{figure}
 
 
 
-中微子双贝塔衰变实验~EXO~也使用了波形拟合。使用~APD~探测闪烁光。采样率为1MS/s，波形上升时间\~6mus。采用的波形拟合函数是根据实际电路计算出来的理论上的响应，拟合的变量只有两个，信号开始时间和信号幅度。见图~\ref{fig:exo}~
-
-\begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*3/2]{Img/chap4/exo}
-    \caption{EXO实验波形拟合}
-  \label{fig:exo}
-\end{figure}
-
-
-另外大亚湾合作组soeren使用一个根据实测波形调出来的参数化的公式~\ref{eq:soeren}~来拟合波形，拟合的参数为波形时间，幅度，以及波形宽度。该算法在噪声较高时，容易拟合失败，而且波形形状固定，不能处理多种波形。
-\begin{equation}\label{eq:soeren}
-U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{\sigma})
-\end{equation}
 \subsection{模型无关的模板拟合算法}
-模板拟合算法目标使用在挑选好的~IBD~样本上和刻度数据上，目的是提取时间和电荷。在江门离线软件框架里，该算法从~ElecFeeCrate buffer~ 读取数据，然后将重建好的波形数据，电荷时间等存放到~RecEvent~数据模型中。
+由于江门中微子实验使用了17000多个~PMT~，对每个~PMT~的波形做拟合，重建一个事例的波形需要大概12秒的时间。速度较慢，因此计划使用在挑选好的~IBD~样本和刻度数据上。通过波形模板拟合，从~PMT~采样波形中提取出时间和电荷。在江门离线软件框架中，该算法从~ElecFeeCrate~buffer~读取数据，然后将重建好的波形数据，电荷时间等存放到~RecEvent~数据模型中，用于后续事例顶点重建和能量重建，如图~\ref{fig:workflow}~。
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/workflow}
+    \caption{~SNiper~软件框架中的工作流程。波形拟合以电子学模拟数据为输入，输出刻度数据。}
+  \label{fig:workflow}
+\end{figure}
 \subsubsection{从数据中获得波形拟合模板}
-模板拟合的第一步是得到单光子波形。我的做法是使用大约2000个单光子波形，然后求出他们上升沿上变化最快（导数最大的点），把所有波形依据这个点对齐。再求出每个时间bin的2000个波形的平均幅度，这样就可以得到波形的模板。对齐的波形如图~\ref{fig:ooo_1}~。根据这些波形得到的平均波形如图~\ref{fig:ooo_2}~。
+模板拟合的第一步是得到单光子波形。我的做法是使用大约~2000~个单光子波形，然后求出他们上升沿上变化最快的点（导数最大的点），把所有波形依据这个点对齐。再求出每个时间~bin~（1~ns~1个时间~bin~）的2000个波形的平均幅度，这样就可以得到波形的模板。对齐的波形如图~\ref{fig:ooo_1}~。根据这些波形得到的平均波形如图~\ref{fig:ooo_2}~。
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
@@ -155,7 +180,7 @@ U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{
     \caption{ Align waveforms }
     \label{fig:ooo_1}
   \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
+  \quad
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth*6/5]{D:/Thesis/ucasthesis-master/Img/chap4/ooo2}
     \caption{ Profile and Get Template }
@@ -165,9 +190,9 @@ U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{
   \label{fig:ooo}
 \end{figure}
 \subsubsection{波形区定位扫描}
-我们通过滑动窗口方法来扫描波形可能存在区域（~ROI~）。滑动窗口由一段连续的采样点构成，窗口大小由波形上升沿快慢调节，比如对于上升沿10ns的波形来说，15ns的窗口比较合适。设定两个阈值来确定~ROI~ 开始时刻和结束时刻。波形开始的阈值设定为5倍噪声涨落RMS值乘以滑动窗口点数的平方根。~ROI~结束阈值设定为噪声涨落RMS值除以滑动窗口点数的平方根。
-通过计算一段时间窗内采样点的~ADC~和,扫描整个波形，根据阈值判断一个或多个~ROI~区域开始和结束时刻，见图
-~\ref{fig:roifit}~。
+我们通过滑动窗口方法来扫描波形可能存在区域（~ROI~：Region of Interest）。滑动窗口由一段连续的采样点构成，窗口大小由波形上升沿快慢调节，比如对于上升沿10~ns~的波形来说，15~ns~的滑动窗口比较合适。设定两个阈值来确定~ROI~开始时刻和结束时刻。波形开始的阈值设定为~5~倍噪声涨落~RMS~值乘以滑动窗口采样点数的平方根。~ROI~结束阈值设定为噪声涨落~RMS~值除以滑动窗口点数的平方根。
+通过计算一段时间窗内采样点的~ADC~和,扫描整个波形，根据阈值判断一个或多个~ROI~区域的开始和结束时刻，图
+~\ref{fig:roifit}~中蓝色实线（非竖直线）与水平的两条灰色虚线的交点，即为一个~ROI~区域的开始（与下方灰色虚线的交点对应的时刻）和结束时刻（与上方灰色虚线的交点对应的时刻）。
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap4/roifit}
@@ -175,19 +200,20 @@ U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{
   \label{fig:roifit}
 \end{figure}
 \subsubsection{波形拟合}
-波形存在区域的拟合通过简单的拉伸和收缩模板的幅度及平移模板实现。为了确定某一个~ROI~区域的拟合初始参数，我们首先计算该区域内~ADC~的累积和（~cumulative sum~）。根据该区域内~ADC~的和，初步判断该区域内的~p.e.~数~NPE~。 作为拟合中单光子波形个数的初始值。下一步需要估计该区域内光电子的击中时间。方法是根据~ADC~累积分布图，将整个~ROI~覆盖的时间区域分成~NPE~等份。这~NPE-1~个等分点和~ROI~开始时刻，即可作为模板拟合中光电子的击中时间初始值。在多光子的情况下，拟合要分步在多个波形可能存在的区域一个一个来做。随着光子数增多$\Delta n$，拟合参数增多$2 \Delta n$。拟合完一个~ROI~区域后，可以从整个波形中减去~\ref{fig:fitdemo_2}~。
-图~\ref{fig:20inch}~是波形拟合算法处理实际的示波器测量的20英寸的波形的效果展示。
+波形存在区域的拟合通过简单的拉伸和收缩模板的幅度及平移模板实现。为了确定某一个~ROI~区域的拟合初始参数，我们首先计算该区域内~ADC~的累积和（~Cumulative~Sum~值）。根据该区域内~ADC~的和，初步判断该区域内的~p.e.~数~NPE~。 作为拟合中单光子波形个数的初始值。下一步需要估计该区域内光电子的击中时间。方法是根据~ADC~累积分布图，将整个~ROI~覆盖的时间区域分成~NPE~等份。这~NPE - 1~个等分点和~ROI~开始时刻，即可作为模板拟合中光电子的击中时间初始值。在多光子的情况下，拟合要分步在多个波形可能存在的区域一个一个来做。随着光子数增多$\Delta n$，拟合参数增多$2 \Delta n$。拟合完一个~ROI~区域后，可以从整个波形中减去拟合完成的波形部分，比如图~\ref{fig:fitdemo_2}~即为减去已经拟合完毕的图~\ref{fig:fitdemo_1}~区域的结果。
+图~\ref{fig:20inch}~是波形拟合算法处理实际的示波器测量的20英寸~PMT~输出波形的拟合结果。由于该算法可以充分考虑过冲及噪声的影响，因此可以实现比较好的多光子拟合。
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/fitdemon1}
-    \caption{一个ROI区域的拟合}
+    \caption{第一个ROI区域的拟合}
     \label{fig:fitdemo_1}
   \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
+  %\quad\quad 
+   \vspace{10 mm}
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/fitdemon2}
-    \caption{中子}
+    \caption{第二个ROI区域的拟合}
     \label{fig:fitdemo_2}
   \end{subfigure}
     \caption{从总的波形中减去已经拟合好的波形，开始下一个ROI区域的拟合}
@@ -197,15 +223,116 @@ U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MySubFactor\textwidth]{Img/chap4/20inch1}
+   \vspace{10 mm}
    \includegraphics[width=\MySubFactor\textwidth]{Img/chap4/20inch2}
-    \caption{波形模板拟合作用在滨松20英寸实测波形上}
+    \caption{使用波形模板拟合方法拟合滨松20英寸~PMT~实测波形}
   \label{fig:20inch}
 \end{figure}
 
-\subsubsection{波形模板重建本征非线性研究}
-波形重建算法引入的非线性是重建算法优劣的重要指标。为了测试模板拟合算法的非线性，我们做了一组~blind test~。
-~blind test~数据有两批，一组是~LED~刻度数据，多是单光子波形，我们可以从中获得单光子模板。另一组是物理数据，包含真实的由于液闪快慢成分以及事例顶点距离~PMT~过近可能出现的多光子的信号堆积情况。所有的波形当中均加入了真实测试过程中看到的基线的快速振荡以及缓慢漂移情况。测试使用的一个波形事例如图\ref{fig:test1}~。通过对比物理~run~ 的波形重建结果和~unblined~的真实信息，我们发现，由于
-波形的模板拟合由于考虑了噪声和过冲带来的基线的形变，可以将非线性控制在1-2\%左右,图\ref{fig:non1}~。而电荷积分方法简单的求和会出现非常大的非线性，严重影响到快信号能谱的测量,图\ref{fig:non2}~。
+
+\subsection{Wavelet~analysis~算法调研}
+小波分析是一种数字信号处理方法\citep{torrence1998practical}，适用于分析小的，快速变化的波形。小波分析的一个用途是数据压缩。本人尝试在波形重建中使用小波分析方法，如果能去除掉信号的过冲，噪声，振铃等，那么可以通过直接在时域内的积分求得信号的电荷，简单通过过阈判断获得时间信息。去除噪声基本思路是：通过采集噪声样本，得到噪声在频域范围内的分布特征，使用数字滤波方法去掉噪声。
+%如果~overshoot~、 振铃在频域内不叠加在信号上的话，也可以在频域去掉。
+为此我们输入了在真实的波形上叠加噪声过冲，使用小波分析算法解谱，给出频谱如图\ref{fig:wave3}。由于时间关系，仅仅完成了解谱工作，但该方法提供了一个很好的处理波形的思路，值得未来继续尝试。
+\begin{figure}[!htbp]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/wave322}
+    \caption{小波分析方法解谱示例}
+  \label{fig:wave3}
+\end{figure}
+
+%\section{江门中微子实验电子学设计指标初步模拟研究}
+%在江门电子学系统的~R\&D~阶段，需要从物理需求的角度出发，对其电子学设计提出设计指标。最后的设计指标需要从工程物理等多个方面以及由具有丰富经验的人决议给出，本节简单叙述一下我参与的部分的工作。
+%\subsection{~PMT~动态范围等的初步模拟研究}
+%模拟使用的探测器方案是有机玻璃方案，~Buffer~的厚度是~0.8~m。总共有~16720~个PMT，覆盖率为76.7\% 。其具体参数见图~\ref{fig:detinfo}~。\\
+%\begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/detinfo}
+%    \caption{模拟研究中使用的探测器参数}
+%  \label{fig:detinfo}
+%\end{figure}
+%~PMT~动态范围的模拟。主要研究了在~IBD~事例中，单个~PMT~上接收到的光电子数的分布。模拟结果见图~\ref{fig:epn}~。99\% 的正电子事例中，单个PMT 接收到的光电子数不超过120个~p.e.~。
+% 99.9\%的正电子事例，单个PMT接收到的光电子数不超过170~p.e.~。对于muon事例来说，由于其平均能量高达214~GeV~。 每个~PMT~ 上接收的光电子数是非常多的~\ref{fig:muon}~。
+%
+% \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/muon}
+%    \caption{~Muon~事例中单个~pmt~上接收光电子数的分布}
+%  \label{fig:muon}
+%\end{figure}
+%
+%\begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/epn1}
+%    \caption{正电子}
+%    \label{fig:epn_1}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/epn2}
+%    \caption{中子}
+%    \label{fig:epn_2}
+%  \end{subfigure}
+%    \caption{正电子中子事例中单个~pmt~上接收光电子数的分布}
+%  \label{fig:epn}
+%\end{figure}
+% 设计指标~event span time~是指一个事例中所有光电倍增管，接收到的第一个光电子与最后一个光电子的时间差。这个设计指标和一次触发后读出电路时间窗口大小有关。如果要对一个事例中所有光电倍增管的信号求和，那么求和时间应该比事例持续时间更长。图中红色箭头分别表示90\%和99\%的事例持续时间不会超过~125~ns~和~285~ns~,图~\ref{fig:evtspan}~。
+% \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/evtspan}
+%    \caption{正电子事例中，一个事例中最早探测器到光子和最晚探测到光子时间差分布}
+%  \label{fig:evtspan}
+%\end{figure}
+% 设计指标~pmt~span~time~是指对于一个光电倍增管，接收到的最后一个光电子与第一个光电子的时间差。为了测量一个光电倍增管的所有光电子产生的电荷量，光电倍增管脉冲成形时间应该不短于~PMT~响应时间，图~\ref{fig:pmtspan}~中长达~2~$\mu$s~的时间是由液闪的慢成分造成的。
+% \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/pmtspan}
+%    \caption{正电子事例中，单个~PMT~最早到达光子和最晚到达光子时间差分布}
+%  \label{fig:pmtspan}
+%\end{figure}
+% 设计指标~PMT~dark~count~rate~与读出窗口大小及~PMT~暗计数率有关。假设~PMT~暗计数率为50~KHz~.时间窗口300~ns~。~Nhit~ 触发阈值~310~则暗计数~trigger~rate~为100~KHz~，~Nhit~触发阈值~
+% 320~暗计数为10~KHz~，~Nhit~阈值设为~330~暗计数率为1KHz。结果见图~\ref{fig:drrate}~。
+%  \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/drrate}
+%    \caption{~Nhit~触发阈值与~PMT~关系图}
+%  \label{fig:drrate}
+%\end{figure}
+% 此外电子学读出设计中还有局部触发方案，我们可以通过研究不同的事例的~hit~pattern~来设计触发阈值。从图~\ref{fig:evtdis}~ 我们可以看到天然放射性事例~hit~分布比较集中，~IBD~事例分布比较均匀。
+% \begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis1}
+%    \caption{~Channel~distribution~for~K}
+%    \label{fig:evtdis_1}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis2}
+%    \caption{~Channel~distribution~for~Th}
+%    \label{fig:evtdis_2}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis3}
+%    \caption{~Channel~distribution~for~U}
+%    \label{fig:evtdis_3}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis4}
+%    \caption{~Channel~distribution~for~IBD}
+%    \label{fig:evtdis_4}
+%  \end{subfigure}
+%  \caption{不同类型事例的Channel~hit~pattern}
+%  \label{fig:evtdis}
+%\end{figure}
+\section{波形重建算法的应用研究}
+\subsection{波形模板重建本征非线性研究}
+波形重建算法引入的电荷非线性的大小，是挑选波形重建算法时需要考虑的重要因素。
+为了测试模板拟合算法的非线性，我们做了一组~blind test~。
+~blind test~数据有两批，一组是~LED~刻度数据，多是单光子波形，我们可以从中获得单光子模板。另一组是物理数据，包含真实的由于液闪快慢成分以及事例顶点距离~PMT~过近可能出现的多光子信号堆积情况。所有的波形当中均加入了真实测试过程中看到的基线的快速振荡以及缓慢漂移这类噪声。测试使用的一个波形示例如图\ref{fig:test1}~。通过对比物理~run~的波形重建结果和~unblined~后的真实信息，我们发现，由于
+波形的模板拟合考虑了噪声和过冲带来的基线的形变，可以将波形重建算法引入的电荷非线性控制在1-2\%左右,图\ref{fig:non1}~。 而电荷积分方法简单的求和会出现非常大的非线性，严重影响到快信号能谱的测量,见图\ref{fig:non2}~。
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*1]{Img/chap4/test1}
@@ -224,210 +351,103 @@ U(t) =U_0 \left( 1 - exp(-\frac{(t-t_0)^2}{{\sigma}^2})\right)exp(-\frac{t-t_0}{
     \caption{电荷积分方法波形重建效果：非线性非常大}
   \label{fig:non2}
 \end{figure}
-\subsection{Wavelet~analysis~算法调研}
-小波分析是一种数字信号处理方法，适用于分析小的，快速变化的波形。小波分析的一个用途是数据压缩。本人也尝试在波形重建中使用小波分析方法，如果能去除掉信号的过冲，噪声，振铃等，那么可以通过直接在时域内的叠加求得信号的电荷和以及简单过域获得时间信息。去除噪声基本思路，通过采集噪声样本，得到噪声在频域范围内的分布特征，通过数字滤波去掉噪声。去除~
-overshoot~、振铃，如果两者在频域内不叠加在信号上的话，也可以在频域去掉。为此我们输入了在真实的波形上叠加噪声过冲，使用小波分析算法解谱，给出频谱如图\ref{fig:wave3}。鉴于时间关系以及数字信号处理的复杂，未能做下去，但该方法提供了一个很好的处理波形的思路。
-\begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/wave3}
-    \caption{小波分析方法解谱示例}
-  \label{fig:wave3}
-\end{figure}
-
-\section{江门中微子实验电子学设计指标初步模拟研究}
-在江门电子学系统的~R\&D~阶段，需要从物理需求的角度出发，对其电子学设计提出设计指标。最后的设计指标需要从工程物理等多个方面以及由具有丰富经验的人决议给出，本节简单叙述一下我参与的部分的工作。
-\subsection{~PMT~动态范围等的初步模拟研究}
-模拟使用的探测器方案是有机玻璃方案，~Buffer~层的厚度是~0.8~m。总共有~16720~个PMT，覆盖率为76.7\% 。其具体参数见图~\ref{fig:detinfo}~。\\
-\begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/detinfo}
-    \caption{模拟研究中使用的探测器参数}
-  \label{fig:detinfo}
-\end{figure}
-
-~PMT~动态范围的模拟。主要研究了在~IBD~事例中，单个~PMT~上接收到的光电子数的分布。模拟结果见图~\ref{fig:epn}~。99\% 的正电子事例中，单个PMT 接收到的光电子数不超过120个~p.e.~。
- 99.9\%的正电子事例，单个PMT接收到的光电子数不超过170~p.e.~。对于muon事例来说，由于其平均能量高达214~GeV~。 每个~PMT~上接收的光电子数是非常多的~\ref{fig:muon}~。
-
- \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/muon}
-    \caption{~Muon~事例中单个~pmt~上接收光电子数的分布}
-  \label{fig:muon}
-\end{figure}
-
-\begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/epn1}
-    \caption{正电子}
-    \label{fig:epn_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/epn2}
-    \caption{中子}
-    \label{fig:epn_2}
-  \end{subfigure}
-    \caption{正电子中子事例中单个~pmt~上接收光电子数的分布}
-  \label{fig:epn}
-\end{figure}
- 设计指标~event span time~是指一个事例中所有光电倍增管，接收到的第一个光电子与最后一个光电子的时间差。这个设计指标和一次触发后读出电路时间窗口大小有关。如果要对一个事例中所有光电倍增管的信号求和，那么求和时间应该比事例持续时间更长。图中红色箭头分别表示90\%和99\%的事例持续时间不会超过~125~ns~ 和~285~ns~,图~\ref{fig:evtspan}~。
-
-
- \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/evtspan}
-    \caption{正电子事例中，一个事例中最早探测器到光子和最晚探测到光子时间差分布}
-  \label{fig:evtspan}
-\end{figure}
-
-
- 设计指标~pmt~span~time~是指对于一个光电倍增管，接收到的最后一个光电子与第一个光电子的时间差。为了测量一个光电倍增管的所有光电子产生的电荷量，光电倍增管脉冲成形时间应该不短于~PMT~响应时间，图~\ref{fig:pmtspan}~中长达~2~~$\mu$s~的时间是由液闪的慢成分造成的。
- \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/pmtspan}
-    \caption{正电子事例中，单个~PMT~最早到达光子和最晚到达光子时间差分布}
-  \label{fig:pmtspan}
-\end{figure}
-
-
-
- 设计指标~PMT~dark~count~rate~与读出窗口大小及~PMT~暗计数率有关。假设~PMT~暗计数率为50~KHz~.时间窗口300~ns~。 ~Nhit~触发阈值~310~则暗计数~trigger~rate~为1~KHz~，~Nhit~触发阈值~
- 320 ~暗计数为10~KHz~，~Nhit~阈值设为~330~暗计数率为100KHz。结果见图~\ref{fig:drrate}~。
-  \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap4/drrate}
-    \caption{~Nhit~触发阈值与~PMT~关系图}
-  \label{fig:drrate}
-\end{figure}
-
-
- 此外电子读出设计中还有局部触发方案，我们可以通过研究不同的事例的~hit~pattern~来设计触发阈值。从图~\ref{fig:evtdis}~ 我们可以看到天然放射性事例~hit~分布比较集中，~IBD~事例分布比较均匀。
-
- \begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis1}
-    \caption{~Channel~distribution~for~K}
-    \label{fig:evtdis_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis2}
-    \caption{~Channel~distribution~for~Th}
-    \label{fig:evtdis_2}
-  \end{subfigure}
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis3}
-    \caption{~Channel~distribution~for~U}
-    \label{fig:evtdis_3}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/evtdis4}
-    \caption{~Channel~distribution~for~IBD}
-    \label{fig:evtdis_4}
-  \end{subfigure}
-  \caption{不同类型事例的Channel~hit~pattern}
-  \label{fig:evtdis}
-\end{figure}
-\subsection{电子学读出电路1G采样率和500M采样率对时间分辨的影响模拟}
-为了对比1GHz采样率和500MHz对时间分辨的影响，我们使用了两种方法。实际探测器的时间分辨除了和采样率有关外，还受到~PMT~波形等的影响，我们这里是一种简化的研究方法。第一种使用从实验室获得的真实波形。波形来自~Hamamatsu~20~inches~ R12860~。我们使用示波器获取~10G~Hz 采样率的波形，通过波形拟合得到的时间作为真实时间。然后将~10G~采样率的波形手动离散成1G和500MHz的数据\ref{fig:1g5m}。再作用波形拟合算法到处理后的波形上，对比拟合得到的时间与"真实时间“，得到采样率对时间分辨的影响。测试结果表明使用1G采样率时间分辨是50ps，使用500MHz采样率，时间分辨是139ps，结果如图~\ref{fig:tres}~。
-  \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/1g5m}
-    \caption{ 10G采样率波形离散成1G和500MHz采样波形}
-  \label{fig:1g5m}
-\end{figure}
+\subsection{~Flash-ADC~1~GHz~采样率和500~MHz~采样率对时间分辨的影响模拟}
+为了对比1~GHz~采样率和500~MHz~采样率对时间分辨的影响，我们使用了两种方法。实际探测器的时间分辨除了和采样率有关外，还受到~PMT~波形等的影响，我们这里是一种简化的研究方法。第一种使用从实验室获得的真实波形。波形来自~Hamamatsu~20~inches~R12860~。我们使用示波器获取~10G~Hz 采样率的波形，通过波形拟合得到的时间作为真实时间。然后将~10G~采样率的波形手动离散成~1G~和500~MHz~的数据。 再作用波形拟合算法到处理后的波形上，对比拟合得到的时间与``真实时间''，得到采样率对时间分辨的影响。测试结果表明使用1G采样率时间分辨是50ps，使用500MHz 采样率，时间分辨是139ps，结果如图~\ref{fig:tres}~。
+%  \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/1g5m}
+%    \caption{10~GHz~采样率波形离散成1~GHz~和500~MHz~采样波形}
+%  \label{fig:1g5m}
+%\end{figure}
   \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/tres}
-    \caption{手动离散的1G和500MHz波形的时间分辨 }
+   \text{(a)1G采样率相对于10G采样率的时间分辨(b)500MHz采样率相对于10G采样率的时间分辨}
+    \caption{手动离散的1~GHz~和500~MHz~波形的时间分辨 }
   \label{fig:tres}
 \end{figure}
-\text{(a)1G采样率相对于10G采样率的时间分辨(b)500MHz采样率相对于10G采样率的时间分辨}
-另一种方法是使用~MC~波形。因为越快的上升沿需要越高的采样率，所以我们在MC中使用具有1-2ns上升沿的新型微通道板波形~\ref{fig:mcp}~，来研究1GHz和500MHz下的波形重建结果的差别。 我们使用电子学模拟，并在模拟中加入高斯白噪声和过冲。假设PMT 的渡越时间涨落是2ns，分别产生1G采样率的波形和500MHz采样率的波形。图~\ref{fig:tres2}~为MC下1G 和500MHz的时间分辨率。如果假设时间分辨率服从$\sigma_{tot}=\sqrt{{\sigma_{tts}}^2+{\sigma_{FADC}}^2}$，那么我们可以看到单纯的由采样率带来的时间分辨是200ps(1G 采样率)和365ps(500MHz采样率)。~MC~测试结果200ps(1G 采样率)和实际20英寸波形50ps (1G 采样率)结果的不同来自与波形的不同，滨松20英寸管子的波形上升沿比较慢，大约为10ns。
+
+另一种方法是使用~MC~波形。因为越快的上升沿需要越高的采样率，所以我们在~MC~中使用具有1-2~ns 上升沿的新型微通道板~PMT~波形~\ref{fig:mcp}~，来研究1~GHz~和500~MHz~下的波形重建结果的差别。 我们使用电子学模拟，并在模拟中加入高斯白噪声和过冲。假设~PMT~的渡越时间涨落是2~ns~，分别产生1~G~采样率的波形和500~MHz~采样率的波形。图~\ref{fig:tres2}~为~MC~下1~GHz~和500~MHz~的时间分辨率。图中横坐标（真实击中时间减去波形拟合时间）中心值约为-200~ns~，是由于电子学模拟中，人为加了200~ns~的时间偏移。如果假设时间分辨率服从如下规律：
+\begin{eqnarray}
+\sigma_{tot}=\sqrt{{\sigma_{tts}}^2+{\sigma_{FADC}}^2}
+\end{eqnarray}
+
+那么我们可以看到单纯的由采样率带来的时间分辨是200~ps~(1~G 采样率)和365~ps~(500~MHz~采样率)。~MC~测试结果200~ps~(1G 采样率)和实际20英寸波形50~ps~(1G 采样率)结果的不同产生自输入波形的不同，滨松20英寸管子的波形上升沿比较慢，大约为10~ns~。
   \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap4/mcp}
-    \caption{MC中使用的具有快速上升沿的波形}
+    \caption{~MC~中使用的具有快速上升沿的波形}
   \label{fig:mcp}
 \end{figure}
   \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/tres2}
-    \caption{MC模拟的1G和500MHz波形的时间分辨 }
+    \caption{ MC 模拟的1 GHz 和500 MHz 波形的时间分辨 }
   \label{fig:tres2}
 \end{figure}
-\section{电子学相关因素对江门中微子实验能量分辨率的影响}
+\section{~PMT~暗噪声率对能量分辨率的影响}
 \subsection{液闪中的能量分辨率}
 在文献\citep{scholermann1980optimizing}中，闪烁体探测器的能量分辨表示成如下公式~\ref{eq:nimmodle}~。
 \begin{equation}\label{eq:nimmodle}
 \Delta_L /L = [ \alpha^2 + (\beta/L^{1/2})^2+(\gamma/L)^2]^{1/2}
 \end{equation}
-其中L为~PMT~波形幅度。并且$L=\theta(E_e-0.005)$，其中Ee为康普顿散射电子的能量，$\theta=1 MeV^{-1}$。文章中常数项被解释成闪烁体后连接的光导的几何效应和PMT光阴极的非均匀性，见图~$\ref{fig:nimpmt}$~,两个PMT由于使用了不同的光导，上面~PMT~收集效率随R，Z变化较大最终拟合的能量分辨率常数项的也比较大，图中曲线1。
+其中L为~PMT~输出波形幅度。并且$L=\theta(E_e-0.005)$，其中 Ee 为康普顿散射出射电子的能量，$\theta=1 MeV^{-1}$。 文章中常数项被解释成闪烁体后连接~PMT~的光导的几何非均匀效应和 PMT 光阴极的非均匀性，见图~$\ref{fig:nimpmt}$~,两个 PMT 由于使用了不同的光导，上面~PMT~收集效率随 R，Z 变化较大最终拟合的能量分辨率常数项的也比较大，图中曲线1。此为能量分辨率中常数项来源的一个解释。
  \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap4/nimpmt}
     \caption{几何因素对能量分辨率中常数项的影响}
   \label{fig:nimpmt}
 \end{figure}
-
-能量分辨率的两参数模型为式~\ref{eq:p2model}~。
-三参数模型为~\ref{eq:p3model}~
+我们可以基于~\ref{eq:nimmodle}~对能量分辨率公式稍作修改，能量分辨率的两参数模型为式~\ref{eq:p2model}~。
+三参数模型为~\ref{eq:p3model}~。
 \begin{equation}\label{eq:p2model}
  \frac{\sigma}{E}=p_0+\frac{p_1}{\sqrt{E}}
 \end{equation}
-
 \begin{equation}\label{eq:p3model}
   \frac{\sigma}{E}=\sqrt{p_0^2+{(\frac{p_1}{\sqrt{E}})}^2+{(\frac{p_2}{E})}^2}
 \end{equation}
-能量分辨率拟合公式中，p1项代表光子涨落，从探测器中心到边缘，p1项变小。p2项与E及探测器几何效应无关,仅随暗噪声水平变化。
-
-\subsection{噪声对因素对能量分辨的影响}
-\subsubsection{~PMT~QE的差别以及~QE~的非均匀性的影响}
-不同PMT的QE差别可以通过刻度来修正，源在探测器中心时，PMT工作在单光子状态，光子打在PMT上的位置是随机的，所以同一个PMT上量子效率的非均匀性可以通过不同PMT量子效率的差异来等效。源在探测器边缘时，此时PMT对源的立体角比较大，光子也打在光阴极的不同位置上，可以同样做等效。研究是通过简单的ToyMC来做，产生没有经过PMT量子效应的总光子数服从~Poisson(E[i]*1210/0.35)~,量子效率做假设成高斯分布或者是均匀分布，抽样(0，1)区间的随机数,如果小于~QE~，产生光子，否则不产生。理想情况下，能量分辨率P1项2.875，见图~\ref{fig:qe_1}~，假设QE服从gauss分布时，p1 项为2.874，见图~\ref{fig:qe_2}~。假设QE 服从均匀分布，则p1项为2.855，见图~\ref{fig:qe_3}~。
-
-\begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe1}
-    \caption{理想情况能量分辨率的拟合 \quad\quad\quad\quad\quad\quad }
-    \label{fig:qe_1}
-  \end{subfigure}%
-   \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe2}
-    \caption{假设PMT~QE~高斯分布，能量分辨率的拟合}
-    \label{fig:qe_2}
-  \end{subfigure}
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe3}
-    \caption{假设PMT~QE~均匀分布，能量分辨率的拟合}
-    \label{fig:qe_3}
-  \end{subfigure}%
-  \caption{PMT~QE~非均匀性对能量分辨率的影响}
-  \label{fig:qe}
-\end{figure}
-
-
-\subsubsection{~PMT~电荷分辨率的影响}
-由于~PMT~第一打拿极二次电子发射个数的破送涨落，~PMT~存在增益不同PMT的增益差別,可以通过刻度修正，假设PMT的单光子电荷分辨是40\%,则加上PMT电荷分辨后的能量分辨率变为$\sqrt{1+0.4^2}/\sqrt{N}=3.09\%$。ToyMC结果与简单估算结果一致 见图~\ref{fig:gain}。
-  \begin{figure}[!htbp]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/gain}
-    \caption{PMT~40\%~电荷分辨的影响 }
-  \label{fig:gain}
-\end{figure}
-
-
-\subsubsection{~PMT~暗噪声率的影响}
-在~ToyMC~研究该项的影响时，假设读出时间窗口大小为300或者500ns，噪声率为10KHz和15KHz。则N个PMT上有j个暗噪声的概率可以表示为$C_N^jP^j(1-P)^{N-j}$，其中P为时间窗口乘以暗噪声率。然后将这j个暗噪声随机加到PMT上。在能量重建过程中，要加上PMT暗噪声带来的期待电荷暗噪声率*读出窗口长度，拟合后发现，~PMT~暗噪声不会带来常数项，p1项与理想情况相同2.87。p2 项随暗噪声增大变大。 p2 项 在15KHz~300ns~读出时间窗的情况下为 1.044。在15KHz, 500ns读出时间窗下为1.526，在20KHz500ns 读出时间窗口下为2.374，见图 ~\ref{fig:dr}~
+除常数项外，在能量分辨率拟合公式中，p1项代表光子涨落，从探测器中心到边缘，p1项变小。p2项与粒子能量及探测器几何效应无关,仅随暗噪声水平变化。
+\subsection{~PMT~暗噪声率对能量分辨的影响}
+%\subsubsection{~PMT~QE的差别以及~QE~的非均匀性的影响}
+%不同~PMT~的~QE~差别可以通过刻度来修正，源在探测器中心时，PMT工作在单光子状态，光子打在PMT上的位置是随机的，所以同一个~PMT~上量子效率的非均匀性可以通过不同PMT量子效率的差异来等效。源在探测器边缘时，此时PMT对源的立体角比较大，光子也打在光阴极的不同位置上，可以同样做等效。研究是通过简单的ToyMC来做，产生没有经过PMT量子效应的总光子数服从~Poisson(E[i]*1210/0.35)~,量子效率做假设成高斯分布或者是均匀分布，抽样(0，1)区间的随机数,如果小于~QE~，产生光子，否则不产生。理想情况下，能量分辨率P1项2.875，见图~\ref{fig:qe_1}~，假设QE服从gauss分布时，p1 项为2.874，见图~\ref{fig:qe_2}~。假设QE 服从均匀分布，则p1项为2.855，见图~\ref{fig:qe_3}~。
+%\begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe1}
+%    \caption{理想情况能量分辨率的拟合 \quad\quad\quad\quad\quad\quad }
+%    \label{fig:qe_1}
+%  \end{subfigure}%
+%   \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe2}
+%    \caption{假设PMT~QE~高斯分布，能量分辨率的拟合}
+%    \label{fig:qe_2}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*4/3]{D:/Thesis/ucasthesis-master/Img/chap4/qe3}
+%    \caption{假设PMT~QE~均匀分布，能量分辨率的拟合}
+%    \label{fig:qe_3}
+%  \end{subfigure}%
+%  \caption{PMT~QE~非均匀性对能量分辨率的影响}
+%  \label{fig:qe}
+%\end{figure}
+%\subsubsection{~PMT~电荷分辨率的影响}
+%由于~PMT~第一打拿极二次电子发射个数的泊松涨落，单个~PMT~存在电荷分辨率。不同PMT的增益差別,可以通过刻度修正，假设PMT 的单光子电荷分辨是40\%,则加上PMT电荷分辨后的能量分辨率变为$\sqrt{1+0.4^2}/\sqrt{N}=3.09\%$。~ToyMC~结果与简单估算结果一致，见图~\ref{fig:gain}。
+%  \begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/gain}
+%    \caption{PMT~40\%~电荷分辨的影响 }
+%  \label{fig:gain}
+%\end{figure}
+%\subsubsection{~PMT~暗噪声率的影响}
+该研究可以通过~ToyMC~来做。~PMT~上实际观测到的电荷和预期电荷的关系可用泊松分布描述。其中源在不同位置时每个 PMT 上的期待电荷的计算方法为：粒子能量*光产额* PMT 量子效率*修正因子(液闪衰减，立体角，角度响应)。使用极大似然拟合方法，可以计算出粒子能量。
+在~ToyMC~中添加暗噪声时，假设读出时间窗口大小为~300~或者~500~ns，噪声率为10~KHz~和15~KHz~。则 N 个 PMT 上有 j 个暗噪声的概率可以表示为$C_N^jP^j(1-P)^{N-j}$，其中 P 为每个 PMT 上预期的暗噪声个数，大小为读出时间窗口长度乘以暗噪声率。然后将这 j 个暗噪声随机加到 PMT 上。在能量重建过程中，要加上~PMT~暗噪声带来的期待电荷项，拟合后发现，~PMT~暗噪声不会带来常数项，p1 项与理想情况相同2.87。 p2~项随暗噪声增大变大。 p2~ 项在15KHz~300ns~ 读出时间窗的情况下为1.044。在15KHz, 500 ns 读出时间窗下为1.526，在20 KHz 500 ns~读出时间窗口下为2.374，见图 ~\ref{fig:dr}~。该研究给出了考虑暗噪声后的能量重建方法：在期待电荷中添加暗噪声 Hit 的期望值。通过测试发现，暗噪声只影响能量分辨率模型中的 p2 项，与能量无关。
  \begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*4/5]{D:/Thesis/ucasthesis-master/Img/chap4/dr1}
-    \caption{15KHz暗噪声300~ns~读出窗口情况下，16720个PMT上暗噪声总数的分布}
+    \includegraphics[width=\textwidth*5/6]{D:/Thesis/ucasthesis-master/Img/chap4/dr1}
+    \caption{%15KHz暗噪声300~ns~读出窗口情况下，16720个
+    PMT上暗噪声总数的分布}
     \label{fig:dr_1}
   \end{subfigure}%
   \quad\quad\quad\quad\quad\quad%add desired spacing
@@ -447,52 +467,45 @@ overshoot~、振铃，如果两者在频域内不叠加在信号上的话，也�
     \caption{50KHz，500~ns~}
     \label{fig:dr_4}
   \end{subfigure}
-  \caption{不同暗噪声率情况下，能量分辨率的拟合}
+  \caption{不同暗噪声率情况下，能量分辨率的拟合，未加暗噪声时，p0 为2.874，p1 和 p2 项为0 }
   \label{fig:dr}
 \end{figure}
-
-
-
-\subsubsection{电子学噪声的影响}
-电子学噪声的影响分为两种，一种是基线涨落的影响。我们分别假设基线涨落的幅度相对于单光子幅度分布是10\%，20\%，
-即5倍的Signal Noise Ratio (SNR)，10倍~SNR~。我们使用在探测器内均匀产生的正电子源，经过电子学模拟(不含后脉冲，过冲，暗噪声模拟),使用简单的求和方法重建波形，修正掉探测器的非均匀性，通过对总电荷做高斯拟合求出能量分辨率。拟合使用式~\ref{eq:p3model}~拟合分辨率。在水和白油两种~buffer~下的结果分别如图~\ref{fig:snr_1}~和图~\ref{fig:snr_2}~所示。
-
-\begin{figure}[!htbp]
-  \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*5/4]{D:/Thesis/ucasthesis-master/Img/chap4/snr1}
-    \caption{水屏蔽层不同信噪比情况下的能量分辨率}
-    \label{fig:snr_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*5/4]{D:/Thesis/ucasthesis-master/Img/chap4/snr2}
-    \caption{油屏蔽层不同信噪比情况下的能量分辨率}
-    \label{fig:snr_2}
-  \end{subfigure}
-    \caption{不同信噪比对能量分辨率的影响}
-  \label{fig:snr}
-\end{figure}
-
-
-
-
-另外一种电子学噪声，来自读出电路的电荷分辨，可以认为其服从$\sqrt{N_{pe}}/10$的关系。即电子学对1个pe的分辨率为0.1个pe，对100个pe的分辨率为1个pe。我们计算源在不同位置每个PMT的期待电荷，计算方法为粒子能量*光产额*PMT 量子*液闪衰减*立体角*角度响应。计算完期待电荷后，我们按照$\sqrt{N_{pe}}/10$的关系对电荷做~smear~。我们发现，不会带来p0项。不同位置处，电子学噪声的影响见表~\ref{tab:tb2}~。能量分辨率的拟合使用公式~\ref{eq:p3model}~。
-\begin{table}[htbp]
-\centering  % 表居中
-\begin{tabular}{lcccccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
-\hline
-粒子顶点在探测器不同半径处&0& R/4 &R/2 &3R/4 &R \\ \hline
-\\ 能量分辨率拟合$p0$项 & 0 &0 &0 &0& 0
-\\ 能量分辨率拟合$p1$项  & 3.062 &3.02 &2.911& 2.74 &2.494
-\\能量分辨率拟合$p2$项 &  0.04534& 0.1076 &0.3588 &0.2879 &0.161
-\\ \hline
-\end{tabular}
-\caption{电子学$\sqrt{N_{pe}}/10$噪声对能量分辨的影响}
-\label{tab:tb2}
-\end{table}
-
-
-\subsubsection{传输线对电子学时间分辨影响的估算}
-理想的导线为50欧阻抗，匹配阻抗后的结果是，信号幅度降为一般，上升沿不会变慢。但是实际导线有一定的带宽，能够传输的最高正弦波频率有上限。 因此实际传输线会使得信号幅度衰减，上升沿变缓。假设输入信号的上升时间为~$T_{in}$~，传输线的本征上升时间~$T_{cable}$~，输出信号的上升时间~$T_{Tout}$~，则满足~$T_{out}^2=T_{in}^2+T_{cable}^2$~。经验法则中，如果导线的本征上升时间小于信号上升时间的50\%，那么传输线造成的上升时间变大就小于10\%，影响可以忽略。从频域角度看，传输线带宽为信号带宽的两倍以上，导线对信号上升时间造成影响就可以忽略。对于大亚湾导线，型号为~RG303/U~，其衰减为~100m ~28.22~dB~,则其实70米的导线衰减为~0.7*28.22~dB，信号幅度衰减为10.27\%，该导线带宽为~400~MHz~，其本征上升时间：$0.35/0.4=0.875$~ns~，相对典型的PMT波形上升时间，其影响可以忽略。
-
+%\subsubsection{电子学噪声的影响}
+%电子学噪声的影响分为两种，一种是基线涨落的影响。我们分别假设基线涨落的幅度相对于单光子幅度分布是10\%，20\%，
+%即5倍的Signal Noise Ratio (SNR)，10倍~SNR~。我们使用在探测器内均匀产生的正电子源，经过电子学模拟(不含后脉冲，过冲，暗噪声模拟),使用简单的求和方法重建波形，修正掉探测器的非均匀性，通过对总电荷做高斯拟合求出能量分辨率。拟合使用式~\ref{eq:p3model}~拟合分辨率。在水和白油两种~buffer~下的结果分别如图~\ref{fig:snr_1}~和图~\ref{fig:snr_2}~所示。
+%
+%\begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*5/4]{D:/Thesis/ucasthesis-master/Img/chap4/snr1}
+%    \caption{水屏蔽层不同信噪比情况下的能量分辨率}
+%    \label{fig:snr_1}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*5/4]{D:/Thesis/ucasthesis-master/Img/chap4/snr2}
+%    \caption{油屏蔽层不同信噪比情况下的能量分辨率}
+%    \label{fig:snr_2}
+%  \end{subfigure}
+%    \caption{不同信噪比对能量分辨率的影响}
+%  \label{fig:snr}
+%\end{figure}
+%
+%另外一种电子学噪声，来自读出电路的电荷分辨，可以认为其服从$\sqrt{N_{pe}}/10$的关系。即电子学对1个pe的分辨率为0.1个pe，对100个pe的分辨率为1个pe。我们计算源在不同位置时每个PMT 的期待电荷，计算方法为粒子能量*光产额*PMT 量子*液闪衰减*立体角*角度响应。计算完期待电荷后，我们按照$\sqrt{N_{pe}}/10$的关系对电荷做~smear~。我们发现，不会带来p0项。不同位置处，电子学噪声的影响见表~\ref{tab:tb2}~。能量分辨率的拟合使用公式~\ref{eq:p3model}~。
+%\begin{table}[htbp]
+%\centering  % 表居中
+%\begin{tabular}{lcccccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
+%\hline
+%粒子顶点在探测器不同半径处&0& R/4 &R/2 &3R/4 &R \\ \hline
+%\\ 能量分辨率拟合$p0$项 & 0 &0 &0 &0& 0
+%\\ 能量分辨率拟合$p1$项  & 3.062 &3.02 &2.911& 2.74 &2.494
+%\\能量分辨率拟合$p2$项 &  0.04534& 0.1076 &0.3588 &0.2879 &0.161
+%\\ \hline
+%\end{tabular}
+%\caption{电子学$\sqrt{N_{pe}}/10$噪声对能量分辨的影响}
+%\label{tab:tb2}
+%\end{table}
+%\subsubsection{传输线对电子学时间分辨影响的估算}
+%理想的导线为50欧阻抗，匹配阻抗后的结果是，信号幅度降为一般，上升沿不会变慢。但是实际导线有一定的带宽，能够传输的最高正弦波频率有上限。 因此实际传输线会使得信号幅度衰减，上升沿变缓。假设输入信号的上升时间为~$T_{in}$~，传输线的本征上升时间~$T_{cable}$~，输出信号的上升时间~$T_{Tout}$~，则满足~$T_{out}^2=T_{in}^2+T_{cable}^2$~。经验法则中，如果导线的本征上升时间小于信号上升时间的50\%，那么传输线造成的上升时间变大就小于10\%，影响可以忽略。从频域角度看，传输线带宽为信号带宽的两倍以上，导线对信号上升时间造成影响就可以忽略。对于大亚湾导线，型号为~RG303/U~，其衰减为~100~m~28.22~dB~,则70米的导线衰减为~0.7*28.22~dB，对应信号幅度衰减为10.27\%，该导线带宽为~400~MHz~，其本征上升时间：$0.35/0.4=0.875$~ns~，相对典型的PMT波形上升时间，其影响可以忽略。
+\section{本章总结}
+我们使用~Flash-ADC~通过波形采样来刻度大亚湾的电子学非线性。由于~PMT~输出波形存在过冲以及基线不稳定等原因，不能简单使用电荷积分方法拿到~Flash-ADC~对应的电荷数，必须通过波形拟合扣除掉早到达~PMT~的击中对后续击中基线的影响。波形模板拟合不依赖于参数化的模型，可以通过刻度单光子波形获得波形模板。本章第二部分对其有详细介绍。该波形重建方法，带来的电荷非线性在$\sim$1\%的水平。通过波形分析，对比了在1~GHz~和500~MHz~采样率下时间分辨,对于滨松20英寸的 PMT 来说，1 GHz 采样率下时间分辨可以达到50 ps 。良好的时间性能为开展一些物理研究提供了可能性，接下来的两章的研究内容，即依赖于探测器优异的时间性能。最后一部分为~PMT~暗噪声率对液闪能量分辨率的影响，通过拟合发现，暗噪声只会影响能量分辨率中的$p2$ 项，即能量分辨率模型中与能量无关的项， p2 随着暗噪声率增大及读出时间窗口增长而变大。
