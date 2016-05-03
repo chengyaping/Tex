@@ -12,7 +12,7 @@
 Nonlinearity_{  LS}=\left( \frac{E_{vis}}{E_{true}} \right) \quad\quad
 Nonlinearity_{  electronics}=\left( \frac{E_{rec}}{E_{vis}} \right)
 \end{eqnarray}
-本人参与电子学非线性的研究。电子学非线性是由于液体闪烁体慢成分和前端电子学以及离线电荷挑选方法共同作用导致的（参见关于电子学非线性的示意图\ref{fig:lscomp},~Cr~:~Soeren Jetter~）。液闪有约占6\%的慢成分，约有4-5\%的~PMT~击中发生在该~PMT~上最早击中出现时间的100~ns~以后。由于前段电子学的电荷积分窗口约为100~ns~，大于100~ns~的这部分击中不能被积分电路积分进去。由于大亚湾~PMT~使用正高压工作模式以及使用了隔直电容，~PMT~输出波形存在过冲，晚到达~PMT~的击中的基线会受到前一个击中的影响，为此离线算法只挑选每个~PMT~上记录下来的首次过域电荷值，并用于重建。随着可见光子数的增多，电子学的电荷搜集效率就会下降，出现非线性。通常用指数形式的公式~\ref{eq:elc}~来描述电子学非线性，$\alpha$和$\tau$为待拟合的浮动参数。
+本人参与电子学非线性的研究。电子学非线性是由于液体闪烁体慢成分和前端电子学以及离线电荷挑选方法共同作用导致的（参见关于电子学非线性的示意图\ref{fig:lscomp},~Cr~:~Soeren Jetter~）。液闪有约占6\%的慢成分，约有4-5\%的~PMT~击中发生在该~PMT~上最早击中出现时间的100~ns~以后。由于前段电子学的电荷积分窗口约为100~ns~，大于100~ns~ 的这部分击中不能被积分电路积分进去。由于大亚湾~PMT~使用正高压工作模式以及使用了隔直电容，~PMT~输出波形存在过冲，晚到达~PMT~的击中的基线会受到前一个击中的影响，为此离线算法只挑选每个~PMT~上记录下来的首次过域电荷值，并用于重建。随着可见光子数的增多，电子学的电荷搜集效率就会下降，出现非线性。通常用指数形式的公式~\ref{eq:elc}~ 来描述电子学非线性，$\alpha$和$\tau$为待拟合的浮动参数。
 \begin{eqnarray}
 \label{eq:elc}
 \frac{E_{vis}}{E_{rec}}=(1-\alpha e^{\frac{E_{rec}}{\tau}})
@@ -20,7 +20,7 @@ Nonlinearity_{  electronics}=\left( \frac{E_{rec}}{E_{vis}} \right)
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*3/2]{Img/chap4/elecins}
-    \caption{电子学非线性示意图}
+    \caption{电子学非线性示意图，cr：Soeren Jetter}
   \label{fig:lscomp}
 \end{figure}
 \subsection{电子学非线性~Flash-ADC~测试}
@@ -163,8 +163,8 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
 
 
 
-\subsection{模型无关的模板拟合算法}
-由于江门中微子实验使用了17000多个~PMT~，对每个~PMT~的波形做拟合，重建一个事例的波形需要大概12秒的时间。速度较慢，因此计划使用在挑选好的~IBD~样本和刻度数据上。通过波形模板拟合，从~PMT~采样波形中提取出时间和电荷。在江门离线软件框架中，该算法从~ElecFeeCrate~buffer~读取数据，然后将重建好的波形数据，电荷时间等存放到~RecEvent~数据模型中，用于后续事例顶点重建和能量重建，如图~\ref{fig:workflow}~。
+\subsection{模型无关的波形模板拟合算法}
+由于江门中微子实验使用了17000多个~PMT~，对每个~PMT~的波形做拟合，重建一个事例的波形需要大概12秒的时间。速度较慢，因此计划使用在挑选好的~IBD~样本和刻度数据上。通过波形模板拟合，从~PMT~采样波形中提取出时间和电荷。在江门离线软件框架中，该算法从~ElecFeeCrate~buffer~读取数据，然后将重建好的波形数据，电荷时间等存放到~RecEvent~ 数据模型中，用于后续事例顶点重建和能量重建，如图~\ref{fig:workflow}~。
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap4/workflow}
@@ -209,7 +209,7 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
     \caption{第一个ROI区域的拟合}
     \label{fig:fitdemo_1}
   \end{subfigure}%
-  %\quad\quad 
+  %\quad\quad
    \vspace{10 mm}
   \begin{subfigure}[b]{\MySubFactor\textwidth}
     \includegraphics[width=\textwidth]{D:/Thesis/ucasthesis-master/Img/chap4/fitdemon2}
@@ -328,18 +328,19 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
 %  \label{fig:evtdis}
 %\end{figure}
 \section{波形重建算法的应用研究}
-\subsection{波形模板重建本征非线性研究}
+\subsection{波形重建方法自身电荷非线性研究}
 波形重建算法引入的电荷非线性的大小，是挑选波形重建算法时需要考虑的重要因素。
 为了测试模板拟合算法的非线性，我们做了一组~blind test~。
 ~blind test~数据有两批，一组是~LED~刻度数据，多是单光子波形，我们可以从中获得单光子模板。另一组是物理数据，包含真实的由于液闪快慢成分以及事例顶点距离~PMT~过近可能出现的多光子信号堆积情况。所有的波形当中均加入了真实测试过程中看到的基线的快速振荡以及缓慢漂移这类噪声。测试使用的一个波形示例如图\ref{fig:test1}~。通过对比物理~run~的波形重建结果和~unblined~后的真实信息，我们发现，由于
 波形的模板拟合考虑了噪声和过冲带来的基线的形变，可以将波形重建算法引入的电荷非线性控制在1-2\%左右,图\ref{fig:non1}~。 而电荷积分方法简单的求和会出现非常大的非线性，严重影响到快信号能谱的测量,见图\ref{fig:non2}~。
-\begin{figure}[!htbp]
+
+\begin{figure}[!htb]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*1]{Img/chap4/test1}
-    \caption{波形重建非线性研究中使用的示例波形}
-  \label{fig:test1}
+   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/non2}
+    \caption{电荷积分方法波形重建效果：非线性非常大}
+  \label{fig:non2}
 \end{figure}
-\begin{figure}[!htbp]
+\begin{figure}[!htb]
   \centering
    \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/non1}
     \caption{模板拟合波形重建效果：非线性在1-2\%范围内}
@@ -347,12 +348,13 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
 \end{figure}
 \begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/non2}
-    \caption{电荷积分方法波形重建效果：非线性非常大}
-  \label{fig:non2}
+   \includegraphics[width=\MyFactor\textwidth*1]{Img/chap4/test1}
+    \caption{波形重建非线性研究中使用的示例波形}
+  \label{fig:test1}
 \end{figure}
-\subsection{~Flash-ADC~1~GHz~采样率和500~MHz~采样率对时间分辨的影响模拟}
-为了对比1~GHz~采样率和500~MHz~采样率对时间分辨的影响，我们使用了两种方法。实际探测器的时间分辨除了和采样率有关外，还受到~PMT~波形等的影响，我们这里是一种简化的研究方法。第一种使用从实验室获得的真实波形。波形来自~Hamamatsu~20~inches~R12860~。我们使用示波器获取~10G~Hz 采样率的波形，通过波形拟合得到的时间作为真实时间。然后将~10G~采样率的波形手动离散成~1G~和500~MHz~的数据。 再作用波形拟合算法到处理后的波形上，对比拟合得到的时间与``真实时间''，得到采样率对时间分辨的影响。测试结果表明使用1G采样率时间分辨是50ps，使用500MHz 采样率，时间分辨是139ps，结果如图~\ref{fig:tres}~。
+
+\subsection{~Flash-ADC~1~GHz~采样率和500~MHz~采样率对时间分辨的影响研究}
+为了对比1~GHz~采样率和500~MHz~采样率对时间分辨的影响，我们使用了两种方法。实际探测器的时间分辨除了和采样率有关外，还受到~PMT~波形等的影响，我们这里是一种简化的研究方法。第一种使用从实验室获得的真实波形。波形来自~Hamamatsu~20~inches~R12860~。我们使用示波器获取~10G~Hz 采样率的波形，通过波形拟合得到的时间作为真实时间。然后将~10G~ 采样率的波形手动离散成~1G~和500~MHz~的数据。 再作用波形拟合算法到处理后的波形上，对比拟合得到的时间与``真实时间''，得到采样率对时间分辨的影响。测试结果表明使用1G采样率时间分辨是50ps，使用500MHz 采样率，时间分辨是139ps，结果如图~\ref{fig:tres}~。
 %  \begin{figure}[!htbp]
 %  \centering
 %   \includegraphics[width=\MyFactor\textwidth*6/4]{Img/chap4/1g5m}
@@ -367,7 +369,7 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
   \label{fig:tres}
 \end{figure}
 
-另一种方法是使用~MC~波形。因为越快的上升沿需要越高的采样率，所以我们在~MC~中使用具有1-2~ns 上升沿的新型微通道板~PMT~波形~\ref{fig:mcp}~，来研究1~GHz~和500~MHz~下的波形重建结果的差别。 我们使用电子学模拟，并在模拟中加入高斯白噪声和过冲。假设~PMT~的渡越时间涨落是2~ns~，分别产生1~G~采样率的波形和500~MHz~采样率的波形。图~\ref{fig:tres2}~为~MC~下1~GHz~和500~MHz~的时间分辨率。图中横坐标（真实击中时间减去波形拟合时间）中心值约为-200~ns~，是由于电子学模拟中，人为加了200~ns~的时间偏移。如果假设时间分辨率服从如下规律：
+另一种方法是使用~MC~波形。因为越快的上升沿需要越高的采样率，所以我们在~MC~中使用具有1-2~ns 上升沿的新型微通道板~PMT~ 波形~\ref{fig:mcp}~，来研究1~GHz~和500~MHz~下的波形重建结果的差别。 我们使用电子学模拟，并在模拟中加入高斯白噪声和过冲。假设~PMT~的渡越时间涨落是2~ns~，分别产生1~G~采样率的波形和500~MHz~采样率的波形。图~\ref{fig:tres2}~为~MC~下1~GHz~ 和500~MHz~的时间分辨率。图中横坐标（真实击中时间减去波形拟合时间）中心值约为-200~ns~，是由于电子学模拟中，人为加了200~ns~的时间偏移。如果假设时间分辨率服从如下规律：
 \begin{eqnarray}
 \sigma_{tot}=\sqrt{{\sigma_{tts}}^2+{\sigma_{FADC}}^2}
 \end{eqnarray}
@@ -385,7 +387,7 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
     \caption{ MC 模拟的1 GHz 和500 MHz 波形的时间分辨 }
   \label{fig:tres2}
 \end{figure}
-\section{~PMT~暗噪声率对能量分辨率的影响}
+\section{~PMT~暗噪声对能量分辨率的影响}
 \subsection{液闪中的能量分辨率}
 在文献\citep{scholermann1980optimizing}中，闪烁体探测器的能量分辨表示成如下公式~\ref{eq:nimmodle}~。
 \begin{equation}\label{eq:nimmodle}
@@ -441,35 +443,57 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
 %\end{figure}
 %\subsubsection{~PMT~暗噪声率的影响}
 该研究可以通过~ToyMC~来做。~PMT~上实际观测到的电荷和预期电荷的关系可用泊松分布描述。其中源在不同位置时每个 PMT 上的期待电荷的计算方法为：粒子能量*光产额* PMT 量子效率*修正因子(液闪衰减，立体角，角度响应)。使用极大似然拟合方法，可以计算出粒子能量。
-在~ToyMC~中添加暗噪声时，假设读出时间窗口大小为~300~或者~500~ns，噪声率为10~KHz~和15~KHz~。则 N 个 PMT 上有 j 个暗噪声的概率可以表示为$C_N^jP^j(1-P)^{N-j}$，其中 P 为每个 PMT 上预期的暗噪声个数，大小为读出时间窗口长度乘以暗噪声率。然后将这 j 个暗噪声随机加到 PMT 上。在能量重建过程中，要加上~PMT~暗噪声带来的期待电荷项，拟合后发现，~PMT~暗噪声不会带来常数项，p1 项与理想情况相同2.87。 p2~项随暗噪声增大变大。 p2~ 项在15KHz~300ns~ 读出时间窗的情况下为1.044。在15KHz, 500 ns 读出时间窗下为1.526，在20 KHz 500 ns~读出时间窗口下为2.374，见图 ~\ref{fig:dr}~。该研究给出了考虑暗噪声后的能量重建方法：在期待电荷中添加暗噪声 Hit 的期望值。通过测试发现，暗噪声只影响能量分辨率模型中的 p2 项，与能量无关。
+在~ToyMC~中添加暗噪声时，假设读出时间窗口大小为~300~或者~500~ns，噪声率为15~KHz~和50~KHz~。则 N 个 PMT 上有 j 个暗噪声的概率可以表示为$C_N^jP^j(1-P)^{N-j}$，其中 P 为每个 PMT 上预期的暗噪声个数，大小为读出时间窗口长度乘以暗噪声率。然后将这 j 个暗噪声随机加到 PMT 上。在能量重建过程中，要加上~PMT~暗噪声带来的期待电荷项，拟合后发现，~PMT~暗噪声不会带来常数项，p1 项与理想情况相同2.87。 p2~项随暗噪声增大变大。 p2~ 项在15KHz~300ns~ 读出时间窗的情况下为1.044。在15KHz, 500 ns 读出时间窗下为1.526，在50 KHz 500 ns~读出时间窗口下为2.374，见图 ~\ref{fig:dr}~。该研究给出了考虑暗噪声后的能量重建方法：在期待电荷中添加暗噪声 Hit 的期望值。通过对比测试发现，暗噪声只影响能量分辨率模型中的 p2 项，与能量无关，参见表~\ref{tab:tb2}~。
+\begin{table}[htb]
+\centering  % 表居中
+\begin{tabular}{lcccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
+\hline
+暗噪声率大小 :[KHz]&0& 15 &15 &50  \\ \hline
+读出窗口长度 :[ns]&300& 300 &500 &500 \\ \hline
+\\ 能量分辨率拟合$p0$项 &0&0.0001405&-0.00001272&0.0000192
+\\ 能量分辨率拟合$p1$项  &2.874&2.87&2.87&2.869
+\\能量分辨率拟合$p2$项 & 0&1.044&1.526&2.37
+\\ \hline
+\end{tabular}
+\caption{不同暗噪声率情况下，使用公式~\ref{eq:p3model}~的能量分辨率拟合结果}
+\label{tab:tb2}
+\end{table}
+
+
  \begin{figure}[!htbp]
   \centering
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*5/6]{D:/Thesis/ucasthesis-master/Img/chap4/dr1}
-    \caption{%15KHz暗噪声300~ns~读出窗口情况下，16720个
-    PMT上暗噪声总数的分布}
-    \label{fig:dr_1}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr2}
-    \caption{15KHz，300~ns~}
-    \label{fig:dr_2}
-  \end{subfigure}
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr3}
-    \caption{15KHz，500~ns~}
-    \label{fig:dr_3}
-  \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
-  \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr4}
-    \caption{50KHz，500~ns~}
-    \label{fig:dr_4}
-  \end{subfigure}
-  \caption{不同暗噪声率情况下，能量分辨率的拟合，未加暗噪声时，p0 为2.874，p1 和 p2 项为0 }
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap4/sumdr}
+    \caption{不同暗噪声率情况下的能量分辨率}
   \label{fig:dr}
 \end{figure}
+% \begin{figure}[!htbp]
+%  \centering
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*5/6]{D:/Thesis/ucasthesis-master/Img/chap4/dr1}
+%    \caption{%15KHz暗噪声300~ns~读出窗口情况下，16720个
+%    PMT上暗噪声总数的分布}
+%    \label{fig:dr_1}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr2}
+%    \caption{15KHz，300~ns~}
+%    \label{fig:dr_2}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr3}
+%    \caption{15KHz，500~ns~}
+%    \label{fig:dr_3}
+%  \end{subfigure}%
+%  \quad\quad\quad\quad\quad\quad%add desired spacing
+%  \begin{subfigure}[b]{\MySubFactor\textwidth}
+%    \includegraphics[width=\textwidth*3/3]{D:/Thesis/ucasthesis-master/Img/chap4/dr4}
+%    \caption{50KHz，500~ns~}
+%    \label{fig:dr_4}
+%  \end{subfigure}
+%  \caption{不同暗噪声率情况下，能量分辨率的拟合，未加暗噪声时，p0 为2.874，p1 和 p2 项为0 }
+%  \label{fig:dr}
+%\end{figure}
 %\subsubsection{电子学噪声的影响}
 %电子学噪声的影响分为两种，一种是基线涨落的影响。我们分别假设基线涨落的幅度相对于单光子幅度分布是10\%，20\%，
 %即5倍的Signal Noise Ratio (SNR)，10倍~SNR~。我们使用在探测器内均匀产生的正电子源，经过电子学模拟(不含后脉冲，过冲，暗噪声模拟),使用简单的求和方法重建波形，修正掉探测器的非均匀性，通过对总电荷做高斯拟合求出能量分辨率。拟合使用式~\ref{eq:p3model}~拟合分辨率。在水和白油两种~buffer~下的结果分别如图~\ref{fig:snr_1}~和图~\ref{fig:snr_2}~所示。
@@ -508,4 +532,4 @@ U^1_{os}.exp(-\frac{1}{2}(\frac{t-t_0}{\sigma_{os}}^2))$}
 %\subsubsection{传输线对电子学时间分辨影响的估算}
 %理想的导线为50欧阻抗，匹配阻抗后的结果是，信号幅度降为一般，上升沿不会变慢。但是实际导线有一定的带宽，能够传输的最高正弦波频率有上限。 因此实际传输线会使得信号幅度衰减，上升沿变缓。假设输入信号的上升时间为~$T_{in}$~，传输线的本征上升时间~$T_{cable}$~，输出信号的上升时间~$T_{Tout}$~，则满足~$T_{out}^2=T_{in}^2+T_{cable}^2$~。经验法则中，如果导线的本征上升时间小于信号上升时间的50\%，那么传输线造成的上升时间变大就小于10\%，影响可以忽略。从频域角度看，传输线带宽为信号带宽的两倍以上，导线对信号上升时间造成影响就可以忽略。对于大亚湾导线，型号为~RG303/U~，其衰减为~100~m~28.22~dB~,则70米的导线衰减为~0.7*28.22~dB，对应信号幅度衰减为10.27\%，该导线带宽为~400~MHz~，其本征上升时间：$0.35/0.4=0.875$~ns~，相对典型的PMT波形上升时间，其影响可以忽略。
 \section{本章总结}
-我们使用~Flash-ADC~通过波形采样来刻度大亚湾的电子学非线性。由于~PMT~输出波形存在过冲以及基线不稳定等原因，不能简单使用电荷积分方法拿到~Flash-ADC~对应的电荷数，必须通过波形拟合扣除掉早到达~PMT~的击中对后续击中基线的影响。波形模板拟合不依赖于参数化的模型，可以通过刻度单光子波形获得波形模板。本章第二部分对其有详细介绍。该波形重建方法，带来的电荷非线性在$\sim$1\%的水平。通过波形分析，对比了在1~GHz~和500~MHz~采样率下时间分辨,对于滨松20英寸的 PMT 来说，1 GHz 采样率下时间分辨可以达到50 ps 。良好的时间性能为开展一些物理研究提供了可能性，接下来的两章的研究内容，即依赖于探测器优异的时间性能。最后一部分为~PMT~暗噪声率对液闪能量分辨率的影响，通过拟合发现，暗噪声只会影响能量分辨率中的$p2$ 项，即能量分辨率模型中与能量无关的项， p2 随着暗噪声率增大及读出时间窗口增长而变大。
+我们使用~Flash-ADC~通过波形采样来刻度大亚湾的电子学非线性。由于~PMT~输出波形存在过冲以及基线不稳定等原因，不能简单使用电荷积分方法拿到~Flash-ADC~对应的电荷数，必须通过波形拟合扣除掉早到达~PMT~的击中对后续击中基线的影响。波形模板拟合不依赖于参数化的模型，可以通过刻度单光电子波形获得波形模板。本章第二部分对其有详细介绍。该波形重建方法，带来的电荷非线性在$\sim$1\%的水平。通过波形分析，对比了在1~GHz~和500~MHz~采样率下时间分辨,对于滨松20英寸的 PMT 来说，1 GHz 采样率下时间分辨可以达到50 ps 。良好的时间性能为开展一些物理研究提供了可能性，接下来的两章的研究内容，即依赖于探测器优异的时间性能。最后一部分为~PMT~暗噪声率对液闪能量分辨率的影响，通过拟合发现，暗噪声只会影响能量分辨率中的$p2$ 项，即能量分辨率模型中与能量无关的项， p2 随着暗噪声率增大及读出时间窗口增长而变大。

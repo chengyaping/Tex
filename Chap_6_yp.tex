@@ -2,15 +2,16 @@
 \chapter{液体闪烁体探测器中超新星定位}
 \label{chap:chap6}
 \section{超新星简介}
-\subsection{超新星分类}
-恒星的一生在经历了分子云，原恒星，主序星历程后，演化成红巨星，红巨星是恒星的成熟阶段。根据恒星质量的不同，恒星走向了不同的死亡阶段。超新星并不是新星，它是中大质量恒星的死亡阶段。超新星爆发是恒星世界中已知的最激烈的爆发现象，根据前身星质量的不同，超新星爆发后形成黑洞或者中子星。
-~1941~年, 天文学家~R.Minkowski~提出根据超新星光谱中是否存在氢吸收线，将超新星分成
-\uppercase\expandafter{\romannumeral1}类和\uppercase\expandafter{\romannumeral2}类\citep{minkowski1941spectra}。
+\subsection{超新星简介}
+恒星的一生在经历了分子云，原恒星，主序星历程后，演化成红巨星。根据恒星质量的不同，恒星走向了不同的死亡阶段。1941年, 天文学家~R.Minkowski~提出根据超新星光谱中是否存在氢吸收线，将超新星分成
+\uppercase\expandafter{\romannumeral1}类和\uppercase\expandafter{\romannumeral2}类\citep{minkowski1941spectra}。除了\uppercase\expandafter{\romannumeral1}$_a$类型以外的超新星是核坍缩类型的，是恒星的死亡阶段。超新星爆发是恒星世界中已知的最激烈的爆发现象，根据前身星质量的不同，超新星爆发后形成黑洞或者中子星。
+
 \subsection{超新星爆发与中微子}
-处于主序星阶段的恒星，靠热核反应产生的向外辐射压与恒星自身的引力保持平衡。恒星演化到晚期，大部分氢被燃烧为氦之后，氢燃烧产生的热压力抵抗不了自身的重力。于是恒星开始坍缩，恒星内部温度升高。当温度的升高至点燃了氦，开始氦燃烧成为碳的核反应，这样热压力又大于引力，恒星向外扩张，直至达到新的平衡。恒星经历了从收缩到膨胀，从膨胀再到收缩的过程。其自身从燃烧氢到碳、氧、硅、镁等重核素，直到燃烧到铁。这样大质量恒星在其演化末期，会形成一系列同心壳层，从外到内分别是氢、碳、氧、硅、铁等壳层。但是在形成铁壳层的过程中，不但不产生能量，反而吸收能量。向外的辐射压不能抵抗它自身的引力，星体内部平衡态会被打破，物质开始向恒星中心快速坍缩，使密度变大，核体变硬。这就是所谓的核坍塌超新星的开始。到坍塌的末期，核变硬超过某一极限值时，发生核反弹。中心向外反弹的物质与向中心坍缩的物质迎面相碰，引起了激烈的爆炸，中心变硬的内核最终会演变成为中子星或者黑洞。这就是\uppercase\expandafter{\romannumeral2}型超新星爆发的基本过程。发生这种爆炸的恒星的前身星质量一般大于8个太阳质量。详细内容可以参考
+处于主序星阶段的恒星，靠热核反应产生的向外辐射压与恒星自身的引力保持平衡。恒星演化到晚期，大部分氢被燃烧为氦之后，氢燃烧产生的热压力抵抗不了自身的重力。于是恒星开始坍缩，恒星内部温度升高。当温度的升高至点燃了氦，开始氦燃烧成为碳的核反应，这样热压力又大于引力，恒星向外扩张，直至达到新的平衡。恒星经历了从收缩到膨胀，从膨胀再到收缩的过程。其自身从燃烧氢到碳、氧、硅、镁等重核素，直到燃烧到铁。这样大质量恒星在其演化末期，会形成一系列同心壳层，从外到内分别是氢、碳、氧、硅、铁等壳层。但是由于铁核的比结合能最大，不能再通过核反应产生能量，向外的电子简并压不能抵抗恒星自身的引力，星体内部平衡态会被打破，物质开始向恒星中心快速坍缩，使密度变大，核体变硬。这就是所谓的核坍塌超新星的开始。到坍塌的末期，核变硬超过某一极限值时，发生核反弹。这些中心向外反弹的物质形成冲击波。中心变硬的内核最终会演变成为中子星或者黑洞。这就是\uppercase\expandafter{\romannumeral2}型超新星爆发的基本过程。发生这种爆炸的恒星的前身星质量一般大于8个太阳质量。详细内容可以参考
 \citep{bethe1990supernova}。
 
-在\uppercase\expandafter{\romannumeral2}型超新星爆发过程中，会产生大量的各种不同味道的中微子和反中微子，通常认为如此多的中微子主要产生于两个阶段，第一阶段，坍缩阶段，持续时间仅仅约10毫秒，通过原子核俘获电子和反贝塔衰变产生大量电子中微子，带走约1-3\%的引力结合能；第二次阶段，冷却阶段，持续时间大约~10~ 秒，通过正负电子对湮灭、电子-核子轫致辐射、光子湮灭等粒子核反应Eq.~(\ref{eq:q1}) 产生大量各种不同味的中微子，中微子会带走96-98\% 的引力结合能。在超新星爆发过程几秒种内产生的中微子比该恒星一生中其他时间产生的中微子总和还要多。另外由于高温下，中微子带走的能量损失率非常大，它将使星体核心迅速冷却，压强急剧地下降，加速了星体引力坍缩过程。
+在\uppercase\expandafter{\romannumeral2}型超新星爆发过程中，会产生大量的各种不同味道的中微子和反中微子，通常认为如此多的中微子主要产生于三个阶段。第一阶段，坍缩阶段，持续时间仅仅约10毫秒，通过原子核俘获电子和反贝塔衰变产生大量电子中微子，带走约1-3\%的引力结合能。第二阶段，吸积阶段，持续时间为几十到几百毫秒。核反弹形成的原初冲击波需要额外的能量才能继续爆发，一般认为中微子是提供给冲击波能量的主要因素，这称为中微子驱动的延迟爆发机制，该阶段产生的$\nu_e$及$\bar{\nu_e}$ 的流强大约为$\nu_x$的2 倍。第三阶段，冷却阶段，持续时间大约10 秒，通过正负电子对湮灭、电子-核子轫致辐射、光子湮灭等粒子核反应（如公式 Eq.~(\ref{eq:q1})）产生大量各种不同味道的中微子，中微子会带走96-98\% 的引力结合能。
+在超新星爆发过程几秒种内产生的中微子比该恒星一生中其他时间产生的中微子总和还要多。%另外由于高温下，中微子带走的能量损失率非常大，它将使星体核心迅速冷却，压强急剧地下降，加速了星体引力坍缩过程。
 由于核坍缩式超新星爆发过程中，中微子可以迅速从超新星核内逃出，因此通常比光学信号早几个小时被观察到。综合世界范围内的中微子探测器，可以给天文学家提供可靠的早期预警，称为超新星预警系统（SNEWS）。SNEWS 的目标是为天文学界提供快速准确的银河系星体核塌缩事件预警。
 \begin{equation}\label{eq:q1}
 \begin{split}
@@ -23,7 +24,7 @@
 \section{~JUNO~对超新星中微子的探测}
 \subsection{~JUNO~中超新星中微子反应道}
 江门实验中，可以探测6个超新星中微子反应道。可以按照带电流（CC）和中性流(NC) 反应道分为两大类，如表\ref{tab:t61}所示。表\ref{tab:t61}还给出了各反应道的能量阈值以及可能的后续反应。
-\begin{table}[htbp]
+\begin{table}[htb]
 \centering  % 表居中
 \begin{tabular}{ccccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
 \hline
@@ -32,46 +33,48 @@
 \\   2& CC& $ \bar{\nu_{e}}   +^{12}C \rightarrow ^{12}B+e^{+} $ & $^{12}B\rightarrow^{12}C+e^{-}+ \bar{\nu_{e}}$ &14.4% \\ 表示重新开始一行
 \\   3&CC & $ \nu_{e}+^{12}C \rightarrow ^{12}N+e^{-}$ &  $^{12}N\rightarrow^{12}C+e^{+}+ \nu_{e}$   &17.3% \\ 表示重新开始一行
 \\   4& NC&$\nu+^{12}C \rightarrow \nu+ ^{12}C^{*}$ &  $^{12}C^{*}\rightarrow^{12}C+\gamma  $&15.1% \\ 表示重新开始一行
-\\   5& NC&$\nu+e^{-} \rightarrow \nu+e^{-}$& \text{-} &-% \\ 表示重新开始一行
+\\   5& ES&$\nu+e^{-} \rightarrow \nu+e^{-}$& \text{-} &-% \\ 表示重新开始一行
 \\   6& NC& $\nu+p \rightarrow \nu+p $ & - &-% \\ 表示重新开始一行
 \\ \hline
 \end{tabular}
-\caption{超新星探测的中性流和带电流反应道。第4列和第5列分别显示了其后续反应道及该反应道的能量阈值。}
+\caption{超新星探测的中性流和带电流反应道，第4列和第5列分别显示了其后续反应道及该反应道的能量阈值}
 \label{tab:t61}
 \end{table}
-超新星的定位研究依赖于第1个反贝塔衰变（Invese Beta Decay ）和第5个中微子电子弹性散射(Elastic scattering)反应道。IBD 反应道只对~$\bar{\nu_{e}}$~ 敏感。这一反应道非常重要，一是它反应截面大，事例率远远高于其他通道。另一原因是利用正电子和中子的在空间和时间上的符合，可以挑出比较干净的IBD 事例。IBD 事例的挑选条件如下\citep{an2015neutrino}:
+超新星的定位研究依赖于第1个反贝塔衰变（Invese Beta Decay ）和第5个中微子电子弹性散射(Elastic scattering)反应道。IBD 反应道只对~$\bar{\nu_{e}}$~敏感。这一反应道非常重要，一是它反应截面大，事例率远远高于其他通道。另一原因是利用正电子和中子在空间和时间上的符合，可以挑出比较干净的IBD 事例。IBD 事例的挑选条件如下\citep{an2015neutrino}:
 \begin{enumerate}
-\item 探测器有效体积~cut~，要求事例顶点R小于17m；
-\item IBD反应快信号能量~cut~，要求大于 0.7 MeV，小于 12 MeV;
-\item IBD反应慢信号能量~cut~，要求大于 1.9 MeV，小于 2.5 MeV;
-\item 快慢信号时间间隔小于 1.0 毫秒；
-\item 快慢信号距离~cut~小于 1.5 m;
+\item 探测器有效体积~cut~，要求事例顶点R小于17~m~；
+\item IBD反应快信号能量~cut~，要求大于0.7~MeV~，小于60~MeV~（反应堆~IBD~事例,要求小于12~MeV~）;
+\item IBD反应慢信号能量~cut~，要求大于1.9~MeV~，小于2.5~MeV~;
+\item 快慢信号时间间隔小于1.0毫秒；
+\item 快慢信号距离~cut~小于1.5~m~;
 \end{enumerate}
 上述挑选条件的挑选效率可达91.8\%。\\
 中微子电子弹性散射这一道，对各种味道的中微子都敏感，而且对中微子的能量没有要求。该反应道对电子型中微子反应截面最大，对探测超新星的~$\nu_e$~burst 非常重要。水切伦科夫探测器，通常通过重建散射电子的方向来确定超新星方向。
 
 \subsection{~JUNO~中各反应道的事例数}
-这部分的详细说明参见\citep{an2015neutrino}。图\ref{fig:nuspec}展示的结果是使用参数化的公式Eq.(~\ref{eq:flux}) 计算时间积分后的中微子总流强。其中$\epsilon$表示一次超新星爆发中微子带走的总能量，通常取值为$3\times10^{53}$erg。 $f_i$和 $\alpha$ 在计算中取值分别为$\frac{1}{6}$。 平均中微子能量$<E_{\nu_e,\bar{\nu_e},\nu_x}>$ 取了有代表性的12MeV, 14MeV, 16MeV 。超新星距离D 假设为10~kpc~。$T_i$ 定义为$T_i = <E_i> /(\alpha+1)$。
+这部分的详细说明参见\citep{an2015neutrino}。图\ref{fig:nuspec}展示的结果是使用参数化的公式Eq.（5.2）计算时间积分后的中微子总流强。其中$\epsilon$表示一次超新星爆发中微子带走的总能量，通常取值为$3\times10^{53}$~erg~。 $f_i$ 和 $\alpha$ 在计算中取值分别为1/6。平均中微子能量$<E_{\nu_e,\bar{\nu_e},\nu_x}>$ 取了有代表性的12~MeV~, 14~MeV~, 16~MeV~。超新星距离~D~假设为10~kpc~。$T_i$ 定义为$T_i = <E_i> /(\alpha+1)$。
 \begin{equation}\label{eq:flux}
 \Phi_i=\frac{\epsilon f_i}{4\pi D^2}\frac{E^{\alpha} exp(-E/T_i)}{T^{\alpha+2}_{i}\Gamma(\alpha+2)}
 \end{equation}
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*6/6]{Img/chap6/nuspec}
     \caption{参数化的中微子流强模型（点线）及中微子截面（绿线），探测器观测到的能谱形状（红线）}
   \label{fig:nuspec}
 \end{figure}
-图\ref{fig:pnuN} 中中微子质子弹性弹性散射的事例数，考虑到~$^{14}C$~本底，为加完反冲质子的能量大于0.2MeV~cut~ 后的事例个数。中微子质子散射出来的反冲质子在液闪中沉积能量，淬灭效应比较明显，最终可见能量较小。由于液体闪烁体探测器中存在大量的~$^{14}C$~,~$^{14}C$~ 贝塔衰变发出的电子的最大能量为156.5KeV，平均能量为49.16KeV。 ~$^{14}C$~ 本底的在超新星爆发10 秒钟内的事例数的有将近10 万个。估算过程如下。20kt LAB （化学式为$C_{18}H_{30}$）中$^{12}C$ 的个数为:$8.98*10^{32}$(根据LAB 摩尔质量估算)。假设LAB 中~$^{14}C$~/~$^{12}C$~ 分别为$2*10^{-18}$ 和$1*10^{-12}$，前者为已知的broexino 实验达到的水平，后者为普通地面材料中~$^{14}C$~/~$^{12}C$~的水平。~$^{14}C$~ 的半衰期为5700年，则10 秒内在$2*10^{-18}$ 情况下~$^{14}C$~ 事例数为7万个。如果我们要求末态电子的能量大于0.2~MeV~，可以丢掉几乎全部的~$^{14}C$~ 本底。
+
+
+图\ref{fig:pnuN} 中中微子质子弹性散射的事例数，考虑到~$^{14}C$~本底，为加完反冲质子的能量大于0.2~MeV~cut~后的事例个数。中微子质子散射出来的反冲质子在液闪中沉积能量，淬灭效应比较明显，最终可见能量较小。由于液体闪烁体探测器中存在大量的~$^{14}C$~,~$^{14}C$~贝塔衰变发出的电子的最大能量为156.5~KeV~，平均能量为49.16~KeV~。 ~$^{14}C$~本底在超新星爆发10秒钟内的事例数有将近10万个。可做如下简单估算。20~kt~LAB~（化学式为$C_{18}H_{30}$）中$^{12}C$的个数为：8.98*10$^{32}$(根据~LAB 摩尔质量估算)。假设~LAB 中~$^{14}C$~/~$^{12}C$~ 分别为2*10$^{-18}$和1*10$^{-12}$，前者为已知的~broexino~实验达到的水平，后者为普通地面材料中~$^{14}$C~/~$^{12}$C~的水平。~$^{14}$C~的半衰期为5700年，则10秒内在2*10$^{-18}$情况下~$^{14}$C~事例数为7万个。如果我们要求末态电子的能量大于0.2~MeV~，可以丢掉几乎全部的~$^{14}$C~本底。
 \begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/nuN}
-    \caption{一次典型的来自银河系中心10kpc超新星爆发江门实验探测到的中微子事例数}
+   \includegraphics[width=\MyFactor\textwidth*9/5]{Img/chap6/nuN}
+    \caption{一次典型的来自银河系中心10kpc超新星爆发江门实验探测到的中微子事例数，来自黄皮书}
   \label{fig:pnuN}
 \end{figure}
 
 \section{液闪中超新星定位方法:中微子反贝塔衰变}
 \subsection{基本原理}
-在IBD反应$\bar{\nu_e} + p \rightarrow e^+ + n$中，正电子和中子相对于入射中微子的角分布在文献\citep{vogel1999angular} 中给出了详细的计算过程。低能情况下，出射正电子相对与入射中微子几乎各项同性分布，略微后倾，见图~Fig(\ref{fig:epnu})~。 出射中子相对于入射中微子方向强烈前倾,中子相对于中微子的发射角与入射中微子能量及中子动能相关如图\ref{fig:nnu}。 图中红线中微子能量为4~MeV~，蓝线中微子能量为6~MeV~。文献\citep{apollonio1999determination}给出了利用反贝塔衰变道确定中微子方向的方法，以及在超新星定位上的应用。我们首先考虑中子从产生到最后被俘获放出伽马的相互作用过程。
+在IBD反应$\bar{\nu_e} + p \rightarrow e^+ + n$中，正电子和中子相对于入射中微子的角分布在文献\citep{vogel1999angular} 中给出了详细的计算过程。低能情况下，出射正电子相对与入射中微子几乎各向同性分布，略微后倾，见图~Fig(\ref{fig:epnu})~。 出射中子相对于入射中微子方向强烈前倾,中子相对于中微子的发射角与入射中微子能量及中子动能相关，如图\ref{fig:nnu}。 图中红线中微子能量为4~MeV~，蓝线中微子能量为6~MeV~。文献\citep{apollonio1999determination}给出了利用反贝塔衰变道确定中微子方向的方法，以及在超新星定位上的应用。我们首先考虑中子从产生到最后被俘获放出伽马的相互作用过程。
 \begin{figure}[!htb]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
@@ -91,11 +94,11 @@
 
 中子通过在氢原子上的多次散射慢化为热中子。在每次散射过程中，出射中子方向相对于入射中子方向并不是各项同性的，仍然可以保留初始中子的方向信息。中子在液体闪烁体中的平均自由程约为1~cm~。假设中子在氢原子上弹性散射，每次碰撞损失一半动能。一个3~MeV~的中微子通过~IBD~ 反应产生的中子的初始速度大约为1.36$\times$10$^6$~m/s~。 俘获前热中子的速度为2.2$\times$10$^3$~m/s~，那么我们可以根据自由程估算出中子慢化前经过的碰撞次数约为18次，花费时间约为11微秒。 在每次散射过程中，出射中子的方向与原来的方向的关系为：
 \begin{equation}\label{eq:flux}
-\bar{cos\theta_n}=\frac{2}{3A}
+\overline{cos\theta_n}=\frac{2}{3A}
 \end{equation}
 中子散射过程中可以保持一定的方向性，因此俘获顶点与正电子方向连线可以代表中子方向。中子在氢上俘获后产生的伽马在液闪中几十厘米的自由程使重建中子俘获顶点有较大弥散（液闪中，1~MeV~伽马可以走约20~cm~）。中子在氢上俘获只产生一个伽马, 中子在掺杂~Gd~的液闪中，在~Gd~上俘获通常产生3到4个伽马，这样由于不同方向伽马的抵消作用，伽马较长自由程带来的中子俘获顶点弥散应该比普通液闪稍小。%模拟结果见图
 %\ref{fig:pgdls}，左右两张图的中间两张图显示了掺~Gd~液闪对中子的方向的确定有微弱好处。
-另外通过很多个事例的平均，也可以抵消伽马带来的顶点弥散，平均之后看到的效果是~neutrino wind~产生的中子俘获顶点的位置。因此可以代表中微子方向。
+另外通过很多个事例的平均，也可以抵消伽马带来的顶点弥散，平均之后看到的效果是特定方向的中微子源产生的中子俘获顶点的位置。因此可以代表中微子方向。
 %在IBD反应中，正电子相对入射中微子方向是各项同性的，中子相对于中微子强烈前倾\citep{vogel1999angular}。
 %通过时间窗，挑选最早的那批~Hit~，这样就可以挑到尽可能多的切伦科夫光子。对于产生在探测器中心的事例，挑选Hit time小于98.8ns 的Hit，
 %其中时间窗的确定方法为~~
@@ -109,33 +112,53 @@
 %  \label{fig:pgdls}
 %\end{figure}
 \subsection{方法与结果}
-利用中子在动量方向的前冲，确定中微子方向的方法可以用~Eq.(\ref{eq:m1})~ 表示。其中~$\vec{p}$~ 表示待估计的中微子方向， ~$i$~表示一次超新星爆发中所有~IBD~事例的编号， ~$\vec{X_{n}}$~ 表示重建中子的顶点位置， ~$\vec{X_{e^+}}$~ 表示重建出来的正电子顶点位置。
+利用中子在动量方向的前冲，确定中微子方向的方法可以用~Eq.(\ref{eq:m1})~表示。其中~$\vec{p}$~表示待估计的中微子方向，$i$表示一次超新星爆发中所有~IBD~事例的编号，~$\overrightarrow{X_{n}}$~表示重建中子的顶点位置，~$\overrightarrow{X_{e^+}}$~表示重建出来的正电子顶点位置。
 \begin{equation}\label{eq:m1}
-\vec{q} = \frac{1}{N}\sum_{i}(\vec{X_{n}}-\vec{X_{e^+}})
+\vec{q} = \frac{1}{N}\sum_{i}(\overrightarrow {X_{n}}-\overrightarrow{X_{e^+}})
 \end{equation}
 
-图\ref{fig:epnnu}显示了反贝塔衰变快慢信号连线在入射中微子方向连线的投影的大小,从图中我们可以看到连线方向相对中微子方向前倾。来自10 kpc 的一次超新星爆发，大约有5000个 IBD 事例， 根据简单的矢量平均方法得到的1倍$\sigma$ 68.3\% ~C.L.~ 角度误差为13.6$\deg$。 考虑到顶点重建精度，目前的重建算法，在1 ns tts 假设下，给出的重建顶点精度约为$12cm/\sqrt{E}$。 这时的1 倍$\sigma$角度误差为14.9$\deg$, 如图\ref{fig:ibdf}。
+图\ref{fig:epnnu}显示了反贝塔衰变快慢信号连线在入射中微子方向连线的投影的大小,从图中我们可以看到连线方向相对中微子方向前倾。来自10 kpc 的一次超新星爆发，大约有5000个 IBD 事例， 根据简单的矢量平均方法得到的1倍$\sigma$ 68.3\%置信度角度误差为13.6$^\circ$。 考虑到顶点重建精度，目前的重建算法，在1 ns~PMT~渡越时间假设下，给出的重建顶点精度约为12~cm~/$\sqrt{E}$。 这时的1倍$\sigma$角度误差为14.9$^\circ$, 如图\ref{fig:ibdf}。
 
 %利用中子在动量方向的前冲，确定中微子方向的方法可以用~Eq.(\ref{eq:m1})~ 表示。其中~$\vec{d_{0}}$~ 表示待估计的中微子方向， ~$q_{i}$~表示进入时间窗挑选窗口的Hit 对应PMT 上搜集到的电荷数， ~$\vec{P_{i}}$~ 表示PMT中心位置， ~$\vec{O_{0}}$~ 表示重建的顶点的位置。
 %\begin{equation}\label{eq:m1}
 %%\vec{d_0}=\sum_{i}q_{i}\times\frac{\vec{P_i}-\vec{O_0}}{\left|\vec{P_i}-\vec{O_0}\right|}
 %\end{equation}
+%\begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/epnnu}
+%    \caption{反贝塔衰变中正电子中子在入射中微子方向的投影}
+%  \label{fig:epnnu}
+%\end{figure}
+%\begin{figure}[!htbp]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/ibdresult}
+%    \caption{使用反贝塔衰变反应道，来自10~kpc~的超新星的定位精度}
+%  \label{fig:ibdf}
+%\end{figure}
+
 \begin{figure}[!htbp]
+\begin{minipage}[t]{0.48\linewidth}
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/epnnu}
-    \caption{反贝塔衰变中正电子中子在入射中微子方向的投影}
+   \includegraphics[width=\MyFactor\textwidth*5/3]{Img/chap6/epnnu}
+    \caption{ 反贝塔衰变中正电子中子在入射中微子方向的投影}
   \label{fig:epnnu}
-\end{figure}
-\begin{figure}[!htbp]
+  \end{minipage}
+ \quad\quad
+  \begin{minipage}[t]{0.48\linewidth}
+%\end{figure}
+%\begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/ibdresult}
+   \includegraphics[width=\MyFactor\textwidth*5/3]{Img/chap6/ibdresult}
     \caption{使用反贝塔衰变反应道，来自10~kpc~的超新星的定位精度}
   \label{fig:ibdf}
+    \end{minipage}
 \end{figure}
 
+
+
 \subsection{大亚湾实验中中微子方向与反应堆关系研究}
-我们使用大亚湾从2011年12月24号到2013年11月27号之间的 IBD 事例，研究按照 IBD 快慢信号连线确定出来的平均方向与反应堆的关系，其中事例的顶点重建使用的的是 AdScale 算法。为了降低多个反应堆带来的中微子方向的弥散，挑选基线的差别比较大的中心探测器（ AD ），降低基线长的反应堆的影响。根据图\ref{fig:baseline} 大亚湾 EH1 和 EH2 均基线差别比较大，通过比较反应堆和探测器连线的夹角，二号厅反应堆分布相对比较集中，用来测中微子方向比较好。表\ref{tab:tcompangu} 还给出了大亚湾 AD1 和 AD3 相对于6个反应堆的夹角的大小。可以看出 AD3 弥散较小。% P14A 定义来自 Doc 10105
-\begin{table}[htb]
+作为上述确定中微子方向方法的一个测试，我们研究了大亚湾实验中中微子方向与反应堆方向的关系。我们使用大亚湾从2011 年12 月24号到2013年11月27号之间的 IBD 事例，研究按照 IBD 快慢信号连线确定出来的平均方向与反应堆的关系，其中事例的顶点重建使用的是 AdScale 算法。为了降低多个反应堆带来的中微子方向的弥散，挑选基线差别比较大的中心探测器（ AD ），以此降低基线长的反应堆的影响。根据图~\ref{fig:baseline}~， 大亚湾 EH1 和 EH2 基线差别均比较大，通过比较反应堆和探测器连线的夹角，二号厅反应堆分布相对比较集中，用来测中微子方向比较好。表~\ref{tab:tcompangu}~ 还给出了大亚湾 AD1 和 AD3 相对于6个反应堆的夹角的大小。可以看出 AD3 弥散较小。% P14A 定义来自 Doc 10105
+\begin{table}[htbp]
 \centering  % 表居中
 \begin{tabular}{lcccccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
 \hline
@@ -147,9 +170,9 @@
 \caption{大亚湾6个反应堆相对于AD1及AD3探测器弥散角度大小}
 \label{tab:tcompangu}
 \end{table}
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/zuobiao}
+   \includegraphics[width=\MyFactor\textwidth*5/4]{Img/chap6/zuobiao}
     \caption{大亚湾各探测器距离反应堆的基线长度}
   \label{fig:baseline}
 \end{figure}
@@ -164,22 +187,21 @@
 \right]                %右括号
 \end{equation}
 
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/zuobiao2}
     \caption{大亚湾各实验厅局部坐标的朝向}
   \label{fig:ehangu}
 \end{figure}
 
-由于探测器探测到的中微子来自6个反应堆，有一定的角度弥散，因此按照1除以探测器和反应堆距离的平方作为权重因子，加权求出了平均的反应堆方向。 把所有IBD事例正负电子连线位置做一个矢量平均，得到一个平均的中微子方向。根据数据求出来的平均中微子方向和基线加权平均计算出来的反应堆的方向（中微子源的方向）的夹角为 7.7613 度。由大亚湾~P14A~所有 IBD 事例给出的中微子方向和加权平均的反应堆的方向对比结果见：
-\ref{tab:t64}。
+由于探测器探测到的中微子来自6个反应堆，有一定的角度弥散，使用1除以探测器和反应堆距离的平方作为权重因子，加权求出了平均的反应堆方向。 把所有IBD事例正负电子连线位置做一个矢量平均，得到一个平均的中微子方向。根据数据求出来的平均中微子方向和基线加权平均计算出来的反应堆的方向（中微子源的方向）的夹角为 7.76 度。由大亚湾~P14A~所有 IBD 事例给出的中微子方向和加权平均后的反应堆的方向对比结果见表~\ref{tab:t64}~。
 \begin{table}[htbp]
 \centering  % 表居中
 \begin{tabular}{lccc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
 \hline
 &X &Y&Z\\\hline
 \\重建出来的中微子方向(归一化)&0.68357 & -0.72711&0.0635799
-\\按照基线平均后的反应堆探测器方向（归一化&0.649066&0.75807&0.0635908
+\\按照基线平均后的反应堆探测器方向（归一化）&0.649066&0.75807&0.0635908
 \\ \hline
 \end{tabular}
 \caption{整个~P14A~数据统计上给出的中微子方向}
@@ -191,21 +213,21 @@
 20世纪30年代中期，苏联科学家~Pavel Cherenkov~开始从实验上系统的研究后来被称为切伦科夫辐射的现象。同时，~Igor Tamm~和 ~Ilya Frank~在爱因斯坦狭义相对论的框架下也对此现象在理论方面做了解释。1958年，~Cherenkov~, ~Frank~和~Tamm~三人被授予诺贝尔物理学奖。切伦科夫光有两大特点。一是其光谱为连续谱，并且在短波段辐射强度大。另一个是切伦科夫光是高度极化的光。切伦科夫光传播方向是一个圆锥面，表示为：
 $cos\theta = 1/ \beta n $
 其中$\theta$ 为锥角，n为粒子所在介质折射率，$\beta$ 为以光速为单位的粒子速度。
-使用中微子电子弹性散射道可以很好地定出超新星方向。文献\citep{tomas2003supernova}讨论的结果为，~super-K~实验如果水中不掺~Gd~，中微子电子弹性散射道就会有很大的~IBD~正电子本底，最终给出的超新星方向精度约为7.8$ ^\circ $。如果在水中掺~Gd~, 最终给出的超新星方向精度约为3.2$^\circ$。
-\begin{figure}[!htb]
+使用中微子电子弹性散射道可以很好地定出超新星方向。文献\citep{tomas2003supernova}讨论的结果为，水切伦科夫探测器实验~super-K~ 如果水中不掺~Gd~，通过中微子电子弹性散射道，最终给出的超新星方向精度约为7.8$ ^\circ $。如果在水中掺~Gd~，就可以去掉很多相对于中微子电子弹性散射道来说是本底的~IBD~正电子， 最终给出的超新星方向精度约为3.2$^\circ$。
+\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth]{Img/chap6/enues}
-    \caption{中微子电子弹性散射中出射电子相对中微子发射角的余弦值分布}
+    \caption{超新星中微子电子弹性散射中出射电子相对中微子发射角的余弦值分布}
   \label{fig:enues}
 \end{figure}
 \subsection{液闪中利用切伦科夫光重建径迹方向可行性讨论}
-利用切伦科夫光，我们可以重建出粒子的运动方向，其为锥心方向。在液体闪烁体中，假设液闪的折射率为~1.46~，那么对于电子来说，能量大于~0.188~MeV~的电子就可以发生切伦科夫辐射。然而，在液体闪烁体探测器中，有大量各向同性的闪烁光存在，需要从闪烁光背底中挑选出切伦科夫光并做重建。
+利用切伦科夫光，我们可以重建出粒子的运动方向，其为锥心方向。在液体闪烁体中，假设液闪的折射率为~1.46~，那么对于电子来说，能量大于~0.188~MeV~的电子就可以发生切伦科夫辐射。然而，在液体闪烁体探测器中，有大量各向同性的闪烁光存在，需要从闪烁光本底中挑选出切伦科夫光并做重建。
 在液闪探测器中，在巨大的闪烁光本底中挑选出切伦科夫光子的一个可能的方法是挑选最快光光子。切伦科夫光光子比闪烁光光子早击中光电倍增管光阴极。这是由于以下两方面的原因：
 \begin{enumerate}
-\item 切伦科夫光的瞬发性质：当带电粒子穿过介质的瞬间，会导致大量电子发生微小位移（电子可以立即回复到正常位置），产生切伦科夫辐射\citep{jelley1955cerenkov}。 闪烁光发光通常有快慢成分，对于江门中微子液闪而言，其闪烁光约有20\%，时间常数5 ns 的快成分光以及80\%，时间常数20 ns 的慢成分光。
-\item 切伦科夫光光子在液闪中具有更快的传播速度。~Geant4~模拟结果显示~PMT~探测到的切伦科夫光长波长成分较多~Fig.(\ref{fig:compwavelength})~，例如波长大于500~nm~的光子的比例，在切伦科夫光中为23\%，在闪烁光中为1\%。较长的波长对应较快的传播速度，参见~Eq.(\ref{eq:speed})~。例如对于370nm波长光子，其传播速度为0.191 m/ns ，对于600 nm 波长光子，其传播速度为0.203 m/ns。
+\item 切伦科夫光的瞬发性质：当带电粒子穿过介质的瞬间，会导致大量电子发生微小位移（电子可以立即回复到正常位置），产生切伦科夫辐射\citep{jelley1955cerenkov}。 闪烁光发光通常有快慢成分，对于江门中微子液闪而言，其闪烁光约有20\%时间常数为5~ns~的快成分光，以及80\%时间常数为20~ns~的慢成分光。
+\item 切伦科夫光光子在液闪中具有更快的传播速度。~Geant4~模拟结果显示~PMT~探测到的切伦科夫光长波长成分较多~Fig.(\ref{fig:compwavelength})~，例如波长大于500~nm~的光子的比例，在切伦科夫光中为23\%，在闪烁光中仅为1\%。较长的波长对应较快的传播速度，参见~Eq.(\ref{eq:speed})~。例如对于370 nm 波长光子，其传播速度为0.191 m/ns ，对于600 nm 波长光子，其传播速度为0.203 m/ns。
 \end{enumerate}
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/compwavelength}
     \caption{液体闪烁体中~PMT~探测到的切伦科夫光子和闪烁光光子的波长分布}
@@ -225,20 +247,20 @@ $cos\theta = 1/ \beta n $
 \end{split}
 \end{equation}
 \\
-在液闪中依赖切伦科夫光做重建存在很多难点。我们的方向重建主要依赖于切伦科夫光光子，然而占很大比重的短波长的切伦科夫光会被液闪吸收重发射，成为闪烁光，失去了原来的方向性。切伦科夫光的光谱在短波段强度比较大，因此只有少部分的长波长的切伦科夫光可以穿过``透明''的液闪，到达光电倍增管光阴极。然而光电倍增管对于在长波长光子的范围内光电转换效率很快减低。见图\ref{fig:pmtqe}。
-  \begin{figure}[!htb]
+在液闪中依赖切伦科夫光做重建存在很多难点。我们的方向重建主要依赖于切伦科夫光光子，然而占很大比重的短波长的切伦科夫光会被液闪吸收重发射，成为闪烁光，失去了原来的方向性。切伦科夫光的光谱在短波段强度比较大，因此只有少部分长波长的切伦科夫光可以穿过``透明''的液闪，到达光电倍增管光阴极。然而光电倍增管光阴极辐射灵敏度以及量子效率对于波长在350 nm 至450 nm 范围内的光子最为显著。在长波长的范围内，光电转换效率很快下降。因此 PMT 对于未经吸收重发射的长波长切伦科夫光子探测效率较低。
+  \begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/stepinfo}
-    \caption{电子在液闪中的径迹示意图}
+   \includegraphics[width=\MyFactor\textwidth*6/5]{Img/chap6/stepinfo}
+    \caption{液闪中电子径迹示意图}
   \label{fig:stepinfo}
 \end{figure}
-\begin{figure}[!htb]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/pmtqe}
-    \caption{PMT对不同波长光子的量子效率曲线}
-  \label{fig:pmtqe}
-  \end{figure}
-另外由于电子在能量沉积过程中会发生多次散射，方向也会相对于原来方向有所偏移。图\ref{fig:stepinfo} 展示了电子在液闪中的~track~ 示例。使用不同的颜色表示每一步的物理过程（并不是唯一的物理过程）。每个~step~点的大小表示该~step~沉积能量的多少。%图\ref{fig:averge} 为对每一个step 的粒子运动方向，做沉积能量加权平均后得到的平均方向相对于电子初始方向的偏移。
+%\begin{figure}[!htb]
+%  \centering
+%   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/pmtqe}
+%    \caption{PMT对不同波长光子的量子效率曲线}
+%  \label{fig:pmtqe}
+%  \end{figure}
+另外由于电子在能量沉积过程中会发生多次散射，方向也会相对于原来方向有所偏移。图\ref{fig:stepinfo} 展示了电子在液闪中的一个~track~ 示例。使用不同的颜色表示每一步的物理过程（并不是唯一的物理过程）。每个~step~点的大小表示该~step~沉积能量的多少。由于电子的多次散射带来的能量加权平均后的运动方向相对于原初运动方向的角度弥散，可以认为是液闪的本征方向分辨能力。%图\ref{fig:averge} 为对每一个step 的粒子运动方向，做沉积能量加权平均后得到的平均方向相对于电子初始方向的偏移。
 %\begin{figure}[!htbp]
 %\begin{minipage}[t]{0.48\linewidth}
 %    \centering
@@ -265,10 +287,10 @@ $cos\theta = 1/ \beta n $
 
 我们可以通过挑选最快光增加可以用于方向重建的切伦科夫光光子的比例。一个简单的模拟，使用探测器方案为有机玻璃罐方案，在探测器中心产生电子事例，动量为~3~MeV，如果不加任何时间窗，有用的切伦科夫光光子和闪烁光光子的比例为
 0.6\%。如果我们挑选最快光，比如挑选时间小于98.8~ns~的击中，那么平均有用的切伦科夫光光子数相对于闪烁光光子的
-比例提高为101.7\%。其中未经过吸收重发射的切伦科夫光子数为21个。加上时间窗口后，在切伦科夫角约~$50^{\circ}$~上的~PMT~ 击中明显增多。关于切伦科夫角的一个简单的估算如下：我们的液闪的折射率接近1.5，电子动量为3~MeV 的情况下，切伦科夫角约为47.4度。另外，通过软件框架中的事例显示软件，也表明通过加时间窗，切伦科夫光明显增多。图\ref{fig:p61}为在探测器中心产生，能量为~15~MeV~的电子事例的事例显示，观察 Hit time 小于98.8 ns 的击中的 PMT 位置分布, 可以看到比较清晰的环状结构。
-\begin{figure}[!htb]
+比例提高为101.7\%。其中未经过吸收重发射的切伦科夫光子数为21个。加上时间窗口后，在切伦科夫角约~$50^{\circ}$~ 上的~PMT~ 击中明显增多。关于切伦科夫角的一个简单的估算如下：我们的液闪的折射率接近1.5，电子动量为3~MeV 的情况下，切伦科夫角约为47.4度。另外，通过软件框架中的事例显示软件，也表明通过加时间窗，切伦科夫光明显增多。图\ref{fig:p61}为在探测器中心产生，能量为~15~MeV~的电子事例的事例显示，观察 Hit time 小于98.8 ns 的击中的 PMT 位置分布, 可以看到比较清晰的环状结构。
+\begin{figure}[!htbp]
   \centering
-   \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/ring_via_eventdisplay}
+   \includegraphics[width=\MyFactor\textwidth*5/6]{Img/chap6/ring_via_eventdisplay}
     \caption{探测器中心产生的能量为15 MeV 的电子的事例显示:击中时间 cut ，小于98.8 ns }
   \label{fig:p61}
 \end{figure}
@@ -279,7 +301,7 @@ $cos\theta = 1/ \beta n $
 %  \label{fig:jiaodufenbu}
 %\end{figure}
 \subsection{径迹方向重建方法：质量重心方法和方向矩阵方法}
-径迹方向重建的第一步是~Hit~挑选，目标是尽量多的挑选出切伦科夫光击中。这里假设所有的切伦科夫和闪烁光光子来自同一时空点（这一假设是合理的，例如对于~8~MeV 的电子来说，走的路径大约为3厘米）。根据重建顶点，计算出预期的飞行时间。扣除掉预期的飞行时间后得到时间残差。挑选时间残差分布图上，前2ns内的 hit 用于重建径迹方向。对于质量中心方法，见公式~Eq.(\ref{eq:cmm})~。 其中$\alpha$ 表示进入挑选 Hit~PMT~编号。$S$ 表示待求中微子方向。~q~表示该 PMT 上的电荷数。~$x_i$~ 表示PMT中心和事例顶点连线。方向矩阵方法见公式~Eq.(\ref{eq:omm})~。 其中 i,j 代表三个方向。待求中微子方向是方向矩阵$OM$ 最大本征值对应的本征向量方向。其中本征向量的求法由~ROOT~的类~TMatrixD~提供。这两种方法的重建结果如图\ref{fig:recsum}。
+径迹方向重建的第一步是~Hit~挑选，目标是尽量多的挑选出切伦科夫光击中。这里假设所有的切伦科夫和闪烁光光子来自同一时空点（这一假设是合理的，例如对于~8~MeV 的电子来说，走的路径大约为3厘米）。根据重建顶点，计算出预期的飞行时间。扣除掉预期的飞行时间后得到时间残差。挑选时间残差分布图上，前2ns内的~Hit~用于重建径迹方向。对于质量重心方法，见公式Eq.~(\ref{eq:cmm})~。 其中$\alpha$ 表示进入挑选 Hit的~PMT~编号。$S$ 表示待求中微子方向。~q~表示该 PMT 上的电荷数。~$x_i$~ 表示~PMT~中心和事例顶点连线。方向矩阵方法见公式~Eq.(~\ref{eq:omm}~)~。 其中 i，j 代表三个方向。待求中微子方向是方向矩阵$OM$ 最大本征值对应的本征向量方向。其中本征向量的求法由~ROOT~的类~TMatrixD~提供。这两种方法的重建结果如图\ref{fig:recsum}。
 
 \begin{equation}\label{eq:cmm}
 \begin{split}
@@ -291,9 +313,9 @@ S_i = \sum^N_{\alpha} q^{\alpha}x^{\alpha}_i
 \end{eqnarray}
 
 \subsection{径迹方向重建方法：似然函数拟合方法}
-径迹重建的质量重心方法和方向矩阵方法都比较简单清晰，本部分重点讨论似然函数方法。首先介绍似然函数的构造方法。接着介绍怎样才可以得到探测器无关的切伦科夫光和闪烁光角分布函数。第三部分介绍遇到的问题及其讨论及解决方法。最后给出似然函数方法及质量中心方法和方向矩阵方法在不同能量下的方向重建精度。
+径迹重建的质量重心方法和方向矩阵方法都比较简单清晰，本部分重点讨论似然函数方法。首先介绍似然函数的构造方法。接着介绍怎样才可以得到探测器无关的切伦科夫光和闪烁光角分布函数。第三部分介绍遇到的问题及其讨论及解决方法。最后给出似然函数方法、质量中心方法和方向矩阵方法在不同能量下的方向重建精度。
 \subsubsection{似然函数方法重建径迹方向}
-该重建方法如公式\ref{eq:lhm}所示。参与拟合的量有粒子发出的总光子数~$N_{tot}$~以及粒子运动方向（需要两个参数，体现在$\theta_{emission}$ 中）以及切伦科夫光纯度~$\alpha$~（通过卡时间窗得到的纯度约为10\%）。根据~PMT~ 位置和源位置以及粒子运动方向，可以得到对应的光子发射角~$\theta_{emission}$~。切伦科夫光~f~和闪烁光~g~在~$\theta_{emission}$~ 方向上的发射几率分别乘以各自占总光子数的比例即可得到改~$\theta_{emission}$~ 上发出的总光子数。光子发出后需要在探测器中传播才能到达~PMT~，因此需要根据光学模型加以修正。公式\ref{eq:lhm} 中~l~为光子传播的光程,$L_{att}$为液闪的衰减长度。~h~函数为~PMT~的角度响应曲线。~$\theta_{injection}$~ 为光子入射方向相对于~PMT~表面法向的夹角。公式\ref{eq:lhm}的前一个大括号部分为探测器无关部分，后一个大括号部分为探测器效应。根据公式\ref{eq:lhm}预期出每个~PMT~ 上的期待电荷，然后根据观测电荷和期待电荷的泊松关系，构造似然函数，拟合出4 个待定参数。其中~$N_{tot}$~可以根据粒子能量设定初始值，粒子运动方向可以根据前两种方法的重建结果设定初始值。
+该重建方法如公式 ~\ref{eq:lhm}~ 所示。参与拟合的量有粒子发出的总光子数~$N_{tot}$~以及粒子运动方向（需要两个参数，体现在$\theta_{emission}$ 中）以及切伦科夫光纯度~$\alpha$~（通过卡时间窗得到的纯度约为10\%）。根据~PMT~ 位置和源位置以及粒子运动方向，可以得到对应的光子发射角~$\theta_{emission}$~。切伦科夫光~f~和闪烁光~g~ 在~$\theta_{emission}$~ 方向上的发射几率分别乘以各自占总光子数的比例即可得到该发射角上发出的总光子数。光子发出后需要在探测器中传播才能到达~PMT~，因此需要根据光学模型加以修正。公式 ~\ref{eq:lhm}~ 中~$l$~为光子传播的光程，L$_{att}$ 为液闪的衰减长度。~h~函数为~PMT~的角度响应曲线。~$\theta_{injection}$~ 为光子入射方向相对于~PMT~表面法向的夹角。公式~\ref{eq:lhm}~的前一个大括号部分为探测器无关部分，后一个大括号部分则用来描述探测器效应对 PMT 上搜集到的光子数的影响。 根据公式~\ref{eq:lhm}~预期出每个~PMT~上的期待电荷，然后根据观测电荷和期待电荷的泊松关系，构造似然函数，拟合出4个待定参数。其中~$N_{tot}$~可以根据粒子能量设定初始值，粒子运动方向可以根据前两种方法的重建结果设定初始值。
 \begin{eqnarray}\label{eq:lhm}
 Lh = \sum_{i=1}^{N_{pmt}} \left [  ( Q^{exp}_i -Q^{obs}_i )+log(\frac{Q^{obs}_i}{Q^{exp}_i}) \times Q^{obs}_i \right ] \quad\quad\quad\quad\quad\quad \\
 Q^{exp}_i  =
@@ -301,55 +323,57 @@ Q^{exp}_i  =
 \times \bigg \{ h(\theta_i^{injection}) \times \frac{e^{-\frac{l_i}{L_{att}}}}{l^2_i} \bigg \} \nonumber
 \end{eqnarray}
 \subsubsection{切伦科夫和闪烁光光子角分布函数构造}
-在公式\ref{eq:lhm}中使用了角分布函数。本节介绍角分布函数的构造方法。\\
-通常的提取角分布函数的方法是从~MC~truth~中直接通过平均得到。但是这一方法存在一些问题。假设粒子在探测器中心，粒子朝不同的方向运动时，~PMT~ 的排布会发生变化。比如在探测器中心，分别朝~X~轴正方向和朝~Z~ 轴正方向运动，~MC~truth~ 中闪烁光和切伦科夫光的角分布分别如图~\ref{fig:centerxz_2}~和~
+在公式 \ref{eq:lhm} 中使用了角分布函数。本节介绍角分布函数的构造方法。\\
+通常的提取角分布函数的方法是从~MC~truth~中直接通过平均得到。但是这一方法存在一些问题。假设粒子在探测器中心，粒子朝不同的方向运动时，~PMT~ 的排布会发生变化。比如在探测器中心，分别朝~X~轴正方向和朝~Z~ 轴正方向运动，~MC~truth~ 中闪烁光和切伦科夫光的角分布分别如图~\ref{fig:centerxz_1}~和~
 \ref{fig:centerxz_2}~ 所示。因此我们需要修正掉~PMT~排布的影响。
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\MyFactor\textwidth*7/4]{D:/Thesis/ucasthesis-master/Img/chap6/centerxz}
+    \includegraphics[width=\MyFactor\textwidth*6/4]{D:/Thesis/ucasthesis-master/Img/chap6/centerxz}
     \caption{探测器中心，~X~正和~z~正运动方向的闪烁光角分布}
     \label{fig:centerxz_1}
   \end{subfigure}%
-  \quad\quad\quad\quad\quad\quad%add desired spacing
+  \quad\quad\quad\quad%add desired spacing
   \begin{subfigure}[b]{\MySubFactor\textwidth}
-    \includegraphics[width=\MyFactor\textwidth*7/4]{D:/Thesis/ucasthesis-master/Img/chap6/centerxz2}
+    \includegraphics[width=\MyFactor\textwidth*6/4]{D:/Thesis/ucasthesis-master/Img/chap6/centerxz2}
     \caption{探测器中心，~X~正和~z~正运动方向的切伦科夫光角分布}
     \label{fig:centerxz_2}
   \end{subfigure}
   \caption{~PMT~排布导致的光子发射角分布差异}
   \label{fig:centerxz}
 \end{figure}
-修正方法是，拿到相对粒子运动方向不同发射角度处的~PMT~ 的排布密度（可以使用~PMT~ 个数作为相对的修正因子）。比如当粒子朝~Z~方向运动时，则赤道方向的~PMT~ 排布密度要远远高于南北极方向的~PMT~排布密度。修正后的结果见图~\ref{fig:aftercenterxz}~。 经过~PMT~密度修正后的角分布函数基本和粒子的运动方向无关。\\
-\begin{figure}[!htb]
+修正方法是，拿到相对粒子运动方向不同发射角度处的~PMT~ 的排布密度（可以使用~PMT~ 个数作为相对的修正因子）。比如当粒子朝~Z~方向运动时，则赤道方向的~PMT~ 排布密度要远远高于南北极方向的~PMT~排布密度，因此90度发射角方向探测到的光子几率就需要乘以一个较小的修正因子。修正后的结果见图~\ref{fig:aftercenterxz}~。 经过~PMT~密度修正后的角分布函数基本和粒子的运动方向无关。\\
+\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/aftercenterxz}
     \caption{经过~PMT~排布密度修正后的闪烁光和切伦科夫光的角度分布曲线}
   \label{fig:aftercenterxz}
 \end{figure}
-在探测器其他位置朝不同方向运动的粒子，光子到达~PMT~前，光程~R~不同，这样同样面积的~PMT~ 光阴极相对光源所张立体角就不同，探测到的光子数和~$R^2$~成反比。除了立体角因素外，光衰减也会导致探测到的光子数的减小。另外，当源偏离中心时，部分光子就会斜入射到~PMT~光阴极表面，这样也要考虑~PMT~角度响应的修正。修正前的距离探测器中心~4~米处，分别朝长轴方向和短轴方向运动的两个粒子的闪烁光和切伦科夫光的角分布如图
-\ref{fig:before4}。修正掉~PMT~角度响应，以及液闪衰减长度和立体角以及~PMT~ 排布密度因素后的闪烁光和切伦科夫光的角度分布如图~\ref{fig:after4}~。
+在探测器其他位置朝不同方向运动的粒子，光子到达~PMT~前，光程~R~不同，这样同样面积的~PMT~ 光阴极相对光源所张立体角就不同，探测到的光子数和~$R^2$~成反比。除了立体角因素外，光衰减也会导致探测到的光子数的减小。另外，当源偏离中心时，部分光子就会斜入射到~PMT~光阴极表面，这样也要考虑~PMT~对不同入射角度光子响应的影响。修正前的距离探测器中心~4~ 米处，分别朝粒子顶点相对球形探测器来说的长轴方向和短轴方向运动的两个粒子的闪烁光和切伦科夫光的角分布如图
+\ref{fig:before4}。修正掉~PMT~角度响应，以及液闪衰减长度和立体角以及~PMT~ 排布密度因素后的闪烁光和切伦科夫光的角度分布如图~\ref{fig:after4}~。修正后长轴方向和短轴方向的闪烁光和切伦科夫光的角度分布基本一致，证明我们的修正是有效的。
 
 \begin{figure}[!htbp]
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
   \centering
    \includegraphics[width=\MyFactor\textwidth*5/3]{Img/chap6/before4}
-    \caption{偏离探测器中心4m,~MC~truth~得到的闪烁光和切伦科夫广的角度分布}
+    \caption{偏离探测器中心4~m~,~MC~truth~得到的闪烁光和切伦科夫光的角度分布}
   \label{fig:before4}
 %\end{figure}
 \end{minipage}
 \quad\quad
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.49\linewidth}
 %\begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*5/3]{Img/chap6/after4}
-    \caption{修正掉探测器因素后，偏离探测器中心4m的不同方向的闪烁光和切伦科夫广的角度分布}
+    \caption{修正掉探测器因素后，偏离探测器中心4~m~的不同方向的闪烁光和切伦科夫光的角度分布}
   \label{fig:after4}
   \end{minipage}
 \end{figure}
-立体角因素的修正比较简单，通过光程~$\left ( \frac{1}{R} \right )^2 $~修正即可。吸收长度的修正，可以通过放置距离~PMT~ 不同距离的源，然后统计~PMT~上探测到的光子数来实现。~PMT~ 角度响应的修正，可以通过改变源和~PMT~中心连线相对于~PMT~表面发现的夹角来实现。\\
+立体角因素的修正比较简单，通过光程~$\left ( \frac{1}{R} \right )^2 $~修正即可。吸收长度的修正，可以通过放置距离~PMT~ 不同距离的源，然后统计~PMT~上探测到的光子数来实现。~PMT~ 角度响应的修正，可以通过改变源和~PMT~中心连线相对于~PMT~表面法线的夹角来实现。
+
 衰减长度的效应通常用一个指数来表示，通过一个指数拟合可以求出衰减长度的大小。根据图~\ref{fig:attlength}~的结果，衰减长度的大小为~37.67~m~。角度响应的曲线中正入射时光子数最多，作为归一化因子，其他角度探测到的光子数均小于1. 从图~\ref{fig:anguresponse}~可以看到，光子数在入射角度大于~50~度时，迅速减小，这是因为光子在~PMT~上发生了全反射。另外对~PMT~ 的模拟前期没有加入搜集效率响应曲线，后期经过完善加入了搜集效率曲线。对比图中红色上三角和蓝色点数据，可以看到差别不大。\\
-修正掉~MC~truth~中的光传播距离，光衰减，~PMT~角度响应，~PMT~排布等因素后，我们就可以得到与粒子顶点以及粒子运动方向无关的切伦科夫光和闪烁光角分布函数了，并且可以用于重建。
+
+综上，修正掉~MC~truth~中的光传播距离，光衰减，~PMT~角度响应，~PMT~排布等因素后，我们就可以得到与粒子顶点以及粒子运动方向无关的切伦科夫光和闪烁光角分布函数了，并且可以用于重建。
 %\begin{figure}[!htbp]
 %  \centering
 %   \includegraphics[width=\MyFactor\textwidth*1/3]{Img/chap6/shiyitu}
@@ -360,11 +384,11 @@ Q^{exp}_i  =
 \begin{minipage}[t]{0.48\linewidth}
   \centering
    \includegraphics[width=\MyFactor\textwidth*5/3]{Img/chap6/attlength}
-    \caption{光子吸收长度}
+    \caption{液闪光衰减长度}
   \label{fig:attlength}
 %\end{figure}
   \end{minipage}
-   \quad\quad
+  \quad\quad
 %\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
@@ -375,16 +399,16 @@ Q^{exp}_i  =
 \end{figure}
 
 \subsubsection{似然函数中遇到的一些问题及解决方法}
-在似然函数的拟合过程中，我们发现有时公式~\ref{eq:lhm}~中闪烁光的比例会拟合到100\%，如下图
+在似然函数的拟合过程中，我们发现有时公式~\ref{eq:lhm}~中闪烁光的比例会拟合到100\%，也就是没有切伦科夫光成分，如下图
 ~(\ref{fig:pratiop_1})~ ~Full MC~所示。
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
      \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/toymc1}
     \caption{ 闪烁光比值Full MC 与 Toy MC 一致}
     \label{fig:pratiop_1}
   \end{minipage}%
-  \quad\quad
+\quad\quad
   \begin{minipage}[t]{0.48\linewidth}
   \centering
     \includegraphics[width=\MyFactor\textwidth*8/5]{D:/Thesis/ucasthesis-master/Img/chap6/toymc4}
@@ -392,15 +416,15 @@ Q^{exp}_i  =
     \label{fig:pratiop_4}
   \end{minipage}
   \end{figure}
-通过~ToyMC~研究发现，是由于统计涨落的影响。该问题可以由图~(\ref{fig:lucky})~形象地描述。我们通过最快光时间窗口，可以挑出纯度为10\%的切伦科夫光，比较闪烁光的角分布和加入10\%切伦科夫光后的角分布，我们可以看到具有方向鉴别能力的区域在图中红色虚线方框框起来的区域。在3~MeV~情况下，我们可以用来重建的光子数约为~21~ 个，如果由于涨落，跑出``lucky'' 区域，则失去方向区分能力，闪烁光百分比就会被拟合到100\%。 为此我们写了一个~Toy MC~程序，用来产生和真实数据类似结构的~Toy MC~ 数据，将真实的~Full MC~和~Toy MC~数据放到同一个方向重建程序中，
-~Full MC~和~Toy MC~数据拟合结果分布一致，参见图~(\ref{fig:pratiop_2}) ~和~(\ref{fig:pratiop_3}) ~，证明~Toy MC~程序有效。如果我们在~Toy MC~中将统计量增大10倍，则切伦科夫光光子比例重建到1的问题消失了，如图~(\ref{fig:pratiop_4}) ~。另外通过~Toy MC~ 也证实了使用10\%的切伦科夫光子，确实可以做方向重建。并且~Toy MC~进一步证实，保持10\%的切伦科夫光子比例，如果能使参与拟合的光子数达到300个，就没有拟合到边界值1的现象出现。\\
+通过~ToyMC~研究发现，是由于统计涨落的影响。该问题可以由图~(\ref{fig:lucky})~形象地描述。我们通过最快光时间窗口，可以挑出纯度为10\%的切伦科夫光，比较闪烁光的角分布和加入10\%切伦科夫光后的角分布，我们可以看到具有方向鉴别能力的区域在图中红色虚线方框框起来的区域。在3~MeV~情况下，我们可以用来重建的光子数约为~21~ 个，如果由于涨落，光子跑出携带方向信息的``lucky'' 区域，则失去方向区分能力，闪烁光百分比就会被拟合到100\%。 为此我们写了一个~Toy MC~ 程序，用来产生和真实数据结构类似的~Toy MC~ 数据，将真实的~Full MC~和~Toy MC~数据放到同一个方向重建程序中，
+~Full MC~和~Toy MC~数据拟合结果分布一致，参见图~(\ref{fig:pratiop_2}) ~和~(\ref{fig:pratiop_3}) ~，证明~Toy MC~程序有效。如果我们在~Toy MC~中将统计量增大10倍，则切伦科夫光光子比例重建到100\%的问题消失了，如图~(\ref{fig:pratiop_4}) ~所示。另外通过~Toy MC~ 也证实了使用10\%的切伦科夫光子，确实可以做方向重建。并且~Toy MC~ 进一步证实，保持10\%的切伦科夫光子比例，如果能使参与拟合的光子数达到300个，就没有闪烁光的比例拟合到边界值1的现象出现。\\
 \begin{figure}[!htbp]
   \centering
    \includegraphics[width=\MyFactor\textwidth*4/4]{Img/chap6/lucky}
     \caption{加入10\% 切伦科夫光后光子角分布与100\% 闪烁光光子角分布对比}
   \label{fig:lucky}
 \end{figure}
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
      \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/toymc2}
@@ -442,20 +466,20 @@ Q^{exp}_i  =
 %  \caption{似然函数中闪烁光比值拟合到边界值1的问题}
 %  \label{fig:pratiop}
 %\end{figure}
-遇到的另一个问题是：拟合初始值变动，极小化结果也跟着变。可以从以下两个方面去做检查:一是~Likelihood~ 函数对参数的敏感度。另外一个是使用光滑连续的~pdf~ 代替实际使用的由~mc truth~ 给出的不够光滑的直方图~pdf~。 使用连续的多项式去近似闪烁光和切伦科夫光的角分布~pdf~。 然后扫描~Likelihood~ 值随参数的变化情况。结果发现，~Likelihood~值并不全是在正确参数处取值最小（世界上是取完-log 后的结果，因此是最小），其中ratio 扫描结果和$\phi$ 扫描结果在真值附近最小，而$\theta$ 扫描结果并不是在真值附近最小，$\theta$和$\phi$ 的二维扫描结果在真值（0,0）处也不是最小,见图~\ref{fig:scan}~。 这个问题可以通过重新改写极小化~FCN~函数解决。我们将待拟合方向从（~$sin\theta cos\phi$~,~$sin\theta sin\phi$~,~$cos\theta$~）改写成（~$ x_0$~,~$y_0$~,~$\sqrt{1-x^2_0-y^2_0}$~），后发现新的扫描结果只有一个极小值，多次振荡的现象消失了，并且在真实值附近，似然函数值最小。结果见图
+遇到的另一个问题是：拟合初始值变动，极小化结果也跟着变。可以从以下两个方面去做检查:一是~Likelihood~ 函数对参数的敏感度。另外一个是使用光滑连续的~pdf~ 代替实际使用的由~mc truth~ 给出的不够光滑的直方图~pdf~。 使用光滑连续的多项式去近似闪烁光和切伦科夫光的角分布~pdf~，然后扫描~Likelihood~ 值随参数的变化情况。结果发现，~Likelihood~ 值并不全是在真值处取值最小（实际上是取完-log 后的结果，因此是最小），其中ratio 扫描结果和$\phi$ 扫描结果在真值附近最小，而$\theta$ 扫描结果并不是在真值附近最小，$\theta$和$\phi$ 的二维扫描结果在真值（0,0）处也不是最小,见图~\ref{fig:scan}~。后来发现，这个问题可以通过重新改写极小化~FCN~函数解决。我们将待拟合方向从（~$sin\theta cos\phi$~,~$sin\theta sin\phi$~,~$cos\theta$~）改写成（~$ x_0$~,~$y_0$~,~$\sqrt{1-x^2_0-y^2_0}$~），发现~Likelihood~值随扫描参数多次振荡的现象消失了，新的扫描结果只有一个极小值点，并且在真实值附近。结果见图
 ~\ref{fig:postscan}~。
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
      \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/ll1}
-    \caption{~Likelihood~值随待拟合方向参数$\theta$,$\phi$的二维扫描的结果}
+    \caption{~Likelihood~值随待拟合方向参数$\theta$,$\phi$的二维扫描的结果，真值(0,0)附近不是最小}
     \label{fig:scan}
   \end{minipage}%
   \quad\quad
   \begin{minipage}[t]{0.48\linewidth}
   \centering
     \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/ll2}
-    \caption{改写~Minute FCN~函数后~Likelihood~值随待拟合参数的二维扫描结果}
+    \caption{改写~Minute FCN~函数后~Likelihood~值随待拟合参数的二维扫描结果，极小值出现在真值(0,0)处}
     \label{fig:postscan}
   \end{minipage}
   \end{figure}
@@ -508,8 +532,8 @@ Q^{exp}_i  =
 %  \caption{改写~Minute FCN~函数后~Likelihood~值随待拟合参数变化的扫描 }
 %  \label{fig:postscan}
 %\end{figure}
-另外我们发现当粒子偏离探测器中心，运动方向分别朝长轴和短轴方向运动时，方向重建的效果很不一样 (图~\ref{fig:tof_1}~ )。 总是远离源位置的~PMT~更容易被挑选进去做重建。
-\begin{figure}[!htb]
+另外我们发现当粒子偏离探测器中心，运动方向分别朝事例顶点相对于整个球形探测器来说的长轴和短轴方向运动时，方向重建的效果很不一样 (图~\ref{fig:tof_1}~ )。 总是远离事例顶点位置的~PMT~更容易被挑选进去做重建。
+\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
      \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/tofbefore}
@@ -524,7 +548,7 @@ Q^{exp}_i  =
     \label{fig:tof_2}
   \end{minipage}
   \end{figure}
-经研究发现，目前的飞行时间计算方法不合理。计算飞行时间的做法是假设光子直线穿过液闪和~buffer~层，没有折射反射等，并且没有考虑到光子在液闪总的色散。由于我们并不能知道真实的飞行时间，观测到的击中时间总是受到液闪发光成分的影响，我们可以用最快的及击中时间来代替飞行时间，观测根据上述直线无色散模型计算出来的飞行时间与最快击中时间的差别。从图~(\ref{fig:tofcal_1})~可以看出当光程变长时，我们预期的飞行时间相比``真实''飞行时间越来越大。说明按照直线无色散模型计算出来的飞行时间，当光子飞行距离较长时，被严重高估了。图~(\ref{fig:tofcal_2})~也说明了这一点。我们可以看到，当光程比较长时，光子的平均波长变长，因此我们也需要使用较大的有效速度，从而压低预估的飞行时间。因此在预估飞行时间时需要考虑到这一点，使用光程依赖的平均有效速度，新的重建结果如图~\ref{fig:tof_2}~ 。在将来的真实数据处理中，我们可以通过刻度源得到光程依赖的有效速度修正数据。
+经研究发现，目前的飞行时间计算方法不合理。计算飞行时间的做法是假设光子直线穿过液闪和~buffer~层，没有折射反射等，并且没有考虑到光子在液闪中的色散。由于我们并不能知道真实的飞行时间，观测到的击中时间总是受到液闪发光成分的影响，我们可以用最快的击中时间来代替飞行时间，假设闪烁光光子沿直线飞行（即不会在介质界面发生折射反射等），闪烁光光子无色散，对比计算出来的飞行时间与最快击中时间的差别，如图~(\ref{fig:tofcal_1})~。从图~(\ref{fig:tofcal_1})~可以看出当光程变长时，我们预期的飞行时间相比`` 真实''飞行时间越来越大。说明按照直线无色散模型计算出来的飞行时间，当光子飞行距离较长时，被严重高估了。图~(\ref{fig:tofcal_2})~ 也说明了这一点。我们可以看到，当光程比较长时，光子的平均波长变长，因此我们也需要使用较大的有效速度，从而压低预估的飞行时间。因此在预估飞行时间时需要考虑到这一点，使用光程依赖的平均有效速度，新的重建结果如图~\ref{fig:tof_2}~ ，径迹方向重建效果在粒子朝长短轴运动时保持一致，不再受光子飞行距离的影响。在将来的真实数据处理中，我们可以通过刻度源得到光程依赖的有效速度修正数据。
 %\begin{figure}[!htbp]
 %  \centering
 %  \begin{subfigure}[b]{\MySubFactor\textwidth}
@@ -547,7 +571,7 @@ Q^{exp}_i  =
 %    \caption{ 中微子电子弹性散射道，似然函数径迹重建方法给出的超新星定位精度}
 %  \label{fig:esnu}
 %  \end{minipage}
-\begin{figure}[!htb]
+\begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
   \centering
     \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/caltof}
@@ -558,15 +582,15 @@ Q^{exp}_i  =
   \begin{minipage}[t]{0.48\linewidth}
   \centering
     \includegraphics[width=\MyFactor\textwidth*5/3]{D:/Thesis/ucasthesis-master/Img/chap6/waveandl}
-    \caption{光子平均波长与光程的关系,光程越长， PMT 接收到的光子的平均波长越长}
+    \caption{光子平均波长与光程的关系,光程越长，PMT 接收到的光子的平均波长越长}
     \label{fig:tofcal_2}
     \end{minipage}
 \end{figure}
 
 
 \subsubsection{方向重建精度}
-为了比较方向重建的精度，我们定义了一个68.3 \% 置信度误差。以真实方向为锥心，包含68.3\% 重建方向的圆锥角的大小即为1倍~$\sigma$~角误差的大小。方向重建需要根据~residual time~挑选~Hit~，受~PMT~渡越时间的涨落的影响，会影响方向重建的精度，我们分别假设渡越时间为0,1,3,5~ns~，8~MeV~电子的重建效果如图
-~\ref{fig:ttseff}~（质量重心方法）。图中灰色虚线即为68.3\% ~C.L.~置信度曲线。图~\ref{fig:recsum}~给出了三种方法在不同能量下的方向重建精度。在分析过程中，$\sigma$=1~ns~PMT TTS 被考虑了进去。
+为了比较方向重建的精度，我们定义了1倍 $\sigma$ 68.3 \% 置信度误差。以真实方向为锥心，包含68.3\% 重建方向的圆锥角的大小即为1倍~$\sigma$~角误差的大小。方向重建需要根据~residual time~挑选~Hit~，受~PMT~渡越时间的涨落的影响，会影响方向重建的精度，我们分别假设渡越时间为0，1，3，5~ns~，8~MeV~电子的重建效果如图
+~\ref{fig:ttseff}~（质量重心方法）。图中灰色虚线即为68.3\% 置信度曲线。图~\ref{fig:recsum}~给出了三种方法在不同能量下的方向重建精度。在分析过程中，$\sigma$=1~ns~PMT 渡越时间涨落被考虑了进去。
 
 \begin{figure}[!htbp]
 \begin{minipage}[t]{0.48\linewidth}
@@ -594,7 +618,7 @@ Q^{exp}_i  =
     \caption{ 中微子电子弹性散射道，似然函数径迹重建方法给出的超新星定位精度}
   \label{fig:esnu}
   \end{minipage}
-  \quad\quad
+ \quad\quad
   \begin{minipage}[t]{0.48\linewidth}
 %\end{figure}
 %\begin{figure}[!htbp]
@@ -604,8 +628,8 @@ Q^{exp}_i  =
   \label{fig:distance}
     \end{minipage}
 \end{figure}
-\section{其他液闪中径迹重建方法尝试}
-除了上述方法外，本人还尝试其他方法，但由于时间关系，只完成了调研部分。其中一种方法是可以在液闪探测器中尝试使用水切伦科夫探测器~super-K~ 的方法重建方法。我们在液闪中可以找出切伦科夫光的环状结构。图\ref{fig:p61} 是液闪探测器中一个在探测器中心产生，能量为~15~MeV 的电子事例的事例显示，观察Hit time 小于98.8ns的Hit,可以看到比较清晰的环状结构。%at hand reference code  from WC detectors:super-k LBNE Wcsim page:https://github.com/WCSim/WCSim  Wcanalysis page:https://lbne.bnl.gov/svn/people/blake/WCSimAnalysis/
+\section{液闪中其他径迹重建方法探究}
+除了上述方法外，本人还尝试其他方法，但由于时间关系，只完成了初步的学习。其中一种方法是可以在液闪探测器中尝试使用水切伦科夫探测器~super-K~的重建方法。我们在液闪中可以找出切伦科夫光的环状结构。图\ref{fig:p61}是液闪探测器中一个在探测器中心产生，能量为~15~MeV 的电子事例的事例显示，观察Hit time 小于98.8ns的Hit,可以看到比较清晰的环状结构。%at hand reference code  from WC detectors:super-k LBNE Wcsim page:https://github.com/WCSim/WCSim  Wcanalysis page:https://lbne.bnl.gov/svn/people/blake/WCSimAnalysis/
 
 %\begin{figure}[!htbp]
 %  \centering
@@ -613,7 +637,9 @@ Q^{exp}_i  =
 %    \caption{探测器中心产生的能量为15MeV的电子的事例显示:击中时间cut，小于98.8ns}
 %  \label{fig:p61}
 %\end{figure}
-在寻找~Ring Structure~之前，首先需要挑选那些成团的聚集在一起的Hit。孤立的Hit 要被丢掉。闪烁光光子由于是各向同性的，因此会在空间均匀弥散，切伦科夫光子相对于~track~ 方向，分布在特定方向，因此分布会密集一些。下一步需要重建事例的顶点和方向。假设所有光子均来自同一顶点以及同一时间。随机假设一个粒子传播方向以及切伦科夫锥角，然后使用~Hough~变换拿到方向和光锥角参数。一个例子如图\ref{fig:p62}
+%该方法的优点是在确定方向前，
+%在寻找~Ring Structure~之前，首先需要挑选那些成团的聚集在一起的Hit。孤立的Hit 要被丢掉。闪烁光光子由于是各向同性的，因此会在空间均匀弥散，切伦科夫光子相对于~track~ 方向，分布在特定方向，因此分布会密集一些。下一步需要重建事例的顶点和方向。假设所有光子均来自同一顶点以及同一时间。随机假设一个粒子传播方向以及切伦科夫锥角，
+该方法的优点是在重建~Ring Structure~之前，通过精细的~Hit~挑选（比如~Hit~的~Cluster~信息），最后可以简单的使用~Hough~变换拿到粒子方向和切伦科夫光锥角参数。一个重建的结果如图\ref{fig:p62} 所示。
 \begin{figure}[!htb]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
@@ -627,11 +653,11 @@ Q^{exp}_i  =
     \caption{}
     \label{fig:p62_2}
   \end{subfigure}
-  \caption{重建示意图}
+  \caption{水切伦科夫探测器中使用的环形结构重建示意图}
   \label{fig:p62}
 \end{figure}
-这种方法对于muon重建可以给出1.5~3degree的角误差。
+这种方法对于~muon~径迹方向重建可以给出好于1.5$^\circ$的角误差。
 \section{本章小结}
-本章介绍液体闪烁体中超新星的定位。第一部分简要介绍了超新星爆发中中微子的产生机制。第二部分介绍江门探测器对超新星中微子的探测。共有6个反应道，其中反贝塔衰变道和中微子电子弹性散射道可用于超星新定方向研究。
+本章介绍液体闪烁体中超新星的定位。第一部分简要介绍了超新星爆发中中微子的产生机制。第二部分介绍江门探测器对超新星中微子的探测。共有6个反应道，其中反贝塔衰变道和中微子电子弹性散射道可用于超新星定方向研究。
 
-接下来两部分介绍液闪中超新星的定位方法。其中之一是根据反贝塔衰变道中子的前冲性，利用快慢信号顶点连线，通过统计方法给出超新星方向。在 PMT 渡越时间1 ns 假设下，该方法给出的超新星定位精度为 14.9$^\circ$。根据此原理，大亚湾实验中统计平均后中微子方向与反应堆按照基线加权平均后方向的夹角为 7.76$^\circ$。另外一种定位方法基于液体闪烁体中粒子径迹方向重建。从理论分析，ToyMC ，事例显示，光子相对径迹方向分布等方面证实了利用加最快光子时间窗的方法重建径迹方向的可能性。并讨论了 PMT 时间性能，液闪光学模型对方向重建的影响。利用电子中微子弹性散射反应道，通过重建电子径迹方向，给出的超新星定位精度为6.15$^\circ$，该结果可以和水切伦科夫 super-K 实验不掺 Gd 结果相比7.8$^\circ$。最后给出了几种 PMT 时间性能下不同距离的超新星的定位精度，如图~\ref{fig:distance}~ 所示。
+接下来两部分介绍液闪中超新星的定位方法。其中之一是根据反贝塔衰变道中子的前冲性，利用快慢信号顶点连线，通过统计方法给出超新星方向。在 PMT 渡越时间1 ns 假设下，该方法给出的超新星定位精度为 14.9$^\circ$。根据此原理，大亚湾实验中统计平均后中微子方向与反应堆按照基线加权平均后方向的夹角为 7.76$^\circ$。另外一种定位方法基于液体闪烁体中粒子径迹方向重建。从理论分析，ToyMC ，事例显示，光子相对径迹方向角分布等方面证实了利用加最快光子时间窗的方法重建径迹方向的可能性。并讨论了 PMT 时间性能，光子飞行计算对方向重建的影响。利用电子中微子弹性散射反应道，通过重建电子径迹方向，给出的超新星定位精度为6.15$^\circ$，该结果可以和水切伦科夫探测器 super-K 实验不掺 Gd 结果相比， super-K 实验超新星定位精度为7.8$^\circ$。最后给出了几种 PMT 时间性能下不同距离的超新星定位精度，如图~\ref{fig:distance}~ 所示。

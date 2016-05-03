@@ -6,10 +6,10 @@
 %%
   \confidential{}% show confidential tag
   \schoollogo{scale=0.45}{D:/Thesis/ucasthesis-master/Img/UCAS}% university logo
-  \title[中国科学院大学博士学位论文]{大型液体闪烁体探测器的波形刻度及粒子鉴别和径迹方向重建研究}% \title[short title for headers]{Long title of thesis}
- % \title[国科大学位论文~\LaTeX{}~模板]{液体闪烁体探测器中的粒子鉴别和粒子径迹方向重建}% \title[short title for headers]{Long title of thesis}
-  \author{程雅苹}% name of author
-  \advisor{王贻芳~研究员}% names and titles of supervisors
+  \title[]{液体闪烁体探测器中的光电倍增管波形刻度\\
+  及粒子鉴别和径迹方向重建研究}% \title[short title for headers]{Long title of thesis}
+\author{程雅苹}% name of author
+\advisor{王贻芳~研究员}% names and titles of supervisors
   \advisorinstitute{中国科学院高能物理研究所}% institute names of supervisors
   \degree{博士}% degree
   \degreetype{理学}% degree type
@@ -19,12 +19,24 @@
 %%
 %%% English Title Page
 %%
-  \englishtitle{Doctoral Thesis\\ of \\ PSD Analysis and Track Reconstruction with waveform calibration in Liquid Scintillator Detector}
-  \englishauthor{Yaping Cheng}
-  \englishadvisor{Professor Yifang Wang}
+%\englishtitle{Study of Dayabay liquid scintillator and the purification of liquid scintillator for Jiangmen Underground Neutrino Observatory }
+%  %\englishtitle{Study of Dayabay liquid scintillator\purification\\Jiangmen Underground Neutrino Observatory}
+%  \englishauthor{Wei Hu}
+%  \englishadvisor{Prof. Yi-Fang Wang}
+%  \englishinstitute{Institute of High Energy Physics \\
+%    Chinese Academy of Sciences}
+%  \englishdegree{Doctor}
+%  \englishmajordegree{Particle and Nuclear Physics}
+
+
+  \englishtitle{ PSD Analysis and Track Reconstruction with\\
+  Waveform Calibration in Liquid Scintillator Detector}
+ \englishauthor{Yaping Cheng}
+ \englishadvisor{Professor Yifang Wang}
+ \englishinstitute{Institute of High Energy Physics, Chinese Academy of Sciences}
   \englishdegree{Doctor}
   \englishmajor{Particle Physics and Nuclear Physics Experiment}
-  \englishinstitute{Institute of High Energy Physics, Chinese Academy of Sciences}
+  
   %\englishdate{June, 2014}% only need for user customized date
 %%
 %%% Generate Chinese Title
@@ -39,19 +51,14 @@
 %%
 %%% >>> Abstract
 %%
-
+\includepdfmerge{statement.pdf}
 \begin{abstract}
 
 中微子物理是研究超出粒子物理标准模型的新物理的突破口和关键学科。本课题研究内容依托于大亚湾反应堆中微子实验和未来的江门中微子实验。
-
-大亚湾实验的主要物理目标除了测量中微子混合角$\theta_{13}$外，另一个重要目标是反应堆能谱的精确测量。电子学非线性是能谱分析中的关键点之一。旨在减小电子学非线性的192通道Flash-ADC自2016年1月份开始，在大亚湾取数。未来江门中微子实验也将使用波形采样读出。因此需要开发对应的采样波形分析算法。本文中的波形模板拟合方法，使用非模型依赖的模板实现波形刻度。模板可通过对刻度数据分析获得，算法可以良好地工作在各种波形上，包括上升沿快达2ns的波形。通过模板拟合带来的电荷非线性在1\%范围内。而使用电荷积分方法带来的电荷非线性可达10\%。该算法现已在江门中微子实验离线软件框架中。
-
-波形采样除了可以减小电子学非线性外，还可以提供优异的时间性能。通过对PMT测试数据的分析，1G采样率下时间分辨可以达到50ps，借助此时间性能，可以开展一些物理研究。
-
-其中一个是液闪中的正负电子鉴别。正电子在液闪当中可以形成一个寿命约为3~ns~的偶素，正电子与电子发生湮灭后产生的伽马的沉积能量的空间分布，都会造成正负电子光子发射时间谱的差异。基于此可做正负电子鉴别的研究。反贝塔衰变（IBD）的快信号为正电子类型。宇宙线缪子带来的长寿命的$^8$He/$^9$Li元素可以通过($\beta$,n)衰变模拟IBD信号，但其快信号类型为电子型。可以使用正负电子鉴别技术压低该项本底。使用正负电子鉴别结合合适的Muon Veto方案，可以将江门中微子实验的质量序列灵敏度($\chi^2$)从10.60提高到11.17。
-
-另外也可以开展的物理研究是液闪中的低能粒子径迹方向重建。其基本原理是利用探测器的时间性能，通过加最快光子挑选时间窗，提高切伦科夫光相对于闪烁光的比例到10\%左右。闪烁光相对于高度方向性的切伦科夫光构成各向同性本底。利用一种基于光子角分布的极大似然拟合方法重建粒子方向。这一研究被用于超新星定位。液体闪烁体中超新星的定位方法是利用~IBD~反应中的中子前冲，通过统计方法给出超新星方向。在1~ns~PMT~渡越时间假设下，对于一个典型的银河系中心10~kpc~的超新星，这一方法在江门中微子实验中给出的超新星方向精度约为14.9$^{\circ}$。如果使用中微子电子散射道，通过重建散射电子径迹方向，在同样假设下，江门中微子实验给出的方向精度为6.15$^{\circ}$。此结果可以和水切伦科夫实验~Super-K~不掺~Gd~的超新星定位精度结果7.8$^{\circ}$相比。
-
+大亚湾实验的主要物理目标除了测量中微子混合角$\theta_{13}$外，另一个重要目标是反应堆能谱的精确测量。电子学非线性是能谱分析中的关键点之一。旨在减小电子学非线性的192通道Flash-ADC自2016年1月份开始，在大亚湾取数。未来江门中微子实验也将使用波形采样读出。因此需要开发对应的采样波形分析算法。本文中的波形模板拟合方法，使用非模型依赖的模板实现波形刻度。模板可通过对刻度数据分析获得，算法可以良好地工作在各种波形上，包括上升沿快达2~ns~的波形。通过模板拟合带来的电荷非线性在1\%范围内。而使用电荷积分方法带来的电荷非线性可达10\%。该算法现已在江门中微子实验离线软件框架中。
+波形采样除了可以减小电子学非线性外，还可以提供优异的时间性能。通过对滨松20英寸~PMT~（型号~R12860~）测试数据的分析，1~GHz~采样率下时间分辨可以达到50~ps~，借助此时间性能，可以开展一些物理研究。
+其中一个是液闪中的正负电子鉴别。正电子在液闪当中可以形成一个寿命约为3~ns~的偶素，正电子与电子发生湮灭后产生的伽马的沉积能量的空间分布，都会造成正负电子光子发射时间谱的差异。基于此可做正负电子鉴别的研究。反贝塔衰变（IBD）的快信号为正电子类型。宇宙线缪子带来的长寿命的$^8$He/$^9$Li元素可以通过($\beta^-$,n)衰变模拟IBD信号，但其快信号类型为电子型。可以使用正负电子鉴别技术压低该项本底。使用正负电子鉴别结合合适的Muon Veto方案，可以将江门中微子实验的质量序列灵敏度($\chi^2$)从10.60提高到11.17。
+另外也可以开展的物理研究是液闪中的低能粒子径迹方向重建。其基本原理是利用探测器的时间性能，通过加最快光子挑选时间窗，提高切伦科夫光相对于闪烁光的比例到10\%左右。闪烁光相对于高度方向性的切伦科夫光构成各向同性本底。利用一种基于光子角分布的极大似然拟合方法重建粒子方向。这一研究被用于超新星定位。液体闪烁体中超新星的定位方法是利用~IBD~反应中的中子前冲，通过统计方法给出超新星方向。在1~ns~PMT~渡越时间假设下，对于一个典型的银河系中心10~kpc~的超新星，这一方法在江门中微子实验中给出的超新星方向精度约为14.9$^{\circ}$。如果使用中微子电子散射道，通过重建散射电子径迹方向，在同样假设下，江门中微子实验给出的方向精度为6.15$^{\circ}$。此结果可以和水切伦科夫实验~Super-K~不掺~Gd~的超新星定位精度7.8$^{\circ}$相比。
 由于时间关系，尚有一些工作需要未来完成。比如目前江门离线软件中能量重建的输入为简单的Hit个数，更加真实的重建输入应为通过波形重建出来的电荷和时间信息。此工作在论文展望部分稍有论述。另外波形模板拟合方法速度较慢，只能用于小批量样本事例的重建。需要尝试提高其性能或者开发新的快速方法，比如说采样波形的小波分析方法。
 
 \keywords{液体闪烁体探测器，波形刻度，粒子鉴别，径迹方向重建}

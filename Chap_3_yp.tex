@@ -75,7 +75,7 @@ B(x)&=&\frac{1-w}{\sigma_0\sqrt{2\pi}}exp(-\frac{x^2}{2\sigma_0^2})+w\theta (x) 
     \caption{~PMT~增益与~VME~机箱温度的关系}
   \label{fig:vmeT}
 \end{figure}
-\subsection{~PMT~增益漂移一个可能解释}
+\subsection{~PMT~增益漂移的一个可能解释}
 我们通过~LED~增益刻度和~Rolling Gain~刻度均发现大亚湾~PMT~的增益在缓慢上升，大约增加了10\%,见图~\ref{fig:gaindrift}~。
 \begin{figure}[!htb]
   \centering
@@ -103,7 +103,7 @@ B(x)&=&\frac{1-w}{\sigma_0\sqrt{2\pi}}exp(-\frac{x^2}{2\sigma_0^2})+w\theta (x) 
 \begin{figure}[!htb]
   \centering
    \includegraphics[width=\MyFactor\textwidth*4/5]{Img/chap3/gain}
-    \caption{ ~PMT~增益随阳极总电荷的变化情况}
+    \caption{ ~PMT~增益随阳极收集到的总电荷的变化情况}
   \label{fig:gain}
 \end{figure}
 为了检验这一理论，我们需要知道大亚湾~PMT~阳极积累电荷的多少。首先通过估算计算。大亚湾~PMT~阳极电流约为100~$\mu A$~，则根据其运行时间，可以推算出阳极总电荷约为~7000~库伦。按照图~\ref{fig:gain}~的结论，应该处于增益下降阶段。另一种方法是，在我们的探测器中，有一些旧的使用时间比较长的~Macro~PMT，被安装在水池，水池~PMT~信息可参见图~\ref{fig:macro}~, 我们去研究单个~PMT~的增益变化。
@@ -167,7 +167,7 @@ B(x)&=&\frac{1-w}{\sigma_0\sqrt{2\pi}}exp(-\frac{x^2}{2\sigma_0^2})+w\theta (x) 
     \caption{}
     \label{fig:gainpmt2_4}
   \end{subfigure}
-  \caption{~Macro~PMT~增益随时间的变化，增益下降或稳定}
+  \caption{~Macro~PMT~增益随时间的变化：增益下降或稳定}
   \label{fig:gainpmt2}
 \end{figure}
 \section{大亚湾中心探测器PMT时间刻度参数检查}
@@ -207,7 +207,7 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 \end{figure}
 %\section{中子俘获时间的研究}
 %\subsection{利用中子俘获时间研究液闪中~Gd~浓度}
-%掺Gd液体闪烁体探测器长时间运行时，有~Gd~络合物析出的风险。中子可以在~H~和~Gd~ 上俘获。在~H~上的平均俘获时间和在~Gd~上的平均俘获时间分别是200微秒和30微秒\citep{manley1942mean}。因此我们可以通过研究不同时间段的中子俘获时间，来监测不同时间段的~Gd~的比例。由图~\ref{fig:gds}~可以根据对应的中子俘获时间的变化，得到~Gd~浓度的变化。
+%掺Gd液体闪烁体探测器长时间运行时，有~Gd~络合物析出的风险。中子可以在~H~和~Gd~ 上俘获。在~H~上的平均俘获时间和在~Gd~ 上的平均俘获时间分别是200微秒和30微秒\citep{manley1942mean}。因此我们可以通过研究不同时间段的中子俘获时间，来监测不同时间段的~Gd~的比例。由图~\ref{fig:gds}~可以根据对应的中子俘获时间的变化，得到~Gd~浓度的变化。
 %\begin{figure}[!htbp]
 %  \centering
 %   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/gds}
@@ -276,7 +276,7 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 %    \caption{散裂中子俘获时间拟合结果}
 %  \label{fig:sn}
 %\end{figure}
-\section{基于~Flash-ADC~的~PMT~后脉冲测试系统设计及采样数据分析}
+\section{基于~Flash-ADC~的~PMT~后脉冲测试系统设计及数据分析}
 \subsection{后脉冲概念及研究意义}
 后脉冲是出现在最初的光电信号一段时间之后的脉冲\citep{morton1967afterpulses}，如下图~\ref{fig:defination}~，幅度可能比主脉冲大，是一种非常讨厌的本底噪声。打拿型~PMT~后脉冲可能的来源如下\citep{akchurin2007study}：
 \begin{enumerate}
@@ -304,7 +304,7 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 %\end{eqnarray}
 \begin{figure}[!htb]
   \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/dayabay}
+   \includegraphics[width=\MyFactor\textwidth*4/3]{Img/chap3/dayabay}
     \caption{大亚湾定标器测试~PMT~后脉冲方法}
   \label{fig:dayabay}
 \end{figure}
@@ -325,15 +325,7 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 %  \label{fig:dyb}
 %\end{figure}
 \subsubsection{~KM3NetT~测试方法介绍}
-~KM3NetT~实验使用激光点亮~PMT~，使用示波器记录20$\mu$s~内的波形信息，示波器采样率为5GHz，触发工作在~stop~模式。其测试示意图如图~\ref{fig:km3}~ 所示。测试结果观测到的后脉冲的时间分布在$\sim$2~$\mu$s~和$\sim$8~$\mu$s~处会出现两个峰，分别是由于~PMT~内残余的甲烷气体和铯离子造成的。
-\begin{figure}[!htb]
-  \centering
-   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/km3}
-    \caption{~KM3NetT~测试~PMT~后脉冲方法}
-  \label{fig:km3}
-\end{figure}
-
-
+~KM3NetT~实验使用激光点亮~PMT~，使用示波器记录10~$\mu$s~内的波形信息。示波器采样率为5~GHz~，共记录5万个采样点的幅度信息，触发工作在~stop~ 模式。测试结果为观测到在后脉冲的时间分布图上在$\sim$2~$\mu$s~ 和$\sim$8~$\mu$s~ 处会出现两个峰，分别是由于~PMT~内残余的甲烷气体和铯离子造成的。
 %\begin{figure}[!htbp]
 %  \centering
 %  \begin{subfigure}[b]{\MySubFactor\textwidth}
@@ -353,7 +345,15 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 
 \subsection{基于~Desktop~Flash-ADC~的快速后脉冲测试方法}
 \subsubsection{快速后脉冲测试方法介绍}
-我们使用皮秒激光器经过衰减后调出单光子或多光子状态。使用激光器的优点是同步信号与光信号时间晃动在几十皮秒量极,可以准确知道光子到达~pmt~的时间。缺点:~pmt~输出波形的时间会受到~pmt~渡越时间的影响,激光器电源会引入非常大的电磁干扰。测试使用1 ~GHz~采样率的便携式~FADC~。调节PMT高压（~SY1527~高压模块），使PMT增益约为1E7。 信号发生器门信号~$\sim$50~ns~宽，PMT 的信号在门内，这样可以减少暗噪声的过阈触发。调节信号发生器，型号AFG3102，分别给出单光子，多光子的信号。另外一种可选择方案是使用示波器，型号~Lecroy~WavePro~7100~。示波器和~CANE~FADC~对比如~\ref{tab:dtwa}~。因此我们最终选择使用~CAEN~公司的~Desktop~Flash-ADC~DT5751。
+我们使用皮秒激光器经过衰减后调出单光子或多光子状态。使用激光器的优点是同步信号与光信号时间晃动在几十皮秒量极,可以准确知道光子到达~PMT~的时间。缺点：~PMT~输出波形的时间会受到~PMT~渡越时间的影响,激光器电源会引入非常大的电磁干扰。测试使用1~GHz~采样率的便携式~FADC~。调节PMT高压（使用~SY1527~高压模块），使PMT增益约为1.0$\times$10$^7$（记为：1E7）。 信号发生器门信号~$\sim$50~ns~宽，PMT 的信号在门内，这样可以减少暗噪声引起的过阈触发。调节信号发生器，型号为AFG3102，分别给出单光子，多光子的信号。另外一种可选择方案是使用示波器，型号为~Lecroy~WavePro~7100~。 示波器和~CANE~FADC~ 对比如表~\ref{tab:dtwa}~。因此我们最终选择使用~CAEN~公司的~Desktop~Flash-ADC~DT5751。测试装置如图~\ref{fig:km3}~所示。
+\begin{figure}[!htb]
+  \centering
+   \includegraphics[width=\MyFactor\textwidth]{Img/chap3/mysetup}
+    \caption{基于~FADC~波形采样的后脉冲测试系统}
+  \label{fig:km3}
+\end{figure}
+
+
 \begin{table}[htbp]
 \centering  % 表居中
 \begin{tabular}{lcc}  % {lccc} 表示各列元素对齐方式，left-l,right-r,center-c
@@ -368,10 +368,10 @@ f(x) = [0]+[1]exp(-[2]x)+[3]exp(-[4]x)+[5]logx
 \\ 价格& 5万元& 15万元
 \\ \hline
 \end{tabular}
-\caption{DT5751与~Lecroy~ WavePro ~7100~对比}
+\caption{DT5751与~Lecroy~ WavePro ~7100~性能对比}
 \label{tab:dtwa}
 \end{table}
-为了准确给出主脉冲以及后脉冲的大小，我们需要做单光子刻度，方法是调节~LD~的~intensity~为单光子， 然后通过拟合得到单光子的数值积分电荷。为了方便分析，我们将事例号，整个20us内波形的个数，每个波形的幅度，面积，开始时间，结束时间，峰值时间记录成~ROOT~Tree~的形式。用于电荷刻度的单光子事例挑选方法是：根据信号产生器门信号的位置，选取第一个~hit~在时间窗口[280ns，330ns]里的~hit~。积分电荷谱的拟合使用与大亚湾Rolling Gain刻度同样的PMT 响应模型。R5912~SPE的积分电荷为：0.8559；R5912-100型号为：0.97817。 单光子电荷刻度结果如图~\ref{fig:speQ}~。
+为了准确给出主脉冲以及后脉冲的大小，我们需要做单光子刻度，方法是调节激光二极管的强度使得~PMT~工作在单光子状态， 然后通过拟合得到单光子的数值积分电荷。为了方便分析，我们将事例号，整个20$\mu$s~内波形的个数，每个波形的幅度，面积，开始时间，结束时间，峰值时间记录成~ROOT~Tree~的形式。用于电荷刻度的单光子事例挑选方法是：根据信号发生器门信号的位置，选取第一个~hit~在时间窗口[280ns，330ns]里的~hit~。积分电荷谱的拟合使用与大亚湾Rolling Gain刻度同样的PMT 响应模型。R5912单光电子的积分电荷为：0.8559；R5912-100型号单光电子电荷为：0.97817。 单光子电荷刻度结果如图~\ref{fig:speQ}~所示。
 \begin{figure}[!htb]
   \centering
   \begin{subfigure}[b]{\MySubFactor\textwidth}
